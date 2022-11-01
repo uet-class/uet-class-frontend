@@ -17,6 +17,7 @@
 .logoInfor {
   position: relative;
   /* background-color: blue; */
+  left: -10px;
   justify-content: flex-start;
   height: auto;
   width: auto;
@@ -24,17 +25,17 @@
 .logoImg {
   border-radius: 50%;
   position: relative;
-  top: 4px;
+  top: 3px;
 }
 
 .logoText {
   font-weight: bold;
-  font-size: 35px;
+  font-size: 25px;
   color: white;
   cursor: pointer;
   position: relative;
   padding-left: 10px;
-  top: -5px;
+  top: -9px;
 }
 
 .userOption{
@@ -54,7 +55,6 @@
   font-weight: bold;
   font-size: 17px;
   color: white;
-  cursor: pointer;
   position: relative;
   top: 7px;
   padding-right: 4px;
