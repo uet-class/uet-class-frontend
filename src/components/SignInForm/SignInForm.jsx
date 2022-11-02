@@ -23,7 +23,7 @@ const SignInForm = () => {
                 <Box
                     className={"login-header"}
                     sx={{
-                        marginTop: 8,
+                        marginTop: 6,
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center",
@@ -52,11 +52,13 @@ const SignInForm = () => {
                             ),
                         }}
                     ></TextField>
-                    <Typography className={"login-info"} fontSize={20} fontWeight={500}>
+                    <Typography type={"password"} className={"login-info"} fontSize={20} fontWeight={500}>
                         Password
                     </Typography>
                     <TextField
                         className={"input-rounded"}
+                        name="password"
+                        type="password"
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
