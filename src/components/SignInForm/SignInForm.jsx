@@ -19,7 +19,7 @@ const SignInForm = () => {
                 borderRadius: 15,
             }}
         >
-            <Container component={"main"} maxWidth={"xs"}>
+            <Container component={"main"}>
                 <Box
                     className={"login-header"}
                     sx={{
@@ -27,6 +27,7 @@ const SignInForm = () => {
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center",
+                        paddingTop: 5,
                     }}
                 >
                     <img src={Logo} alt={"logo"}/>
@@ -38,12 +39,24 @@ const SignInForm = () => {
                 <Box
                     className={"login-form"}
                     component={"form"}
+                    sx={{
+                        marginTop: 5,
+                        paddingLeft: 10,
+                        paddingRight: 10,
+                    }}
                 >
-                    <Typography className={"login-info"} fontSize={20} fontWeight={500}>
+                    <Typography
+                        className={"login-info"}
+                        fontSize={20}
+                        fontWeight={500}
+                    >
                         Username
                     </Typography>
                     <TextField
                         className={"input-rounded"}
+                        sx={{
+                            width: "100%",
+                        }}
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
@@ -51,14 +64,27 @@ const SignInForm = () => {
                                 </InputAdornment>
                             ),
                         }}
+
                     ></TextField>
-                    <Typography type={"password"} className={"login-info"} fontSize={20} fontWeight={500}>
+                    <Typography
+                        type={"password"}
+                        className={"login-info"}
+                        fontSize={20}
+                        fontWeight={500}
+                        sx={{
+                            paddingTop: 2,
+                        }}
+                    >
                         Password
                     </Typography>
                     <TextField
                         className={"input-rounded"}
                         name="password"
                         type="password"
+                        sx={{
+                            width: "100%",
+                            paddingBottom: 8,
+                        }}
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
@@ -88,7 +114,14 @@ const SignInForm = () => {
                         </Grid>
                         <Grid item xs={8}>
                             <Link href="/signUp" variant="body2">
-                                <Typography className={"login-info"} fontSize={20} fontWeight={500}>
+                                <Typography
+                                    className={"login-info"}
+                                    fontSize={20}
+                                    fontWeight={500}
+                                    sx={{
+                                        paddingTop: 0.5,
+                                    }}
+                                >
                                     or sign up a new account?
                                 </Typography>
                             </Link>
