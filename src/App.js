@@ -1,12 +1,12 @@
 import React from 'react';
 import './App.css';
 import { Route, Routes} from "react-router-dom";
-import Home from "./components/Home/Home";
-import Documents from "./pages/Documents/Documents";
-import Assignments from "./pages/Assignments/Assignments";
-import Posts from "./pages/Posts/Posts";
-import SignIn from "./pages/SignIn/SignIn";
-import SignUp from "./pages/SignUp/SignUp";
+import Home from "./components/Home/home";
+import Documents from "./pages/Documents/documents";
+import Assignments from "./pages/Assignments/assignments";
+import Posts from "./pages/Posts/posts";
+import SignIn from "./pages/SignIn/signIn";
+import SignUp from "./pages/SignUp/signUp";
 
 function App() {
   return (
