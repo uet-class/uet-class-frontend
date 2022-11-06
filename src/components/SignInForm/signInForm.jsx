@@ -5,7 +5,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import KeyIcon from "@mui/icons-material/Key";
 import {useNavigate} from "react-router-dom";
-import "./SignInForm.css";
+import "./signInForm.css";
 import AuthService from "../../services/auth.service";
 
 const SignInForm = () => {

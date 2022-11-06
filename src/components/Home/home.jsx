@@ -1,5 +1,5 @@
-import Sidebar from "../Sidebar/Sidebar";
-import "./Home.css";
+import Sidebar from "../Sidebar/sidebar";
+import "./home.css";
 
 const Home = () => {
     return (
