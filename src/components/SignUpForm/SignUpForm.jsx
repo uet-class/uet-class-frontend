@@ -5,6 +5,10 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import KeyIcon from "@mui/icons-material/Key";
 
 const SignUpForm = () => {
+    const openInNewTab = () => {
+        window.open("https://www.youtube.com/watch?v=ZZ5LpwO-An4", '_blank', 'noopener,noreferrer');
+    };
+
     return (
         <Box
             className={"login-section"}
@@ -126,6 +130,7 @@ const SignUpForm = () => {
                                     color: "#015198",
                                     borderRadius: 4,
                                 }}
+                                onClick={openInNewTab}
                             >
                                 <Typography
                                     className={"sign-in"}
