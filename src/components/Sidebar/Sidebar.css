@@ -19,3 +19,10 @@
     height: 100%;
     width: 100%;
 }
+
+.nav-link.active {
+    background-color : #9E9E9E !important;
+    margin-left: 5px !important;
+    margin-right: 5px !important;
+    border-radius: 15px !important;
+}

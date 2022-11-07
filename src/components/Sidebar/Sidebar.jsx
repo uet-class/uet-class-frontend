@@ -1,5 +1,5 @@
-import { NavLink } from "react-router-dom";
 import "./Sidebar.css";
+import { NavLink, Link } from "react-router-dom";
 import HomeIcon from "../Icon/HomeIcon";
 import NewsIcon from "../Icon/NewsIcon";
 import DocumentIcon from "../Icon/DocumentIcon";
@@ -18,22 +18,22 @@ const Sidebar = () => {
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink to="/home" className="nav-link">
+            <NavLink to="/posts" className="nav-link">
               <NewsIcon /> Bảng tin
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink to="/home" className="nav-link ">
+            <NavLink to="/posts" className="nav-link ">
               <DocumentIcon /> Tài liệu
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink to="/assignments" className="nav-link disabled">
+            <NavLink to="/assignments" className="nav-link">
               <HomeworkIcon /> Bài tập 
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink to="/home" className="nav-link">
+            <NavLink to="/posts" className="nav-link">
               <OtherIcon /> Khác
             </NavLink>
           </li>
@@ -42,24 +42,24 @@ const Sidebar = () => {
       <div className="advance-nav">
         <ul className="nav nav-pills flex-column ">
           <li className="nav-item">
-            <NavLink to="/assignments" className="nav-link">
+            <Link to="/assignments" className="nav-link">
               <ClassIcon /> Tương tác người máy test (link: Assignments)
-            </NavLink>
+            </Link>
           </li>
           <li className="nav-item">
-            <NavLink to="/home" className="nav-link">
+            <Link to="/home" className="nav-link">
               <ClassIcon /> Tương tác người máy
-            </NavLink>
+            </Link>
           </li>
           <li className="nav-item">
-            <NavLink to="/home" className="nav-link">
+            <Link to="/home" className="nav-link">
               <ClassIcon /> Tương tác người máy
-            </NavLink>
+            </Link>
           </li>
           <li className="nav-item">
-            <NavLink to="/home" className="nav-link">
+            <Link to="/home" className="nav-link">
               <ClassIcon /> Tương tác người máy
-            </NavLink>
+            </Link>
           </li>
         </ul>
       </div>
