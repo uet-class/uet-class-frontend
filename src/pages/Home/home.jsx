@@ -3,18 +3,8 @@ import {Box, Button, Container, createTheme, Grid, Modal, ThemeProvider, Typogra
 import "./home.css"
 import React from "react";
 import AddIcon from '@mui/icons-material/Add';
-
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-};
+import CreateClass from "../../components/CreateClass/createClass";
+import JoinClass from "../../components/JoinClass/joinClass";
 
 const Home = () => {
     const [openCreateClass, setOpenCreateClass] = React.useState(false);
@@ -118,14 +108,7 @@ const Home = () => {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box sx={style}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
-                        Tiêu đề cho tạo lớp
-                    </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        Đây là modal tạo lớp.
-                    </Typography>
-                </Box>
+                <CreateClass />
             </Modal>
 
             <Modal
@@ -134,14 +117,7 @@ const Home = () => {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box sx={style}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
-                        Tiêu đề tham gia lớp
-                    </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        Đây là modal tham gia vào lớp.
-                    </Typography>
-                </Box>
+                <JoinClass />
             </Modal>
         </ThemeProvider>
     )
