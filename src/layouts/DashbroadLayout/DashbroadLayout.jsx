@@ -1,10 +1,8 @@
-import Sidebar from "../../components/Sidebar/Sidebar";
-import Header from "../../components/Header/Header.jsx";
-import "./DashbroadLayout.css";
+import Sidebar from "../../components/Sidebar/sidebar.jsx";
+import Header from "../../components/header/header.jsx";
+import "./dashbroadLayout.css";
 
 const DashbroadLayout = (props) => {
-  var links = ["./home", "./assignments"];
-  var classes = ["Tương tác người máy", "XSTK"];
   return (
     <Header>
       <div className="sidebar-section">

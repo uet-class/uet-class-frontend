@@ -1,5 +1,5 @@
 import Sidebar from "../../components/Sidebar/sidebar";
-import Header from "../../components/Header/header.jsx";
+import Header from "../../components/header/header.jsx";
 import "./posts.css";
 
 const Posts = () => {
