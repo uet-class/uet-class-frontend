@@ -1,12 +1,12 @@
-import "./Documents.css";
-import DashbroadLayout from "../../layouts/DashbroadLayout/DashbroadLayout";
-import HomeIcon from "../../components/Icon/HomeIcon";
-import NewsIcon from "../../components/Icon/NewsIcon";
-import DocumentIcon from "../../components/Icon/DocumentIcon";
-import HomeworkIcon from "../../components/Icon/HomeworkIcon";
-import OtherIcon from "../../components/Icon/OtherIcon";
+import DashbroadLayout from "../../layouts/DashbroadLayout/dashbroadLayout";
+import "./assignments.css";
+import HomeIcon from "../../components/Icon/homeIcon";
+import NewsIcon from "../../components/Icon/newsIcon";
+import DocumentIcon from "../../components/Icon/documentIcon";
+import HomeworkIcon from "../../components/Icon/homeworkIcon";
+import OtherIcon from "../../components/Icon/otherIcon";
 
-const Documents = () => {
+const Assignments = () => {
   var sideBar = {};
   sideBar.classLinks = ["/home", "/assignments"];
   sideBar.classes = ["Tương tác người máy", "Xác suất thống kê"];
@@ -31,12 +31,13 @@ const Documents = () => {
     <HomeworkIcon />,
     <OtherIcon />,
   ];
-
   return (
     <DashbroadLayout sideBar={sideBar}>
-      <h1 className="content">This is the documents page</h1>
+      <div>
+        <h1 className="content">This is the assignments page</h1>
+      </div>
     </DashbroadLayout>
   );
 };
 
-export default Documents;
+export default Assignments;

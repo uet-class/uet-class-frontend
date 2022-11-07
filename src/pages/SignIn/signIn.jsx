@@ -1,7 +1,7 @@
-import './SignIn.css';
+import './signIn.css';
 import {Grid, createTheme, ThemeProvider} from "@mui/material";
-import SignInForm from "../../components/SignInForm/SignInForm";
-import ClassIllustration from "../../components/ClassIllustration/ClassIllustration";
+import SignInForm from "../../components/SignInForm/signInForm";
+import ClassIllustration from "../../components/ClassIllustration/classIllustration";
 
 const SignIn = () => {
     const theme = createTheme({

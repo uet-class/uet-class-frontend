@@ -1,6 +1,6 @@
-import Sidebar from "../../components/Sidebar/Sidebar";
-import Header from "../../components/Header/Header.jsx";
-import "./Posts.css";
+import Sidebar from "../../components/Sidebar/sidebar";
+import Header from "../../components/Header/header.jsx";
+import "./posts.css";
 
 const Posts = () => {
     return (

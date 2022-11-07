@@ -1,10 +1,10 @@
-import "./Home.css";
-import DashbroadLayout from "../../layouts/DashbroadLayout/DashbroadLayout";
-import HomeIcon from "../Icon/HomeIcon";
-import NewsIcon from "../Icon/NewsIcon";
-import DocumentIcon from "../Icon/DocumentIcon";
-import HomeworkIcon from "../Icon/HomeworkIcon";
-import OtherIcon from "../Icon/OtherIcon";
+import "./home.css";
+import DashbroadLayout from "../../layouts/DashbroadLayout/dashbroadLayout";
+import HomeIcon from "../Icon/homeIcon";
+import NewsIcon from "../Icon/newsIcon";
+import DocumentIcon from "../Icon/documentIcon";
+import HomeworkIcon from "../Icon/homeworkIcon";
+import OtherIcon from "../Icon/otherIcon";
 
 const Home = () => {
   var sideBar = {};

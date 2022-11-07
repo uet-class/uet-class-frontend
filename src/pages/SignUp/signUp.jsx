@@ -1,6 +1,6 @@
 import {createTheme, Grid, ThemeProvider} from "@mui/material";
-import ClassIllustration from "../../components/ClassIllustration/ClassIllustration";
-import SignUpForm from "../../components/SignUpForm/SignUpForm";
+import ClassIllustration from "../../components/ClassIllustration/classIllustration";
+import SignUpForm from "../../components/SignUpForm/signUpForm";
 
 const SignUp = () => {
     const theme = createTheme({
