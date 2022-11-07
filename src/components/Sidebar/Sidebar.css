@@ -1,28 +1,32 @@
 .basic-nav {
-    background-color: #003049;
-    box-sizing: border-box;
-    padding-bottom: 10px;
-    padding-top: 15px;
-    height: 40%;
+  background-color: #003049;
+  box-sizing: border-box;
+  padding-bottom: 10px;
+  padding-top: 15px;
+  height: 40%;
 }
 .advance-nav {
-    background-color: #003049;
-    opacity: 81%;
-    box-sizing: border-box;
-    padding-bottom: 10px;
-    padding-top: 15px;
-    height: 60% !important;
+  background-color: #003049;
+  opacity: 81%;
+  box-sizing: border-box;
+  padding-bottom: 10px;
+  padding-top: 15px;
+  height: 60% !important;
 }
 .wrapped {
-    /* position:relative; */
-    background-color: white;
-    height: 100%;
-    width: 100%;
+  /* position:relative; */
+  background-color: white;
+  height: 100%;
+  width: 100%;
 }
 
 .nav-link.active {
-    background-color : #9E9E9E !important;
-    margin-left: 5px !important;
-    margin-right: 5px !important;
-    border-radius: 15px !important;
+  background-color: #9e9e9e !important;
+  margin-left: 5px !important;
+  margin-right: 5px !important;
+  border-radius: 15px !important;
+}
+
+ul.nav a:hover {
+  color: #9e9e9e !important;
 }

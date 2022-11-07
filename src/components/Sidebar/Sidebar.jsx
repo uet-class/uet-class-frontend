@@ -7,60 +7,31 @@ import HomeworkIcon from "../Icon/HomeworkIcon";
 import OtherIcon from "../Icon/OtherIcon";
 import ClassIcon from "../Icon/ClassIcon";
 
-const Sidebar = () => {
+const Sidebar = (props) => {
   return (
     <div className="wrapped">
       <div className="basic-nav">
-        <ul className="nav nav-pills flex-column">
-          <li className="nav-item">
-            <NavLink to="/home" className="nav-link">
-              <HomeIcon /> Trang chủ
+        <ul className="nav nav-pills flex-column mx">
+          {
+            props.info['basicLink'].map(function(link, i) {
+              console.log(props)
+              return <NavLink to={link} className="nav-link">
+              {props.info['basicIcon'][i]} {props.info['basicLinkName'][i]}
             </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink to="/posts" className="nav-link">
-              <NewsIcon /> Bảng tin
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink to="/posts" className="nav-link ">
-              <DocumentIcon /> Tài liệu
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink to="/assignments" className="nav-link">
-              <HomeworkIcon /> Bài tập 
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink to="/posts" className="nav-link">
-              <OtherIcon /> Khác
-            </NavLink>
-          </li>
+            })
+          }
         </ul>
       </div>
       <div className="advance-nav">
         <ul className="nav nav-pills flex-column ">
-          <li className="nav-item">
-            <Link to="/assignments" className="nav-link">
-              <ClassIcon /> Tương tác người máy test (link: Assignments)
+          {
+            props.info['classLinks'].map(function(link, i) {
+              console.log(props)
+              return <Link to={link} className="nav-link">
+              <ClassIcon /> {props.info['classes'][i]}
             </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/home" className="nav-link">
-              <ClassIcon /> Tương tác người máy
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/home" className="nav-link">
-              <ClassIcon /> Tương tác người máy
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/home" className="nav-link">
-              <ClassIcon /> Tương tác người máy
-            </Link>
-          </li>
+            })
+          }
         </ul>
       </div>
     </div>
