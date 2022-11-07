@@ -130,7 +130,9 @@ export default function Header(props) {
           </div>
         </div>
       </div>
-      {props.children}
+      <div className="children">
+        {props.children}
+      </div>
     </>
   );
 }

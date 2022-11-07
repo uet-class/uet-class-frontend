@@ -1,0 +1,21 @@
+.basic-nav {
+    background-color: #003049;
+    box-sizing: border-box;
+    padding-bottom: 10px;
+    padding-top: 15px;
+    height: 40%;
+}
+.advance-nav {
+    background-color: #003049;
+    opacity: 81%;
+    box-sizing: border-box;
+    padding-bottom: 10px;
+    padding-top: 15px;
+    height: 60% !important;
+}
+.wrapped {
+    /* position:relative; */
+    background-color: white;
+    height: 100%;
+    width: 100%;
+}

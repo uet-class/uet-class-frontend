@@ -1,18 +1,23 @@
-// import logo from './logo.svg';
+import React from 'react';
 import './App.css';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Header from "../src/components/header/Header.jsx"
+import { Route, Routes} from "react-router-dom";
+import Home from "./components/Home/Home";
+import Documents from "./pages/Documents/Documents";
+import Assignments from "./pages/Assignments/Assignments";
+import Posts from "./pages/Posts/Posts";
+import SignIn from "./pages/SignIn/SignIn";
+import SignUp from "./pages/SignUp/SignUp";
 
 function App() {
   return (
-    <BrowserRouter>
-    <Header>
       <Routes>
-        <Route path="/" element={<div>home</div>} />
-        <Route path="/test" element={<div>test</div>} />
+          <Route path="/signIn" element={<SignIn />} />
+          <Route path="/signUp" element={<SignUp />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/posts" element={<Posts />} />
+          <Route path="/documents" element={<Documents />} />
+          <Route path="/assignments" element={<Assignments />} />
       </Routes>
-    </Header>
-    </BrowserRouter>
   );
 }
 
