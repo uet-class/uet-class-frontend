@@ -1,6 +1,6 @@
-import Sidebar from "../../components/Sidebar/sidebar.jsx";
-import Header from "../../components/header/header.jsx";
-import "./dashbroadLayout.css";
+import Sidebar from "../../components/Sidebar/sidebar";
+import Header from "../../components/header/Header";
+import "./DashbroadLayout.css";
 
 const DashbroadLayout = (props) => {
   return (

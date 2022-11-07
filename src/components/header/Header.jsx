@@ -1,4 +1,4 @@
-import "./header.css";
+import "./Header.css";
 import * as React from "react";
 import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
