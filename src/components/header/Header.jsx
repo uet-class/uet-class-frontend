@@ -2,14 +2,12 @@ import "./Header.css";
 import * as React from "react";
 import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import Button from "@mui/material/Button";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Grow from "@mui/material/Grow";
 import Paper from "@mui/material/Paper";
 import Popper from "@mui/material/Popper";
 import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
-import Stack from "@mui/material/Stack";
 
 export default function Header(props) {
   const [open, setOpen] = React.useState(false);
@@ -130,9 +128,7 @@ export default function Header(props) {
           </div>
         </div>
       </div>
-      <div className="children">
-        {props.children}
-      </div>
+      <div className="children">{props.children}</div>
     </>
   );
 }

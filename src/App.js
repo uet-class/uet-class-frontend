@@ -7,6 +7,8 @@ import Assignments from "./pages/Assignments/Assignments";
 import Posts from "./pages/Posts/Posts";
 import SignIn from "./pages/SignIn/SignIn";
 import SignUp from "./pages/SignUp/SignUp";
+import News from './pages/News/News';
+import Other from './pages/Other/Other';
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
           <Route path="/posts" element={<Posts />} />
           <Route path="/documents" element={<Documents />} />
           <Route path="/assignments" element={<Assignments />} />
+          <Route path="/news" element={<News />} />
+          <Route path="/other" element={<Other />} />
       </Routes>
   );
 }

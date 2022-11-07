@@ -1,4 +1,4 @@
-import "./Documents.css";
+import "./Other.css";
 import DashbroadLayout from "../../layouts/DashbroadLayout/DashbroadLayout";
 import HomeIcon from "../../components/Icon/HomeIcon";
 import NewsIcon from "../../components/Icon/NewsIcon";
@@ -6,7 +6,7 @@ import DocumentIcon from "../../components/Icon/DocumentIcon";
 import HomeworkIcon from "../../components/Icon/HomeworkIcon";
 import OtherIcon from "../../components/Icon/OtherIcon";
 
-const Documents = () => {
+const Other = () => {
   var sideBar = {};
   sideBar.classLinks = ["/home", "/assignments"];
   sideBar.classes = ["Tương tác người máy", "Xác suất thống kê"];
@@ -34,9 +34,9 @@ const Documents = () => {
 
   return (
     <DashbroadLayout sideBar={sideBar}>
-      <h1 className="content">This is the documents page</h1>
+      <h1 className="content">This is the other page</h1>
     </DashbroadLayout>
   );
 };
 
-export default Documents;
+export default Other;
