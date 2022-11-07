@@ -16,7 +16,9 @@ const SignInForm = () => {
     const handleSubmit = async (Event) => {
         Event.preventDefault();
         const data = new FormData(Event.currentTarget);
-        AuthService.login(data.get("username"), data.get("password"))
+        console.log(data.get("email"));
+        console.log(data.get("password"));
+        AuthService.login(data.get("email"), data.get("password"))
             .then((res) => {
                 if (res.status === 200) {
                     navigate('/home');
@@ -30,8 +32,8 @@ const SignInForm = () => {
             });
     };
 
-    const toHome = () => {
-        navigate('/home')
+    const toSignIn = () => {
+        navigate('/signin')
     }
 
     return (
@@ -84,10 +86,10 @@ const SignInForm = () => {
                             fontSize={20}
                             fontWeight={500}
                         >
-                            Username
+                            Email
                         </Typography>
                         <TextField
-                            name="username"
+                            name="email"
                             className={"input-rounded"}
                             sx={{
                                 width: "100%",
@@ -137,7 +139,7 @@ const SignInForm = () => {
                                         color: "#015198",
                                         borderRadius: 4,
                                     }}
-                                    onClick={toHome}
+                                    onClick={toSignIn}
                                 >
                                     <Typography
                                         className={"sign-in"}
