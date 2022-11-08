@@ -89,6 +89,7 @@ const SignInForm = () => {
                         name="email"
                         id="email"
                         className={"input-rounded"}
+                        autoComplete='off'
                         sx={{
                             width: "100%",
                         }}
@@ -99,7 +100,6 @@ const SignInForm = () => {
                                 </InputAdornment>
                             ),
                         }}
-
                     ></TextField>
                     <Typography
                         type={"password"}
@@ -116,6 +116,7 @@ const SignInForm = () => {
                         className={"input-rounded"}
                         name="password"
                         type="password"
+                        autoComplete='off'
                         id="password"
                         sx={{
                             width: "100%",

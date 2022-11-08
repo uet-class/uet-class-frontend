@@ -57,6 +57,7 @@ const SignUpForm = () => {
                     </Typography>
                     <TextField
                         className={"input-rounded"}
+                        autoComplete='off'
                         sx={{
                             width: "100%",
                         }}
@@ -83,6 +84,7 @@ const SignUpForm = () => {
                     <TextField
                         className={"input-rounded"}
                         name="password"
+                        autoComplete='off'
                         type="password"
                         sx={{
                             width: "100%",
@@ -108,6 +110,7 @@ const SignUpForm = () => {
                     <TextField
                         className={"input-rounded"}
                         name="password"
+                        autoComplete='off'
                         type="password"
                         sx={{
                             width: "100%",
