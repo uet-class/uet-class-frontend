@@ -8,8 +8,6 @@ on:
   pull_request:
     types:
       - "opened"
-    branches:
-      - "feature/**"
 
 env:
   REGISTRY_URL: thainm
