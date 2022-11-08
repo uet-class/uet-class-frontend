@@ -1,6 +1,6 @@
-import DashbroadLayout from "../../layouts/DashbroadLayout/DashbroadLayout";
+import DashbroadLayout from "../../layouts/DashbroadLayout/dashbroadLayout";
 import "./assignments.css";
-import HomeIcon from "../../components/Icon/newsIcon";
+import HomeIcon from "../../components/Icon/homeIcon";
 import NewsIcon from "../../components/Icon/newsIcon";
 import DocumentIcon from "../../components/Icon/documentIcon";
 import HomeworkIcon from "../../components/Icon/homeworkIcon";

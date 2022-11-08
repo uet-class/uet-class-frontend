@@ -1,12 +1,16 @@
-import {Box, Button, Container, Grid, TextField, Typography} from "@mui/material";
+import {Box, Button, Container, Grid, Link, TextField, Typography} from "@mui/material";
 import Logo from "../../assets/logo.png";
 import InputAdornment from "@mui/material/InputAdornment";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import KeyIcon from "@mui/icons-material/Key";
+import React from "react";
+import {useNavigate} from "react-router-dom";
 
 const SignUpForm = () => {
-    const openInNewTab = () => {
-        window.open("https://www.youtube.com/watch?v=ZZ5LpwO-An4", '_blank', 'noopener,noreferrer');
+    const navigate = useNavigate();
+
+    const goToSignIn = () => {
+        navigate("/signIn")
     };
 
     return (
@@ -53,10 +57,11 @@ const SignUpForm = () => {
                         fontSize={20}
                         fontWeight={500}
                     >
-                        Username
+                        Email
                     </Typography>
                     <TextField
                         className={"input-rounded"}
+                        autoComplete='off'
                         sx={{
                             width: "100%",
                         }}
@@ -83,6 +88,7 @@ const SignUpForm = () => {
                     <TextField
                         className={"input-rounded"}
                         name="password"
+                        autoComplete='off'
                         type="password"
                         sx={{
                             width: "100%",
@@ -108,10 +114,11 @@ const SignUpForm = () => {
                     <TextField
                         className={"input-rounded"}
                         name="password"
+                        autoComplete='off'
                         type="password"
                         sx={{
                             width: "100%",
-                            paddingBottom: 8,
+                            paddingBottom: 3,
                         }}
                         InputProps={{
                             startAdornment: (
@@ -130,7 +137,7 @@ const SignUpForm = () => {
                                     color: "#015198",
                                     borderRadius: 4,
                                 }}
-                                onClick={openInNewTab}
+                                onClick={goToSignIn}
                             >
                                 <Typography
                                     className={"sign-in"}
@@ -142,6 +149,18 @@ const SignUpForm = () => {
                             </Button>
                         </Grid>
                     </Grid>
+                    <Link href="/signIn" variant="body2">
+                        <Typography
+                            className={"login-info"}
+                            fontSize={18}
+                            fontWeight={400}
+                            sx={{
+                                paddingTop: 1,
+                            }}
+                        >
+                            Already have an account? Sign in
+                        </Typography>
+                    </Link>
                 </Box>
             </Container>
         </Box>
