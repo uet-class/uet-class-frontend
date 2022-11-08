@@ -14,7 +14,6 @@ const SignInForm = () => {
     const navigate = useNavigate();
 
     const handleSubmit = (event) => {
-        console.log("Hello");
         event.preventDefault();
         const data = event.target;
         console.log(data.email.value);

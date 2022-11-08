@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Route, Routes} from "react-router-dom";
+import {Navigate, Route, Routes} from "react-router-dom";
 import Documents from "./pages/Documents/documents";
 import Assignments from "./pages/Assignments/assignments";
 import Posts from "./pages/Posts/posts";
@@ -11,6 +11,7 @@ import Home from "./pages/Home/home";
 function App() {
   return (
       <Routes>
+          <Route path="/" element={<Navigate to="/signin" replace />}/>
           <Route path="/signIn" element={<SignIn />} />
           <Route path="/signUp" element={<SignUp />} />
           <Route path="/home" element={<Home />} />
