@@ -7,8 +7,8 @@ import Assignments from "./pages/Assignments/assignments";
 import Posts from "./pages/Posts/posts";
 import SignIn from "./pages/SignIn/signIn";
 import SignUp from "./pages/SignUp/signUp";
-import News from './pages/News/News';
-import Other from './pages/Other/Other';
+import News from './pages/News/news';
+import Other from './pages/Other/other';
 
 function App() {
   return (

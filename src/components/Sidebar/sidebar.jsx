@@ -1,6 +1,6 @@
-import "./Sidebar.css";
+import "./sidebar.css";
 import { NavLink, Link } from "react-router-dom";
-import ClassIcon from "../Icon/ClassIcon";
+import ClassIcon from "../Icon/classIcon";
 
 const Sidebar = (props) => {
   return (
