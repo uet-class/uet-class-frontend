@@ -47,7 +47,7 @@ const Home = () => {
                                 fontSize={32}
                                 fontWeight={600}
                             >
-                                Lớp học của bạn
+                                Your classrooms
                             </Typography>
                         </Grid>
                         <Grid
@@ -70,7 +70,7 @@ const Home = () => {
                                     fontSize={20}
                                     fontWeight={500}
                                 >
-                                    Tạo lớp
+                                    Create class
                                 </Typography>
                             </Button>
                         </Grid>
@@ -94,7 +94,7 @@ const Home = () => {
                                     fontSize={20}
                                     fontWeight={500}
                                 >
-                                    Tham gia vào lớp
+                                    Join a class
                                 </Typography>
                             </Button>
                         </Grid>

@@ -1,8 +1,9 @@
-import {Box, Button, Container, Grid, TextField, Typography} from "@mui/material";
+import {Box, Button, Container, Grid, Link, TextField, Typography} from "@mui/material";
 import Logo from "../../assets/logo.png";
 import InputAdornment from "@mui/material/InputAdornment";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import KeyIcon from "@mui/icons-material/Key";
+import React from "react";
 
 const SignUpForm = () => {
     const openInNewTab = () => {
@@ -53,7 +54,7 @@ const SignUpForm = () => {
                         fontSize={20}
                         fontWeight={500}
                     >
-                        Username
+                        Email
                     </Typography>
                     <TextField
                         className={"input-rounded"}
@@ -114,7 +115,7 @@ const SignUpForm = () => {
                         type="password"
                         sx={{
                             width: "100%",
-                            paddingBottom: 8,
+                            paddingBottom: 3,
                         }}
                         InputProps={{
                             startAdornment: (
@@ -145,6 +146,18 @@ const SignUpForm = () => {
                             </Button>
                         </Grid>
                     </Grid>
+                    <Link href="/signIn" variant="body2">
+                        <Typography
+                            className={"login-info"}
+                            fontSize={18}
+                            fontWeight={400}
+                            sx={{
+                                paddingTop: 1,
+                            }}
+                        >
+                            Already have an account? Sign in
+                        </Typography>
+                    </Link>
                 </Box>
             </Container>
         </Box>
