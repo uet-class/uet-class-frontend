@@ -1,5 +1,5 @@
 import Sidebar from "../../components/Sidebar/sidebar";
-import Header from "../../components/header/Header";
+import Header from "../../components/header/header";
 import "./DashbroadLayout.css";
 
 const DashbroadLayout = (props) => {
