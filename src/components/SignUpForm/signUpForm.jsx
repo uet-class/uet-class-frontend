@@ -4,10 +4,13 @@ import InputAdornment from "@mui/material/InputAdornment";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import KeyIcon from "@mui/icons-material/Key";
 import React from "react";
+import {useNavigate} from "react-router-dom";
 
 const SignUpForm = () => {
-    const openInNewTab = () => {
-        window.open("https://www.youtube.com/watch?v=ZZ5LpwO-An4", '_blank', 'noopener,noreferrer');
+    const navigate = useNavigate();
+
+    const goToSignIn = () => {
+        navigate("/signIn")
     };
 
     return (
@@ -134,7 +137,7 @@ const SignUpForm = () => {
                                     color: "#015198",
                                     borderRadius: 4,
                                 }}
-                                onClick={openInNewTab}
+                                onClick={goToSignIn}
                             >
                                 <Typography
                                     className={"sign-in"}
