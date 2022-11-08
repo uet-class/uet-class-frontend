@@ -1,5 +1,5 @@
 import "./documents.css";
-import DashbroadLayout from "../../layouts/DashbroadLayout/DashbroadLayout";
+import DashbroadLayout from "../../layouts/DashbroadLayout/dashbroadLayout";
 import HomeIcon from "../../components/Icon/homeIcon";
 import NewsIcon from "../../components/Icon/newsIcon";
 import DocumentIcon from "../../components/Icon/documentIcon";

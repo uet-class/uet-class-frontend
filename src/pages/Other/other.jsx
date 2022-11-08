@@ -1,12 +1,12 @@
-import "./news.css";
-import DashbroadLayout from "../../layouts/DashbroadLayout/DashbroadLayout";
+import "./other.css";
+import DashbroadLayout from "../../layouts/DashbroadLayout/dashbroadLayout";
 import HomeIcon from "../../components/Icon/homeIcon";
 import NewsIcon from "../../components/Icon/newsIcon";
 import DocumentIcon from "../../components/Icon/documentIcon";
 import HomeworkIcon from "../../components/Icon/homeworkIcon";
 import OtherIcon from "../../components/Icon/otherIcon";
 
-const News = () => {
+const Other = () => {
   var sideBar = {};
   sideBar.classLinks = ["/home", "/assignments"];
   sideBar.classes = ["Tương tác người máy", "Xác suất thống kê"];
@@ -34,9 +34,9 @@ const News = () => {
 
   return (
     <DashbroadLayout sideBar={sideBar}>
-      <h1 className="content">This is the news page</h1>
+      <h1 className="content">This is the other page</h1>
     </DashbroadLayout>
   );
 };
 
-export default News;
+export default Other;
