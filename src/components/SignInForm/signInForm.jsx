@@ -13,17 +13,19 @@ const SignInForm = () => {
 
     const navigate = useNavigate();
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const data = event.target;
         console.log(data.email.value);
         console.log(data.password.value);
         AuthService.login(data.email.value, data.password.value)
             .then((res) => {
+                console.log(res.status)
                 if (res.status === 200) {
                     navigate('/home');
                 } else {
                     const error = new Error(res.error);
+                    console.log(error)
                     throw error;
                 }
             })
