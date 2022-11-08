@@ -21,6 +21,8 @@ function App() {
           <Route path="/assignments" element={<Assignments />} />
           <Route path="/news" element={<News />} />
           <Route path="/other" element={<Other />} />
+          <Route path="/news" element={<News />} />
+          <Route path="/other" element={<Other />} />
       </Routes>
   );
 }
