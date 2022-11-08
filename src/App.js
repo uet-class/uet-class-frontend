@@ -7,6 +7,8 @@ import Posts from "./pages/Posts/posts";
 import SignIn from "./pages/SignIn/signIn";
 import SignUp from "./pages/SignUp/signUp";
 import Home from "./pages/Home/home";
+import News from "./pages/News/News";
+import Other from "./pages/Other/Other";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
           <Route path="/posts" element={<Posts />} />
           <Route path="/documents" element={<Documents />} />
           <Route path="/assignments" element={<Assignments />} />
+          <Route path="/news" element={<News />} />
+          <Route path="/other" element={<Other />} />
       </Routes>
   );
 }
