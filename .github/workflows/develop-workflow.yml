@@ -5,6 +5,11 @@ on:
     branches:
       - "develop"
       - "feature/cicd"
+  pull_request:
+    types:
+      - "opened"
+    branches:
+      - "feature/**"
 
 env:
   REGISTRY_URL: thainm
