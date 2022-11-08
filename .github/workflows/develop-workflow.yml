@@ -4,10 +4,7 @@ on:
   push:
     branches:
       - "develop"
-      - "feature/cicd"
-  pull_request:
-    types:
-      - "opened"
+      - "feature/**"
 
 env:
   REGISTRY_URL: thainm
