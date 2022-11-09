@@ -16,6 +16,20 @@ class AuthService {
                 console.log(error);
             });
     }
+
+    register(email, password) {
+        return axios.post(API_URL + '/auth/signup', {
+            email: email,
+            password: password,
+        })
+            .then(function (response) {
+                console.log(response);
+                return response;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
 }
 
 export default new AuthService();
