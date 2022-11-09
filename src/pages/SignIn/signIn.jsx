@@ -1,7 +1,13 @@
-import './signIn.css';
-import {Grid, createTheme, ThemeProvider} from "@mui/material";
+import {
+    Grid,
+    createTheme,
+    ThemeProvider,
+    CssBaseline,
+} from "@mui/material";
+import React from "react";
 import SignInForm from "../../components/SignInForm/signInForm";
-import ClassIllustration from "../../components/ClassIllustration/classIllustration";
+import Classroom from "../../assets/classroom.png";
+
 
 const SignIn = () => {
     const theme = createTheme({
@@ -12,11 +18,20 @@ const SignIn = () => {
 
     return (
         <ThemeProvider theme={theme}>
-            <Grid container justifyContent="center">
-                <Grid className={"classroom-illustration"} item xs={7.5}>
-                    <ClassIllustration />
-                </Grid>
-                <Grid className={"login-section"} item xs={4.5}>
+            <Grid container component="main" sx={{height: '100vh'}}>
+                <CssBaseline/>
+                <Grid
+                    item
+                    xs={false}
+                    sm={4}
+                    md={8}
+                    sx={{
+                        backgroundImage: `url(${Classroom})`,
+                        backgroundRepeat: 'no-repeat',
+                        backgroundPosition: 'center',
+                    }}
+                />
+                <Grid item xs={12} sm={8} md={4} elevation={6} square>
                     <SignInForm />
                 </Grid>
             </Grid>

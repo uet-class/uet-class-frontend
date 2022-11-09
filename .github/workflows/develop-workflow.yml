@@ -4,11 +4,6 @@ on:
   push:
     branches:
       - "develop"
-      - "feature/cicd"
-  pull_request:
-    types:
-      - "opened"
-    branches:
       - "feature/**"
 
 env:
@@ -34,8 +29,8 @@ jobs:
       - name: Installing dependencies
         run: yarn install
 
-      - name: Building static files
-        run: yarn build
+      - name: Building static files with environment variables
+        run: export $(cat .env.production); yarn build
 
       - name: Building Docker image
         run: |

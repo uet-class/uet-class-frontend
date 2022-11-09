@@ -27,3 +27,14 @@ __NOTE: These steps below are instructions for Linux environment. If you are usi
   ```
 
   This will start the server at `http://localhost:3000`.
+
+## File naming conventions
+
+- The directories must be in uppercase
+- The files inside the directory must be camelCase
+
+  ```
+  ClassIllustration
+  ├── classIllustration.css
+  └── classIllustration.jsx
+  ```
