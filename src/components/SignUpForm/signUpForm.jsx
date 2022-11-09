@@ -1,12 +1,39 @@
 import React from "react";
-import {Box, Button, Grid, Link, TextField, Typography} from "@mui/material";
+import {Alert, Box, Button, Grid, Link, TextField, Typography} from "@mui/material";
 import Logo from "../../assets/logo.png";
 import InputAdornment from "@mui/material/InputAdornment";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import KeyIcon from "@mui/icons-material/Key";
 import "./signUpForm.css";
+import {useNavigate} from "react-router-dom";
+import AuthService from "../../services/auth.service";
 
 const SignUpForm = () => {
+    const [signUpFail, setSignUpFail] = React.useState(false);
+
+    const navigate = useNavigate();
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+        if (data.get("password") === data.get("reConfirmPassword")) {
+            AuthService.register(data.get("email"), data.get("password"))
+                .then((res) => {
+                    if (res.status === 200) {
+                        navigate('/signIn');
+                    } else {
+                        const error = new Error(res.error);
+                        throw error;
+                    }
+                })
+                .catch((err) => {
+                    setSignUpFail(true);
+                });
+        } else {
+            setSignUpFail(true)
+        }
+
+    };
     return (
         <Box
             boxShadow={3}
@@ -22,11 +49,16 @@ const SignUpForm = () => {
                 borderRadius: 15
             }}
         >
+            {signUpFail ? (
+                <Alert severity="error">
+                    Đăng ký thất bại, hãy kiểm tra lại thông tin!
+                </Alert>
+            ) : null}
             <img src={Logo} alt={"logo"}/>
             <Typography className={"app-title"} fontSize={46} fontWeight={700}>
                 UET CLASS
             </Typography>
-            <Box component="form">
+            <Box component="form" onSubmit={handleSubmit}>
                 <Typography
                     className={"login-info"}
                     fontSize={20}
@@ -83,9 +115,9 @@ const SignUpForm = () => {
                     className={"input-rounded"}
                     required
                     fullWidth
-                    name="password"
+                    name="reConfirmPassword"
                     type="password"
-                    id="password"
+                    id="reConfirmPassword"
                     autoComplete='off'
                     InputProps={{
                         startAdornment: (
