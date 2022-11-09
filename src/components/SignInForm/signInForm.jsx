@@ -1,11 +1,11 @@
 import React from "react";
-import {Alert, Box, Button, Container, Grid, Link, TextField, Typography} from "@mui/material";
+import {Alert, Box, Button, Grid, Link, TextField, Typography} from "@mui/material";
 import Logo from "../../assets/logo.png";
 import InputAdornment from "@mui/material/InputAdornment";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import KeyIcon from "@mui/icons-material/Key";
-import {useNavigate} from "react-router-dom";
 import "./signInForm.css";
+import {useNavigate} from "react-router-dom";
 import AuthService from "../../services/auth.service";
 
 const SignInForm = () => {
@@ -30,140 +30,93 @@ const SignInForm = () => {
             });
     };
 
-
     return (
         <Box
-            className={"login-section"}
-            bgcolor={"#FCF9F9"}
-            justifyContent={"center"}
-            alignItems={"center"}
-            minHeight={"90vh"}
             boxShadow={3}
+            bgcolor={"#FCF9F9"}
+            minHeight={"80vh"}
+            justifyContent={"center"}
             sx={{
-                marginRight: 10,
-                borderRadius: 15,
+                my: 10,
+                mx: 4,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                borderRadius: 15
             }}
         >
-            <Container component={"main"}>
-                {fail ? (
-                    <Alert severity="error">
-                        Đăng nhập thất bại, hãy kiểm tra lại thông tin!
-                    </Alert>
-                ) : null}
-                <Box
-                    className={"login-header"}
-                    sx={{
-                        marginTop: 6,
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        paddingTop: 5,
-                    }}
+            {fail ? (
+                <Alert severity="error">
+                    Đăng nhập thất bại, hãy kiểm tra lại thông tin!
+                </Alert>
+            ) : null}
+            <img src={Logo} alt={"logo"}/>
+            <Typography className={"app-title"} fontSize={46} fontWeight={700}>
+                UET CLASS
+            </Typography>
+            <Box component="form" onSubmit={handleSubmit}>
+                <Typography
+                    className={"login-info"}
+                    fontSize={20}
+                    fontWeight={500}
+                    marginTop={5}
                 >
-                    <img src={Logo} alt={"logo"}/>
-                    <Typography className={"app-title"} fontSize={46} fontWeight={700}>
-                        UET CLASS
-                    </Typography>
-                </Box>
-
-                <Box
-                    className={"login-form"}
-                    component={"form"}
-                    sx={{
-                        marginTop: 5,
-                        paddingLeft: 10,
-                        paddingRight: 10,
+                    Email
+                </Typography>
+                <TextField
+                    className={"input-rounded"}
+                    required
+                    fullWidth
+                    id="email"
+                    name="email"
+                    autoComplete='off'
+                    autoFocus
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <AccountCircleIcon/>
+                            </InputAdornment>
+                        ),
                     }}
-                    onSubmit={handleSubmit}
+                    sx={{
+                        marginBottom: 3,
+                    }}
+                />
+                <Typography className={"login-info"} fontSize={20} fontWeight={500}>
+                    Mật khẩu
+                </Typography>
+                <TextField
+                    className={"input-rounded"}
+                    required
+                    fullWidth
+                    name="password"
+                    type="password"
+                    id="password"
+                    autoComplete='off'
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <KeyIcon/>
+                            </InputAdornment>
+                        ),
+                    }}
+                />
+                <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{mt: 3, mb: 2}}
                 >
-                    <Typography
-                        className={"login-info"}
-                        fontSize={20}
-                        fontWeight={500}
-                    >
-                        Email
-                    </Typography>
-                    <TextField
-                        name="email"
-                        id="email"
-                        className={"input-rounded"}
-                        autoComplete='off'
-                        sx={{
-                            width: "100%",
-                        }}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <AccountCircleIcon/>
-                                </InputAdornment>
-                            ),
-                        }}
-                    ></TextField>
-                    <Typography
-                        type={"password"}
-                        className={"login-info"}
-                        fontSize={20}
-                        fontWeight={500}
-                        sx={{
-                            paddingTop: 2,
-                        }}
-                    >
-                        Password
-                    </Typography>
-                    <TextField
-                        className={"input-rounded"}
-                        name="password"
-                        type="password"
-                        autoComplete='off'
-                        id="password"
-                        sx={{
-                            width: "100%",
-                            paddingBottom: 8,
-                        }}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <KeyIcon/>
-                                </InputAdornment>
-                            ),
-                        }}></TextField>
-                    <Grid container spacing={2}>
-                        <Grid item xs={4}>
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                sx={{
-                                    color: "#015198",
-                                    borderRadius: 4,
-                                }}
-                            >
-                                <Typography
-                                    className={"sign-in"}
-                                    fontSize={20}
-                                    fontWeight={500}
-                                >
-                                    Sign in
-                                </Typography>
-                            </Button>
-                        </Grid>
-                        <Grid item xs={8}>
-                            <Link href="/signUp" variant="body2">
-                                <Typography
-                                    className={"login-info"}
-                                    fontSize={20}
-                                    fontWeight={500}
-                                    sx={{
-                                        paddingTop: 0.5,
-                                    }}
-                                >
-                                    or sign up a new account?
-                                </Typography>
-                            </Link>
-                        </Grid>
+                    Đăng nhập
+                </Button>
+                <Grid container>
+                    <Grid item>
+                        <Link href="/signUp" variant="body2">
+                            {"Chưa có tài khoản? Đăng ký"}
+                        </Link>
                     </Grid>
-                </Box>
-            </Container>
+                </Grid>
+            </Box>
         </Box>
     )
 }

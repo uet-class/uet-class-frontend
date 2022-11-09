@@ -1,17 +1,17 @@
 import Header from "../../components/Header/header";
 import {Box, Button, Container, createTheme, Grid, Modal, ThemeProvider, Typography} from "@mui/material";
 import "./home.css"
-import React from "react";
+import React, {useState} from "react";
 import AddIcon from '@mui/icons-material/Add';
 import CreateClass from "../../components/CreateClass/createClass";
 import JoinClass from "../../components/JoinClass/joinClass";
 
 const Home = () => {
-    const [openCreateClass, setOpenCreateClass] = React.useState(false);
+    const [openCreateClass, setOpenCreateClass] = useState(false);
     const handleOpenCreateClass = () => setOpenCreateClass(true);
     const handleCloseCreateClass = () => setOpenCreateClass(false);
 
-    const [openJoinClass, setOpenJoinClass] = React.useState(false);
+    const [openJoinClass, setOpenJoinClass] = useState(false);
     const handleOpenJoinClass = () => setOpenJoinClass(true);
     const handleCloseJoinClass = () => setOpenJoinClass(false);
 
@@ -47,11 +47,11 @@ const Home = () => {
                                 fontSize={32}
                                 fontWeight={600}
                             >
-                                Your classrooms
+                                Lớp học của tôi
                             </Typography>
                         </Grid>
                         <Grid
-                            item xs={4}
+                            item xs={4.25}
                             display="flex"
                             justifyContent="flex-end"
                         >
@@ -70,12 +70,12 @@ const Home = () => {
                                     fontSize={20}
                                     fontWeight={500}
                                 >
-                                    Create class
+                                    Tạo lớp
                                 </Typography>
                             </Button>
                         </Grid>
                         <Grid
-                            item xs={2}
+                            item xs={1.75}
                             display="flex"
                             justifyContent="flex-end"
                         >
@@ -94,31 +94,35 @@ const Home = () => {
                                     fontSize={20}
                                     fontWeight={500}
                                 >
-                                    Join a class
+                                    Tham gia lớp
                                 </Typography>
                             </Button>
                         </Grid>
                     </Grid>
                 </Box>
+
+                <Modal
+                    open={openCreateClass}
+                    onClose={handleCloseCreateClass}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box>
+                        <CreateClass />
+                    </Box>
+                </Modal>
+
+                <Modal
+                    open={openJoinClass}
+                    onClose={handleCloseJoinClass}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box>
+                        <JoinClass />
+                    </Box>
+                </Modal>
             </Container>
-
-            <Modal
-                open={openCreateClass}
-                onClose={handleCloseCreateClass}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <CreateClass />
-            </Modal>
-
-            <Modal
-                open={openJoinClass}
-                onClose={handleCloseJoinClass}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <JoinClass />
-            </Modal>
         </ThemeProvider>
     )
 }
