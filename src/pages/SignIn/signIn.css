@@ -1,0 +1,16 @@
+.app-title {
+    color: #015198;
+}
+
+.login-info {
+    color: #015198;
+}
+
+.input-rounded .MuiOutlinedInput-root {
+    border-radius: 15px;
+    background-color: #EFEFEF;
+}
+
+.sign-in {
+    color: #FFFFFF;
+}
