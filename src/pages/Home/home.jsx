@@ -22,7 +22,7 @@ const Home = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!AuthService.isUser()) {
+        if (false) {
             navigate("/signin");
         } else {
             const fetchData = async () => {
@@ -77,7 +77,7 @@ const Home = () => {
                                         onClick={handleOpenCreateClass}
                                         variant="contained"
                                         sx={{
-                                            color: "#305264",
+                                            backgroundColor: "#305264",
                                             borderRadius: 4,
                                         }}
                                     >
@@ -101,7 +101,7 @@ const Home = () => {
                                         onClick={handleOpenJoinClass}
                                         variant="contained"
                                         sx={{
-                                            color: "#305264",
+                                            backgroundColor: "#305264",
                                             borderRadius: 4,
                                         }}
                                     >
