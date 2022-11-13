@@ -1,5 +1,5 @@
 import "./documents.css";
-import { Button, Typography } from "@mui/material";
+import { Button, Typography, Box, Modal } from "@mui/material";
 import DashbroadLayout from "../../layouts/DashbroadLayout/dashbroadLayout";
 import AddIcon from "@mui/icons-material/Add";
 import HomeIcon from "../../components/Icon/homeIcon";
@@ -8,11 +8,10 @@ import DocumentIcon from "../../components/Icon/documentIcon";
 import HomeworkIcon from "../../components/Icon/homeworkIcon";
 import OtherIcon from "../../components/Icon/otherIcon";
 import ClassHeader from "../../components/ClassHeader/classHeader";
-import BorderColorIcon from "@mui/icons-material/BorderColor";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DownloadIcon from "@mui/icons-material/Download";
 import ArticleIcon from "@mui/icons-material/Article";
-
+import { useState } from "react";
 import * as React from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -21,6 +20,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import CreateDocuments from "../../components/createDocuments/createDocuments";
 
 const columns = [
   { id: "name", label: "Tên tài liệu", minWidth: 220 },
@@ -125,6 +125,10 @@ const rows = [
 ];
 
 const Documents = () => {
+  const [openCreateDocument, setOpenCreateDocument] = useState(false);
+  const handleOpenCreateDocument = () => setOpenCreateDocument(true);
+  const handleCloseCreateDocument = () => setOpenCreateDocument(false);
+
   var sideBar = {};
   sideBar.classLinks = ["/home", "/assignments"];
   sideBar.classes = ["Tương tác người máy", "Xác suất thống kê"];
@@ -173,6 +177,7 @@ const Documents = () => {
               width: 160,
               marginTop: 2,
             }}
+            onClick={handleOpenCreateDocument}
           >
             <AddIcon style={{ color: "white" }} />
             <Typography
@@ -225,7 +230,7 @@ const Documents = () => {
                                 align={column.align}
                                 style={{ fontSize: "17px" }}
                               >
-                                {column.id == "name" && (
+                                {column.id === "name" && (
                                   <ArticleIcon
                                     style={{
                                       color: "#464646",
@@ -270,6 +275,16 @@ const Documents = () => {
               </TableContainer>
             </Paper>
           </div>
+          <Modal
+            open={openCreateDocument}
+            onClose={handleCloseCreateDocument}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box>
+              <CreateDocuments />
+            </Box>
+          </Modal>
         </div>
       </ClassHeader>
     </DashbroadLayout>
