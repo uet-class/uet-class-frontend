@@ -5,6 +5,7 @@ import NewsIcon from "../../components/Icon/newsIcon";
 import DocumentIcon from "../../components/Icon/documentIcon";
 import HomeworkIcon from "../../components/Icon/homeworkIcon";
 import OtherIcon from "../../components/Icon/otherIcon";
+import ClassHeader from "../../components/ClassHeader/classHeader";
 
 const Documents = () => {
   var sideBar = {};
@@ -34,7 +35,9 @@ const Documents = () => {
 
   return (
     <DashbroadLayout sideBar={sideBar}>
-      <h1 className="content">This is the documents page</h1>
+      <ClassHeader className={"Tương tác người máy"} classCode={"INT1234_21"}>
+        <h1 className="content">This is the documents page</h1>
+      </ClassHeader>
     </DashbroadLayout>
   );
 };
