@@ -27,85 +27,100 @@ const columns = [
   { id: "updateDate", label: "Ngày đăng tải", minWidth: 100 },
 ];
 
-function createData(name, updateDate, link) {
-  return { name, updateDate, link };
+function createData(name, updateDate, link, id) {
+  return { name, updateDate, link, id };
 }
 
 const rows = [
   createData(
     "bai1.pdf",
     "23/10/2012",
-    "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+    "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    1
   ),
   createData(
-    "bai1",
+    "bai1.pdf",
     "23/10/2012",
-    "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+    "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    1
   ),
   createData(
-    "bai1",
+    "bai1.pdf",
     "23/10/2012",
-    "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+    "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    1
   ),
   createData(
-    "bai1",
+    "bai1.pdf",
     "23/10/2012",
-    "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+    "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    1
   ),
   createData(
-    "bai1",
+    "bai1.pdf",
     "23/10/2012",
-    "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+    "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    1
   ),
   createData(
-    "bai1",
+    "bai1.pdf",
     "23/10/2012",
-    "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+    "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    1
   ),
   createData(
-    "bai1",
+    "bai1.pdf",
     "23/10/2012",
-    "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+    "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    1
   ),
   createData(
-    "bai1",
+    "bai1.pdf",
     "23/10/2012",
-    "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+    "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    1
   ),
   createData(
-    "bai1",
+    "bai1.pdf",
     "23/10/2012",
-    "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+    "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    1
   ),
   createData(
-    "bai1",
+    "bai1.pdf",
     "23/10/2012",
-    "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+    "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    1
   ),
   createData(
-    "bai1",
+    "bai1.pdf",
     "23/10/2012",
-    "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+    "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    1
   ),
   createData(
-    "bai1",
+    "bai1.pdf",
     "23/10/2012",
-    "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+    "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    1
   ),
   createData(
-    "bai1",
+    "bai1.pdf",
     "23/10/2012",
-    "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+    "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    1
   ),
   createData(
-    "bai1",
+    "bai1.pdf",
     "23/10/2012",
-    "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+    "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    1
   ),
   createData(
-    "bai1",
+    "bai1.pdf",
     "23/10/2012",
-    "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+    "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    1
   ),
 ];
 
@@ -134,6 +149,14 @@ const Documents = () => {
     <HomeworkIcon />,
     <OtherIcon />,
   ];
+
+  const handleDelete = (a) => {
+    console.log(a);
+  };
+
+  const handleDownload = (a) => {
+    console.log(a);
+  };
 
   return (
     <DashbroadLayout sideBar={sideBar}>
@@ -181,12 +204,8 @@ const Documents = () => {
                           {column.label}
                         </TableCell>
                       ))}
-                      <TableCell
-                        style={{ width: 3, }}
-                      ></TableCell>
-                      <TableCell
-                        style={{ width: 3,}}
-                      ></TableCell>
+                      <TableCell style={{ width: 3 }}></TableCell>
+                      <TableCell style={{ width: 3 }}></TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -223,13 +242,23 @@ const Documents = () => {
                             );
                           })}
                           <TableCell style={{ width: 3 }}>
-                            <Button sx={{ width: 3 }}>
+                            <Button
+                              sx={{ width: 3 }}
+                              onClick={() => {
+                                handleDownload(row.link);
+                              }}
+                            >
                               <DownloadIcon style={{ color: "blue" }} />
                             </Button>
                           </TableCell>
 
                           <TableCell>
-                            <Button sx={{ width: 3 }}>
+                            <Button
+                              sx={{ width: 3 }}
+                              onClick={() => {
+                                handleDelete(row.id);
+                              }}
+                            >
                               <DeleteIcon style={{ color: "red" }} />
                             </Button>
                           </TableCell>
