@@ -5,7 +5,7 @@ import React, {useEffect, useState} from "react";
 import AddIcon from '@mui/icons-material/Add';
 import CreateClass from "../../components/CreateClass/createClass";
 import JoinClass from "../../components/JoinClass/joinClass";
-import AuthService from "../../services/auth.service";
+// import AuthService from "../../services/auth.service";
 import {useNavigate} from "react-router-dom";
 
 const Home = () => {
