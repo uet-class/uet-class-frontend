@@ -5,7 +5,7 @@ const DocumentIcon = () => {
       width="35"
       height="35"
       fill="currentColor"
-      class="bi bi-file-earmark-text"
+      className="bi bi-file-earmark-text"
       viewBox="0 0 19 19"
     >
       <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z" />
