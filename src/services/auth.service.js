@@ -40,6 +40,23 @@ class AuthService {
                 console.log(error);
             });
     }
+
+    logout() {
+        const userId = localStorage.getItem('user')
+        console.log(userId)
+        return axios.post(API_URL + '/auth/signout', {}, {
+            headers: {
+                Cookie: `sessionId=${userId}`
+            }
+        })
+            .then(function (response) {
+                console.log(response);
+                return response;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
 }
 
 export default new AuthService();
