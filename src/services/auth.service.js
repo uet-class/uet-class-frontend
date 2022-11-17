@@ -9,12 +9,22 @@ class AuthService {
             password: password,
         })
             .then(function (response) {
-                console.log(response);
+                if (response.data.message === "Succeed") {
+                    sessionStorage.setItem("user", JSON.stringify(response.headers));
+                }
                 return response;
             })
             .catch(function (error) {
                 console.log(error);
             });
+    }
+
+    isUser() {
+        const data = JSON.parse(sessionStorage.getItem("user"));
+        if (data) {
+            return true;
+        }
+        return false;
     }
 
     register(email, password) {

@@ -1,6 +1,7 @@
-import {Box, Button, Grid, TextField, Typography} from "@mui/material";
+import {Alert, Box, Button, Grid, TextField, Typography} from "@mui/material";
 import React from "react";
 import AddIcon from "@mui/icons-material/Add";
+import ClassService from "../../services/class.service";
 
 const style = {
     position: 'absolute',
@@ -15,10 +16,33 @@ const style = {
 };
 
 const CreateClass = () => {
+    const [createClassFail, setCreateClassFail] = React.useState(false);
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const data = event.target;
+        ClassService.createClass(data.className.value, data.description.value)
+            .then((res) => {
+                if (res.status === 200) {
+                    console.log("Success");
+                } else {
+                    const error = new Error(res.error);
+                    throw error;
+                }
+            })
+            .catch((err) => {
+                setCreateClassFail(true);
+            });
+    };
     return (
         <Box sx={style}>
+            {createClassFail ? (
+                <Alert severity="error">
+                     Tạo lớp thất bại
+                </Alert>
+            ) : null}
             <Box
-                component={"form"}
+                component={"form"} onSubmit={handleSubmit}
             >
                 <Typography
                     className={"login-info"}
@@ -28,7 +52,7 @@ const CreateClass = () => {
                     Tên lớp
                 </Typography>
                 <TextField
-                    name="username"
+                    name="className"
                     className={"input-rounded"}
                     autoComplete='off'
                     sx={{
@@ -44,7 +68,7 @@ const CreateClass = () => {
                     Mã lớp
                 </Typography>
                 <TextField
-                    name="username"
+                    name="classCode"
                     className={"input-rounded"}
                     autoComplete='off'
                     sx={{
@@ -60,7 +84,7 @@ const CreateClass = () => {
                     Mô tả
                 </Typography>
                 <TextField
-                    name="username"
+                    name="description"
                     className={"input-rounded"}
                     autoComplete='off'
                     sx={{
