@@ -128,7 +128,7 @@ const Documents = () => {
   const [openCreateDocument, setOpenCreateDocument] = useState(false);
   const handleOpenCreateDocument = () => setOpenCreateDocument(true);
   const handleCloseCreateDocument = () => setOpenCreateDocument(false);
-  const [isTeacher, setIsTeacher] = useState(false);
+  const isTeacher = false //tam thoi
 
   var sideBar = {};
   sideBar.classLinks = ["/home", "/assignments"];
