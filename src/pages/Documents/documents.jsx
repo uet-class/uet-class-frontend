@@ -128,6 +128,7 @@ const Documents = () => {
   const [openCreateDocument, setOpenCreateDocument] = useState(false);
   const handleOpenCreateDocument = () => setOpenCreateDocument(true);
   const handleCloseCreateDocument = () => setOpenCreateDocument(false);
+  const isTeacher = false //tam thoi
 
   var sideBar = {};
   sideBar.classLinks = ["/home", "/assignments"];
@@ -166,29 +167,31 @@ const Documents = () => {
     <DashbroadLayout sideBar={sideBar}>
       <ClassHeader className={"Tương tác người máy"} classCode={"INT1234_21"}>
         <div className="section">
-          <Button
-            // onClick={handleOpenJoinClass}
-            variant="contained"
-            sx={{
-              backgroundColor: "#0A5379",
-              borderRadius: 5,
-              marginLeft: 1.4,
-              height: 50,
-              width: 160,
-              marginTop: 2,
-            }}
-            onClick={handleOpenCreateDocument}
-          >
-            <AddIcon style={{ color: "white" }} />
-            <Typography
-              paddingLeft={1}
-              className={"sign-in"}
-              fontSize={20}
-              fontWeight={500}
+          {isTeacher && (
+            <Button
+              variant="contained"
+              sx={{
+                backgroundColor: "#0A5379",
+                borderRadius: 5,
+                marginLeft: 1.4,
+                height: 50,
+                width: 160,
+                marginTop: 2,
+              }}
+              onClick={handleOpenCreateDocument}
             >
-              Tạo mới
-            </Typography>
-          </Button>
+              <AddIcon style={{ color: "white" }} />
+              <Typography
+                paddingLeft={1}
+                className={"sign-in"}
+                fontSize={20}
+                fontWeight={500}
+              >
+                Tạo mới
+              </Typography>
+            </Button>
+          )}
+
           <div className="dataTable">
             <Paper sx={{ width: "100%", overflow: "hidden" }}>
               <TableContainer sx={{ height: 550 }}>
@@ -203,14 +206,15 @@ const Documents = () => {
                             minWidth: column.minWidth,
                             fontWeight: "600",
                             fontSize: "18px",
-                            // backgroundColor: "#D3D3D3",
                           }}
                         >
                           {column.label}
                         </TableCell>
                       ))}
                       <TableCell style={{ width: 3 }}></TableCell>
-                      <TableCell style={{ width: 3 }}></TableCell>
+                      {isTeacher && (
+                        <TableCell style={{ width: 3 }}></TableCell>
+                      )}
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -256,17 +260,18 @@ const Documents = () => {
                               <DownloadIcon style={{ color: "blue" }} />
                             </Button>
                           </TableCell>
-
-                          <TableCell>
-                            <Button
-                              sx={{ width: 3 }}
-                              onClick={() => {
-                                handleDelete(row.id);
-                              }}
-                            >
-                              <DeleteIcon style={{ color: "red" }} />
-                            </Button>
-                          </TableCell>
+                          {isTeacher && (
+                            <TableCell>
+                              <Button
+                                sx={{ width: 3 }}
+                                onClick={() => {
+                                  handleDelete(row.id);
+                                }}
+                              >
+                                <DeleteIcon style={{ color: "red" }} />
+                              </Button>
+                            </TableCell>
+                          )}
                         </TableRow>
                       );
                     })}
