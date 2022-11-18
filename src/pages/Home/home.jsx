@@ -7,6 +7,7 @@ import CreateClass from "../../components/CreateClass/createClass";
 import JoinClass from "../../components/JoinClass/joinClass";
 // import AuthService from "../../services/auth.service";
 import {useNavigate} from "react-router-dom";
+import AuthService from "../../services/auth.service";
 
 const Home = () => {
     const [openCreateClass, setOpenCreateClass] = useState(false);
@@ -22,7 +23,7 @@ const Home = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (false) {
+        if (!AuthService.isUser()) {
             navigate("/signin");
         } else {
             const fetchData = async () => {

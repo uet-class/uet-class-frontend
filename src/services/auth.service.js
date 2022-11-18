@@ -7,11 +7,11 @@ class AuthService {
         return axios.post(API_URL + '/auth/signin', {
             email: email,
             password: password,
-        })
+        },)
             .then(function (response) {
-                if (response.data.message === "Succeed") {
-                    sessionStorage.setItem("user", JSON.stringify(response.headers));
-                }
+                console.log(response.data.message.sessionId)
+                axios.defaults.headers.cookie = response.data.message.sessionId
+                localStorage.setItem("user", JSON.stringify(response.data.message.sessionId));
                 return response;
             })
             .catch(function (error) {
@@ -20,7 +20,7 @@ class AuthService {
     }
 
     isUser() {
-        const data = JSON.parse(sessionStorage.getItem("user"));
+        const data = JSON.parse(localStorage.getItem("user"));
         if (data) {
             return true;
         }
@@ -31,6 +31,23 @@ class AuthService {
         return axios.post(API_URL + '/auth/signup', {
             email: email,
             password: password,
+        })
+            .then(function (response) {
+                console.log(response);
+                return response;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+    logout() {
+        const userId = localStorage.getItem('user')
+        console.log(userId)
+        return axios.post(API_URL + '/auth/signout', {}, {
+            headers: {
+                Cookie: `sessionId=${userId}`
+            }
         })
             .then(function (response) {
                 console.log(response);

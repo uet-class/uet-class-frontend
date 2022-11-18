@@ -9,6 +9,7 @@ import Popper from "@mui/material/Popper";
 import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
 import { useNavigate } from "react-router";
+import AuthService from "../../services/auth.service";
 
 export default function Header(props) {
   const [open, setOpen] = React.useState(false);
@@ -25,6 +26,16 @@ export default function Header(props) {
     }
 
     setOpen(false);
+  };
+
+  const handleLogout = (event) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+    AuthService.logout()
+    localStorage.removeItem("user")
+    setOpen(false);
+    navigate('/')
   };
 
   function handleListKeyDown(event) {
@@ -129,7 +140,7 @@ export default function Header(props) {
                         onKeyDown={handleListKeyDown}
                       >
                         <MenuItem onClick={handleClose}>Hồ sơ của tôi</MenuItem>
-                        <MenuItem onClick={handleClose}>Đăng xuất</MenuItem>
+                        <MenuItem onClick={handleLogout}>Đăng xuất</MenuItem>
                       </MenuList>
                     </ClickAwayListener>
                   </Paper>

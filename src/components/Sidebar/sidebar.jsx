@@ -8,7 +8,6 @@ const Sidebar = (props) => {
       <div className="basic-nav">
         <ul className="nav nav-pills flex-column mx">
           {props.info["basicLink"].map(function (link, i) {
-            console.log(props);
             return (
               <NavLink to={link} className="nav-link">
                 {props.info["basicIcon"][i]} {props.info["basicLinkName"][i]}
@@ -20,7 +19,6 @@ const Sidebar = (props) => {
       <div className="advance-nav">
         <ul className="nav nav-pills flex-column ">
           {props.info["classLinks"].map(function (link, i) {
-            console.log(props);
             return (
               <Link to={link} className="nav-link">
                 <ClassIcon /> {props.info["classes"][i]}
