@@ -1,7 +1,7 @@
-import {Box, Button, Grid, Typography } from "@mui/material";
-import {React, useState} from "react";
+import { Box, Button, Grid, Typography } from "@mui/material";
+import { React, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
-import "./createDocument.css";
+import "./createDocumentsForm.css";
 
 const style = {
   position: "absolute",
@@ -14,6 +14,7 @@ const style = {
   boxShadow: 24,
   justifyContent: "center",
   p: 4,
+  borderRadius: "25px",
 };
 
 const CreateDocuments = () => {
@@ -26,12 +27,11 @@ const CreateDocuments = () => {
   };
 
   const handleFileInput = (e) => {
-    console.log(e.target.files[0])
-    setSelectedFile(e.target.files[0])
+    console.log(e.target.files[0]);
+    setSelectedFile(e.target.files[0]);
   };
   return (
     <Box sx={style}>
-
       <Typography
         className={"sign-in"}
         fontSize={25}

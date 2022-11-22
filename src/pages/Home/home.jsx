@@ -23,7 +23,8 @@ const Home = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!AuthService.isUser()) {
+        // if (!AuthService.isUser()) {
+        if (false) {
             navigate("/signin");
         } else {
             const fetchData = async () => {

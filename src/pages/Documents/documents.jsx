@@ -1,5 +1,5 @@
 import "./documents.css";
-import { Button, Typography, Box, Modal } from "@mui/material";
+import { Button, Typography, Modal } from "@mui/material";
 import DashbroadLayout from "../../layouts/DashbroadLayout/dashbroadLayout";
 import AddIcon from "@mui/icons-material/Add";
 import HomeIcon from "../../components/Icon/homeIcon";
@@ -20,7 +20,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import CreateDocuments from "../../components/createDocuments/createDocuments";
+import CreateDocuments from "../../components/createDocuments/createDocumentsForm";
 
 const columns = [
   { id: "name", label: "Tên tài liệu", minWidth: 220 },
@@ -128,7 +128,7 @@ const Documents = () => {
   const [openCreateDocument, setOpenCreateDocument] = useState(false);
   const handleOpenCreateDocument = () => setOpenCreateDocument(true);
   const handleCloseCreateDocument = () => setOpenCreateDocument(false);
-  const isTeacher = false //tam thoi
+  const isTeacher = true; //tam thoi
 
   var sideBar = {};
   sideBar.classLinks = ["/home", "/assignments"];
@@ -143,7 +143,7 @@ const Documents = () => {
   sideBar.basicLinkName = [
     "Trang chủ",
     "Bảng tin",
-    "Tài Tài liệu",
+    "Tài liệu",
     "Bài tập",
     "Khác",
   ];
@@ -280,16 +280,25 @@ const Documents = () => {
               </TableContainer>
             </Paper>
           </div>
-          <Modal
-            open={openCreateDocument}
-            onClose={handleCloseCreateDocument}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box>
-              <CreateDocuments />
-            </Box>
-          </Modal>
+          {isTeacher && (
+            <Modal
+              open={openCreateDocument}
+              onClose={handleCloseCreateDocument}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+              sx={{
+                borderRadius: "25px",
+              }}
+            >
+              {/* <Box
+                sx={{
+                  borderRadius: "25px",
+                }}
+              > */}
+                <CreateDocuments />
+              {/* </Box> */}
+            </Modal>
+          )}
         </div>
       </ClassHeader>
     </DashbroadLayout>
