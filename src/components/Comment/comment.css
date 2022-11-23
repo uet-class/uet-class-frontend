@@ -1,0 +1,11 @@
+.name {
+  font-size: 20px;
+  margin-bottom: 10;
+  text-align: "left";
+  margin-top: 8px;
+}
+.post-time {
+  margin-top: 10px;
+  text-align: "left";
+  color: gray;
+}
