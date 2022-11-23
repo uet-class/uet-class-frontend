@@ -5,7 +5,7 @@ const Comment = (props) => {
   return (
     <Grid container wrap="nowrap" spacing={2}>
       <Grid item>
-        
+        <Avatar alt="Remy Sharp" src={props.avatar} />
       </Grid>
       <Grid justifyContent="left" item xs zeroMinWidth>
         <Grid container wrap="nowrap" spacing={2}>
