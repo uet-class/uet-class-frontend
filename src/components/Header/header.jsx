@@ -10,11 +10,17 @@ import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
 import { useNavigate } from "react-router";
 import AuthService from "../../services/auth.service";
+import { Modal, Box } from "@mui/material";
+import ProfileForm from "../ProfileForm/profileForm";
+import { useState } from "react";
 
 export default function Header(props) {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
   const navigate = useNavigate();
+  const [openProfile, setOpenProfile] = useState(false);
+  const handleCloseProfile = () => setOpenProfile(false);
+  const handleOpenProfile = () => setOpenProfile(true);
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -32,10 +38,10 @@ export default function Header(props) {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
-    AuthService.logout()
-    localStorage.removeItem("user")
+    AuthService.logout();
+    localStorage.removeItem("user");
     setOpen(false);
-    navigate('/')
+    navigate("/");
   };
 
   function handleListKeyDown(event) {
@@ -139,7 +145,13 @@ export default function Header(props) {
                         aria-labelledby="composition-button"
                         onKeyDown={handleListKeyDown}
                       >
-                        <MenuItem onClick={handleClose}>Hồ sơ của tôi</MenuItem>
+                        <MenuItem
+                          onClick={() => {
+                            handleOpenProfile();
+                          }}
+                        >
+                          Hồ sơ của tôi
+                        </MenuItem>
                         <MenuItem onClick={handleLogout}>Đăng xuất</MenuItem>
                       </MenuList>
                     </ClickAwayListener>
@@ -151,6 +163,16 @@ export default function Header(props) {
         </div>
       </div>
       <div className="children">{props.children}</div>
+      <Modal
+        open={openProfile}
+        onClose={handleCloseProfile}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box>
+          <ProfileForm />
+        </Box>
+      </Modal>
     </>
   );
 }

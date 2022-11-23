@@ -52,8 +52,8 @@ const News = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!AuthService.isUser()) {
-    // if (false) {
+    // if (!AuthService.isUser()) {
+    if (false) {
       navigate("/signin");
     } else {
       const fetchData = async () => {
