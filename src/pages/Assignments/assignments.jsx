@@ -20,6 +20,7 @@ import TableRow from "@mui/material/TableRow";
 import SubmitAssignmentForm from "../../components/submitAssignmentForm/submitAssignmentForm";
 import { Button, Typography, Box, Modal } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import CreateAssignmentForm from "../../components/createAssignmentForm/createAssignmentForm";
 
 const columns = [
   { id: "name", label: "Bài tập", minWidth: 300 },
@@ -51,9 +52,12 @@ const rows = [
 ];
 
 const Assignments = () => {
-  const [openCreateAssignment, setOpenCreateAssignment] = useState(false);
-  const handleCloseCreateAssignment = () => setOpenCreateAssignment(false);
-  const handleOpenCreateAssignment = () => setOpenCreateAssignment(true);
+  const [openSubmitAssignment, setSubmitAssignment] = useState(false);
+  const handleCloseSubmitAssignment = () => setSubmitAssignment(false);
+  const handleOpenSubmitAssignment = () => setSubmitAssignment(true);
+  const [openCreateAssignment, setCreateAssignment] = useState(false);
+  const handleCloseCreateAssignment = () => setCreateAssignment(false);
+  const handleOpenCreateAssignment = () => setCreateAssignment(true);
   const isTeacher = true; //tam thoi
 
   var sideBar = {};
@@ -177,6 +181,11 @@ const Assignments = () => {
                           role="checkbox"
                           tabIndex={-1}
                           key={row.code}
+                          onClick={() => {if (!isTeacher) {
+                            handleOpenSubmitAssignment()}}}
+                          sx={{
+                            ...(!isTeacher && {cursor: "pointer",})
+                          }}
                         >
                           {columns.map((column) => {
                             const value = row[column.id];
@@ -230,13 +239,23 @@ const Assignments = () => {
             </Paper>
           </div>
           <Modal
+            open={openSubmitAssignment}
+            onClose={handleCloseSubmitAssignment}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box>
+              <SubmitAssignmentForm />
+            </Box>
+          </Modal>
+          <Modal
             open={openCreateAssignment}
             onClose={handleCloseCreateAssignment}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
           >
             <Box>
-              <SubmitAssignmentForm />
+              <CreateAssignmentForm />
             </Box>
           </Modal>
         </div>
