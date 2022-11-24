@@ -9,6 +9,7 @@ import SignUp from "./pages/SignUp/signUp";
 import Home from "./pages/Home/home";
 import News from "./pages/News/news";
 import Other from "./pages/Other/other";
+import AdminDashboard from "./pages/Admin/adminDashboard";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/other" element={<Other />} />
           <Route path="/news" element={<News />} />
           <Route path="/other" element={<Other />} />
+          <Route path="/admin" element={<AdminDashboard />} />
       </Routes>
   );
 }

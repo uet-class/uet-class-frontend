@@ -34,6 +34,7 @@ const SignUpForm = () => {
         }
 
     };
+
     return (
         <Box
             boxShadow={3}
@@ -72,6 +73,7 @@ const SignUpForm = () => {
                     required
                     fullWidth
                     id="email"
+                    type="email"
                     name="email"
                     autoComplete='off'
                     autoFocus
