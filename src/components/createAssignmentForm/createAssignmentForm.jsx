@@ -47,9 +47,9 @@ const CreateAssignmentForm = () => {
     event.preventDefault();
     // const data = event.target;
     console.log(selectedFile);
-    console.log(event.target.header.value)
-    console.log(event.target.content.value)
-    console.log(timeDeadline)
+    console.log(event.target.header.value);
+    console.log(event.target.content.value);
+    console.log(timeDeadline);
   };
   return (
     <Box sx={style}>
@@ -104,7 +104,13 @@ const CreateAssignmentForm = () => {
                     variant="standard"
                     fullWidth
                     // sx={{ width: "100%" }}
-                    InputLabelProps={{ style: {color: "black", fontSize: 20, fontWeight:"bold"} }}
+                    InputLabelProps={{
+                      style: {
+                        color: "black",
+                        fontSize: 20,
+                        fontWeight: "bold",
+                      },
+                    }}
                   />
                 </Container>
               </Grid>
@@ -168,7 +174,9 @@ const CreateAssignmentForm = () => {
                 multiline
                 maxRows={10}
                 // inputProps={{ style: {color: "black", fontSize: 20} }}
-                InputLabelProps={{ style: {color: "black", fontSize: 20, fontWeight:"bold"}}}
+                InputLabelProps={{
+                  style: { color: "black", fontSize: 20, fontWeight: "bold" },
+                }}
               />
             </Container>
           </Box>
@@ -214,7 +222,17 @@ const CreateAssignmentForm = () => {
                       value={timeDeadline}
                       onChange={handleTimeChange}
                       renderInput={(params) => (
-                        <TextField fullWidth {...params} />
+                        <TextField
+                          InputLabelProps={{
+                            style: {
+                              color: "black",
+                              fontSize: 20,
+                              fontWeight: "bold",
+                            },
+                          }}
+                          fullWidth
+                          {...params}
+                        />
                       )}
                     />
                   </LocalizationProvider>
