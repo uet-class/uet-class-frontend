@@ -1,5 +1,16 @@
 import Header from "../../components/Header/header";
-import {Box, Button, Container, createTheme, Grid, Modal, ThemeProvider, Typography} from "@mui/material";
+import {
+    Box,
+    Button,
+    Card, CardActions, CardContent,
+    CardMedia,
+    Container,
+    createTheme,
+    Grid,
+    Modal,
+    ThemeProvider,
+    Typography
+} from "@mui/material";
 import "./home.css"
 import React, {useEffect, useState} from "react";
 import AddIcon from '@mui/icons-material/Add';
@@ -32,6 +43,8 @@ const Home = () => {
             fetchData();
         }
     }, );
+
+    const classes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 
     const theme = createTheme({
         typography: {
@@ -117,6 +130,57 @@ const Home = () => {
                                         </Typography>
                                     </Button>
                                 </Grid>
+                            </Grid>
+                        </Box>
+
+                        <Box
+                            sx={{
+                                paddingTop: 5,
+                            }}
+                        >
+                            <Grid
+                                container spacing={4}
+                                sx={{
+                                    maxHeight: '78vh',
+                                    overflow: 'auto'
+                                }}
+                            >
+                                {classes.map((n) => (
+                                    <Grid item>
+                                        <Card
+                                            sx={{
+                                                height: "100%",
+                                                display: "flex",
+                                                flexDirection: "column",
+                                                minWidth: 310,
+                                                maxWidth: 310,
+                                            }}
+                                        >
+                                            <CardMedia
+                                                image="https://source.unsplash.com/random"
+                                                title="Image title"
+                                                sx={{
+                                                    paddingTop: "56.25%"
+                                                }}
+                                            />
+                                            <CardContent
+                                                sx={{
+                                                    flexGrow: 1,
+                                                }}
+                                            >
+                                                <Typography variant={"h5"}>
+                                                    Lớp số {n}
+                                                </Typography>
+                                                <Typography>
+                                                    INT3117 40
+                                                </Typography>
+                                            </CardContent>
+                                            <CardActions>
+                                                <Button size={"small"} color={"primary"}>Vào lớp</Button>
+                                            </CardActions>
+                                        </Card>
+                                    </Grid>
+                                ))}
                             </Grid>
                         </Box>
 

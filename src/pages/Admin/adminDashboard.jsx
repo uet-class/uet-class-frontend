@@ -1,4 +1,15 @@
-import {Box, Button, Container, createTheme, Grid, Modal, ThemeProvider, Typography} from "@mui/material";
+import {
+    Box,
+    Button,
+    Card, CardActions, CardContent,
+    CardMedia,
+    Container,
+    createTheme,
+    Grid,
+    Modal,
+    ThemeProvider,
+    Typography
+} from "@mui/material";
 import React, {useEffect, useState} from "react";
 import AuthService from "../../services/auth.service";
 import Header from "../../components/Header/header";
@@ -25,6 +36,8 @@ const AdminDashboard = () => {
     const handleOpenDeleteClass = () => setOpenDeleteClass(true);
     const handleCloseDeleteClass = () => setOpenDeleteClass(false);
 
+    const reports = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+
     useEffect(() => {
         if (!AuthService.isUser()) {
             // if (false) {
@@ -35,7 +48,7 @@ const AdminDashboard = () => {
             };
             fetchData();
         }
-    }, );
+    },);
 
     const theme = createTheme({
         typography: {
@@ -145,6 +158,58 @@ const AdminDashboard = () => {
                                         </Typography>
                                     </Button>
                                 </Grid>
+                            </Grid>
+                        </Box>
+
+                        <Box
+                            sx={{
+                                paddingTop: 5,
+                            }}
+                        >
+                            <Grid
+                                container spacing={4}
+                                sx={{
+                                    maxHeight: '78vh',
+                                    overflow: 'auto'
+                                }}
+                            >
+                                {reports.map((n) => (
+                                    <Grid item>
+                                        <Card
+                                            sx={{
+                                                height: "100%",
+                                                display: "flex",
+                                                flexDirection: "column",
+                                                minWidth: 310,
+                                                maxWidth: 310,
+                                            }}
+                                        >
+                                            <CardMedia
+                                                image="https://source.unsplash.com/random"
+                                                title="Image title"
+                                                sx={{
+                                                    paddingTop: "56.25%"
+                                                }}
+                                            />
+                                            <CardContent
+                                                sx={{
+                                                    flexGrow: 1,
+                                                }}
+                                            >
+                                                <Typography variant={"h5"}>
+                                                    Báo cáo số {n}
+                                                </Typography>
+                                                <Typography>
+                                                    Báo cáo của người dùng Phạm Vũ Minh
+                                                </Typography>
+                                            </CardContent>
+                                            <CardActions>
+                                                <Button size={"small"} color={"primary"}>Xem nội dung</Button>
+                                                <Button size={"small"} color={"primary"}>Xóa báo cáo</Button>
+                                            </CardActions>
+                                        </Card>
+                                    </Grid>
+                                ))}
                             </Grid>
                         </Box>
 
