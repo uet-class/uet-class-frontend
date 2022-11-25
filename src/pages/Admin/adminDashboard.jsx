@@ -1,4 +1,3 @@
-import Header from "../../components/Header/header";
 import {
     Box,
     Button,
@@ -11,30 +10,37 @@ import {
     ThemeProvider,
     Typography
 } from "@mui/material";
-import "./home.css"
 import React, {useEffect, useState} from "react";
-import AddIcon from '@mui/icons-material/Add';
-import CreateClass from "../../components/CreateClass/createClass";
-import JoinClass from "../../components/JoinClass/joinClass";
 import AuthService from "../../services/auth.service";
+import Header from "../../components/Header/header";
 import {useNavigate} from "react-router-dom";
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
+import AdminAddUser from "../../components/AdminAddUser/adminAddUser";
+import AdminDeleteUser from "../../components/AdminDeleteUser/adminDeleteUser";
+import AdminDeleteClass from "../../components/AdminDeleteClass/adminDeleteClass";
 
-const Home = () => {
-    const [openCreateClass, setOpenCreateClass] = useState(false);
-    const handleOpenCreateClass = () => setOpenCreateClass(true);
-    const handleCloseCreateClass = () => setOpenCreateClass(false);
-
-    const [openJoinClass, setOpenJoinClass] = useState(false);
-    const handleOpenJoinClass = () => setOpenJoinClass(true);
-    const handleCloseJoinClass = () => setOpenJoinClass(false);
-
+const AdminDashboard = () => {
     const [isShow, setIsShow] = useState(false);
-
     const navigate = useNavigate();
+
+    const [openAddUser, setOpenAddUser] = useState(false);
+    const handleOpenAddUser = () => setOpenAddUser(true);
+    const handleCloseAddUser = () => setOpenAddUser(false);
+
+    const [openDeleteUser, setOpenDeleteUser] = useState(false);
+    const handleOpenDeleteUser = () => setOpenDeleteUser(true);
+    const handleCloseDeleteUser = () => setOpenDeleteUser(false);
+
+    const [openDeleteClass, setOpenDeleteClass] = useState(false);
+    const handleOpenDeleteClass = () => setOpenDeleteClass(true);
+    const handleCloseDeleteClass = () => setOpenDeleteClass(false);
+
+    const reports = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 
     useEffect(() => {
         if (!AuthService.isUser()) {
-        // if (false) {
+            // if (false) {
             navigate("/signin");
         } else {
             const fetchData = async () => {
@@ -42,9 +48,7 @@ const Home = () => {
             };
             fetchData();
         }
-    }, );
-
-    const classes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    },);
 
     const theme = createTheme({
         typography: {
@@ -73,22 +77,22 @@ const Home = () => {
                             }}
                         >
                             <Grid container>
-                                <Grid item xs={6}>
+                                <Grid item xs={6.75}>
                                     <Typography
                                         className={"your-class"}
                                         fontSize={32}
                                         fontWeight={600}
                                     >
-                                        Lớp học của tôi
+                                        Danh sách báo cáo
                                     </Typography>
                                 </Grid>
                                 <Grid
-                                    item xs={4.25}
+                                    item xs={2}
                                     display="flex"
                                     justifyContent="flex-end"
                                 >
                                     <Button
-                                        onClick={handleOpenCreateClass}
+                                        onClick={handleOpenAddUser}
                                         variant="contained"
                                         sx={{
                                             backgroundColor: "#305264",
@@ -102,31 +106,55 @@ const Home = () => {
                                             fontSize={20}
                                             fontWeight={500}
                                         >
-                                            Tạo lớp
+                                            Thêm người dùng
                                         </Typography>
                                     </Button>
                                 </Grid>
                                 <Grid
-                                    item xs={1.75}
+                                    item xs={2}
                                     display="flex"
                                     justifyContent="flex-end"
                                 >
                                     <Button
-                                        onClick={handleOpenJoinClass}
+                                        onClick={handleOpenDeleteUser}
                                         variant="contained"
                                         sx={{
                                             backgroundColor: "#305264",
                                             borderRadius: 4,
                                         }}
                                     >
-                                        <AddIcon style={{color: 'white'}}/>
+                                        <DeleteIcon style={{color: 'white'}}/>
                                         <Typography
                                             paddingLeft={1}
                                             className={"sign-in"}
                                             fontSize={20}
                                             fontWeight={500}
                                         >
-                                            Tham gia lớp
+                                            Xóa người dùng
+                                        </Typography>
+                                    </Button>
+                                </Grid>
+                                <Grid
+                                    item xs={1.25}
+                                    display="flex"
+                                    justifyContent="flex-end"
+                                >
+                                    <Button
+                                        onClick={handleOpenDeleteClass}
+                                        variant="contained"
+                                        sx={{
+                                            backgroundColor: "#305264",
+                                            borderRadius: 4,
+                                        }}
+                                    >
+                                        <DeleteIcon style={{color: 'white'}}/>
+                                        <Typography
+                                            paddingLeft={1}
+                                            className={"sign-in"}
+                                            fontSize={20}
+                                            fontWeight={500}
+                                        >
+                                            Xóa lớp
                                         </Typography>
                                     </Button>
                                 </Grid>
@@ -145,7 +173,7 @@ const Home = () => {
                                     overflow: 'auto'
                                 }}
                             >
-                                {classes.map((n) => (
+                                {reports.map((n) => (
                                     <Grid item>
                                         <Card
                                             sx={{
@@ -169,14 +197,15 @@ const Home = () => {
                                                 }}
                                             >
                                                 <Typography variant={"h5"}>
-                                                    Lớp số {n}
+                                                    Báo cáo số {n}
                                                 </Typography>
                                                 <Typography>
-                                                    INT3117 40
+                                                    Báo cáo của người dùng Phạm Vũ Minh
                                                 </Typography>
                                             </CardContent>
                                             <CardActions>
-                                                <Button size={"small"} color={"primary"}>Vào lớp</Button>
+                                                <Button size={"small"} color={"primary"}>Xem nội dung</Button>
+                                                <Button size={"small"} color={"primary"}>Xóa báo cáo</Button>
                                             </CardActions>
                                         </Card>
                                     </Grid>
@@ -185,25 +214,30 @@ const Home = () => {
                         </Box>
 
                         <Modal
-                            open={openCreateClass}
-                            onClose={handleCloseCreateClass}
+                            open={openAddUser}
+                            onClose={handleCloseAddUser}
                             aria-labelledby="modal-modal-title"
                             aria-describedby="modal-modal-description"
                         >
-                            <Box>
-                                <CreateClass/>
-                            </Box>
+                            <AdminAddUser/>
                         </Modal>
 
                         <Modal
-                            open={openJoinClass}
-                            onClose={handleCloseJoinClass}
+                            open={openDeleteUser}
+                            onClose={handleCloseDeleteUser}
                             aria-labelledby="modal-modal-title"
                             aria-describedby="modal-modal-description"
                         >
-                            <Box>
-                                <JoinClass/>
-                            </Box>
+                            <AdminDeleteUser/>
+                        </Modal>
+
+                        <Modal
+                            open={openDeleteClass}
+                            onClose={handleCloseDeleteClass}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
+                        >
+                            <AdminDeleteClass/>
                         </Modal>
                     </Container>
                 </Header>
@@ -212,4 +246,4 @@ const Home = () => {
     )
 }
 
-export default Home;
+export default AdminDashboard;
