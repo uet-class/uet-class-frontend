@@ -1,7 +1,7 @@
 import {Alert, Box, Button, Grid, TextField, Typography} from "@mui/material";
 import React from "react";
 import AddIcon from "@mui/icons-material/Add";
-import ClassService from "../../services/class.service";
+import AuthService from "../../services/auth.service";
 
 const style = {
     position: 'absolute',
@@ -20,11 +20,12 @@ const AdminAddUser = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const data = event.target;
-        ClassService.createClass(data.className.value, data.description.value)
+        const data = new FormData(event.currentTarget);
+
+        AuthService.register(data.get("email"), data.get("password"))
             .then((res) => {
                 if (res.status === 200) {
-                    console.log("Success");
+                    console.log("Success")
                 } else {
                     const error = new Error(res.error);
                     throw error;
@@ -33,7 +34,9 @@ const AdminAddUser = () => {
             .catch((err) => {
                 setCreateUserFail(true);
             });
+
     };
+
     return (
         <Box sx={style}>
             {createUserFail ? (
