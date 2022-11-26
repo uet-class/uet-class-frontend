@@ -58,7 +58,7 @@ const Assignments = () => {
   const [openCreateAssignment, setCreateAssignment] = useState(false);
   const handleCloseCreateAssignment = () => setCreateAssignment(false);
   const handleOpenCreateAssignment = () => setCreateAssignment(true);
-  const isTeacher = true; //tam thoi
+  const isTeacher = false; //tam thoi
 
   var sideBar = {};
   sideBar.classLinks = ["/home", "/assignments"];
