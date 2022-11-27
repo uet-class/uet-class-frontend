@@ -19,6 +19,7 @@ import AddIcon from '@mui/icons-material/Add';
 import AdminAddUser from "../../components/AdminAddUser/adminAddUser";
 import AdminDeleteUser from "../../components/AdminDeleteUser/adminDeleteUser";
 import AdminDeleteClass from "../../components/AdminDeleteClass/adminDeleteClass";
+import ReportContent from "../../components/ReportContent/reportContent";
 
 const AdminDashboard = () => {
     const [isShow, setIsShow] = useState(false);
@@ -35,6 +36,10 @@ const AdminDashboard = () => {
     const [openDeleteClass, setOpenDeleteClass] = useState(false);
     const handleOpenDeleteClass = () => setOpenDeleteClass(true);
     const handleCloseDeleteClass = () => setOpenDeleteClass(false);
+
+    const [openReportContent, setOpenReportContent] = useState(false)
+    const handleOpenReportContent = () => setOpenReportContent(true);
+    const handleCloseReportContent = () => setOpenReportContent(false);
 
     const reports = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 
@@ -204,7 +209,11 @@ const AdminDashboard = () => {
                                                 </Typography>
                                             </CardContent>
                                             <CardActions>
-                                                <Button size={"small"} color={"primary"}>Xem nội dung</Button>
+                                                <Button
+                                                    size={"small"}
+                                                    color={"primary"}
+                                                    onClick={handleOpenReportContent}
+                                                >Xem nội dung</Button>
                                                 <Button size={"small"} color={"primary"}>Xóa báo cáo</Button>
                                             </CardActions>
                                         </Card>
@@ -238,6 +247,15 @@ const AdminDashboard = () => {
                             aria-describedby="modal-modal-description"
                         >
                             <AdminDeleteClass/>
+                        </Modal>
+
+                        <Modal
+                            open={openReportContent}
+                            onClose={handleCloseReportContent}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
+                        >
+                            <ReportContent />
                         </Modal>
                     </Container>
                 </Header>

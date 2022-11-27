@@ -1,7 +1,7 @@
 import {Alert, Box, Button, Grid, TextField, Typography} from "@mui/material";
 import React from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
-import ClassService from "../../services/class.service";
+import AdminService from "../../services/admin.service";
 
 const style = {
     position: 'absolute',
@@ -21,7 +21,8 @@ const AdminDeleteUser = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = event.target;
-        ClassService.createClass(data.className.value, data.description.value)
+        console.log(data.email.value)
+        AdminService.deleteUser(data.email.value)
             .then((res) => {
                 if (res.status === 200) {
                     console.log("Success");

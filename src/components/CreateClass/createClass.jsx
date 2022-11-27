@@ -21,6 +21,8 @@ const CreateClass = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = event.target;
+        console.log(data.className.value)
+        console.log(data.description.value)
         ClassService.createClass(data.className.value, data.description.value)
             .then((res) => {
                 if (res.status === 200) {
@@ -53,22 +55,6 @@ const CreateClass = () => {
                 </Typography>
                 <TextField
                     name="className"
-                    className={"input-rounded"}
-                    autoComplete='off'
-                    sx={{
-                        width: "100%",
-                        paddingBottom: 3,
-                    }}
-                ></TextField>
-                <Typography
-                    className={"login-info"}
-                    fontSize={20}
-                    fontWeight={500}
-                >
-                    Mã lớp
-                </Typography>
-                <TextField
-                    name="classCode"
                     className={"input-rounded"}
                     autoComplete='off'
                     sx={{
