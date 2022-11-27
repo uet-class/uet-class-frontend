@@ -9,8 +9,8 @@ class AuthService {
             password: password,
         },)
             .then(function (response) {
-                console.log(response.data.message.sessionId)
-                axios.defaults.headers.cookie = response.data.message.sessionId
+                // console.log(response.data.message.sessionId)
+                // axios.defaults.headers.cookie = response.data.message.sessionId
                 localStorage.setItem("sessionId", JSON.stringify(response.data.message.sessionId));
                 localStorage.setItem("userId", JSON.stringify(response.data.message.userId));
                 return response;

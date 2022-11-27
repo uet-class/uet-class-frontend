@@ -8,13 +8,14 @@ import {
   Paper,
   Avatar,
   Button,
+  Alert,
 } from "@mui/material";
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import dayjs from "dayjs";
-import userService from "../../services/user.service";
+import UserService from "../../services/user.service";
 
 const style = {
   position: "absolute",
@@ -35,9 +36,14 @@ const style = {
 
 const ProfileForm = (props) => {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [updateProfileFail, setUpdateProfileFail] = useState(false);
   const [timeBirthDate, setTimeBirthDate] = useState(
-    dayjs("2014-08-18T21:11:54")
+    dayjs("01-02-2003", "DD-MM-YYYY")
   );
+
+  useEffect(() => {
+    setTimeBirthDate(props.userInfo.DateOfBirth)
+  },[props.userInfo])
 
   const handleTimeChange = (newValue) => {
     setTimeBirthDate(newValue);
@@ -50,10 +56,25 @@ const ProfileForm = (props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    event.target.dateOfBirth.value = event.target.dateOfBirth.value.replace('/', '');
-    await userService.updateUserInfo(event.target)
-    props.handleCloseProfile();
+    event.target.dateOfBirth.value = event.target.dateOfBirth.value.replace(
+      "/",
+      ""
+    );
+    UserService.updateUserInfo(event.target)
+      .then((res) => {
+        if (res.status === 200) {
+          props.handleCloseProfile();
+          props.handleRefresh();
+        } else {
+          const error = new Error(res.error);
+          throw error;
+        }
+      })
+      .catch((err) => {
+        setUpdateProfileFail(true);
+      });
   };
+  
   return (
     <Box sx={style}>
       <Grid
@@ -107,7 +128,7 @@ const ProfileForm = (props) => {
               }}
             >
               <Typography fontSize={32} fontWeight={600} color="black">
-                Phạm Vũ Minh
+                {props.userInfo.FullName}
               </Typography>
             </Box>
           </Container>
@@ -123,6 +144,9 @@ const ProfileForm = (props) => {
           }}
         >
           <Container maxWidth={false} disableGutters sx={{}}>
+            {updateProfileFail ? (
+              <Alert severity="error">Cập nhật thông tin thất bại</Alert>
+            ) : null}
             <Paper
               style={{
                 // padding: "40px 20px",
@@ -143,7 +167,7 @@ const ProfileForm = (props) => {
                 <TextField
                   name="fullname"
                   label="Họ và tên"
-                  defaultValue="Phạm Vũ Minh"
+                  defaultValue={props.userInfo.FullName}
                   variant="standard"
                   fullWidth
                   sx={{ marginBottom: "30px" }}
@@ -155,7 +179,7 @@ const ProfileForm = (props) => {
                   name="email"
                   disabled
                   label="Email"
-                  defaultValue="wibu@gmail.com"
+                  defaultValue={props.userInfo.Email}
                   variant="standard"
                   fullWidth
                   sx={{ marginBottom: "30px" }}
@@ -167,7 +191,7 @@ const ProfileForm = (props) => {
                   id="phoneNumber"
                   name="phoneNumber"
                   label="Số điện thoại"
-                  defaultValue="0321654789"
+                  defaultValue={props.userInfo.PhoneNumber}
                   variant="standard"
                   fullWidth
                   sx={{ marginBottom: "30px" }}
@@ -180,7 +204,7 @@ const ProfileForm = (props) => {
                   disabled
                   name="class"
                   label="Lớp quản lý"
-                  defaultValue="K64CACLC2"
+                  defaultValue={props.userInfo.ClassName}
                   variant="standard"
                   fullWidth
                   sx={{ marginBottom: "30px" }}
