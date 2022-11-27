@@ -39,7 +39,6 @@ export default function Header(props) {
       return;
     }
     AuthService.logout();
-    localStorage.removeItem("user");
     setOpen(false);
     navigate("/");
   };
@@ -170,7 +169,7 @@ export default function Header(props) {
         aria-describedby="modal-modal-description"
       >
         <Box>
-          <ProfileForm />
+          <ProfileForm openProfile={openProfile} handleCloseProfile={handleCloseProfile}/>
         </Box>
       </Modal>
     </>

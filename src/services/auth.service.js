@@ -12,6 +12,7 @@ class AuthService {
                 console.log(response.data.message.sessionId)
                 axios.defaults.headers.cookie = response.data.message.sessionId
                 localStorage.setItem("sessionId", JSON.stringify(response.data.message.sessionId));
+                localStorage.setItem("userId", JSON.stringify(response.data.message.userId));
                 return response;
             })
             .catch(function (error) {
@@ -20,11 +21,17 @@ class AuthService {
     }
 
     isUser() {
-        const data = JSON.parse(localStorage.getItem("sessionId"));
-        if (data) {
-            return true;
+        try {
+            const data = JSON.parse(localStorage.getItem("sessionId"));
+            if (data) {
+                return true;
+            }
+            return false;
         }
-        return false;
+        catch (e) {
+            return false;
+        }
+       
     }
 
     register(email, password) {
@@ -42,8 +49,9 @@ class AuthService {
     }
 
     logout() {
-        const userId = localStorage.getItem('sessionId')
-        console.log(userId)
+        localStorage.removeItem("sessionId");
+        localStorage.removeItem("userId");
+ 
         return axios.post('/auth/signout', {}, {
             // headers: {
             //     Cookie: `sessionId=${userId}`
