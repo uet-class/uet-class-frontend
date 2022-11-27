@@ -12,7 +12,8 @@ import { useNavigate } from "react-router";
 import AuthService from "../../services/auth.service";
 import { Modal, Box } from "@mui/material";
 import ProfileForm from "../ProfileForm/profileForm";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import UserService from "../../services/user.service";
 
 export default function Header(props) {
   const [open, setOpen] = React.useState(false);
@@ -21,6 +22,12 @@ export default function Header(props) {
   const [openProfile, setOpenProfile] = useState(false);
   const handleCloseProfile = () => setOpenProfile(false);
   const handleOpenProfile = () => setOpenProfile(true);
+  const [refreshPage, setRefreshPage] = useState(false);
+  const handleRefresh = () => {
+    setRefreshPage((current) => !current);
+  };
+
+  const [userInfo, setUserInfo] = useState('');
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -39,10 +46,19 @@ export default function Header(props) {
       return;
     }
     AuthService.logout();
-    localStorage.removeItem("user");
     setOpen(false);
     navigate("/");
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await UserService.getUserInfo().then((info) => {
+        // console.log(info.FullName);
+        setUserInfo(info)
+      });
+    };
+    fetchData();
+  }, [refreshPage]);
 
   function handleListKeyDown(event) {
     if (event.key === "Tab") {
@@ -88,7 +104,7 @@ export default function Header(props) {
             </span>
           </div>
           <div className="userInfor">
-            <span className="userName">Pham Vu Minh</span>
+            <span className="userName">{userInfo.FullName}</span>
             <div className="userOption">
               {!open ? (
                 <ExpandMoreOutlinedIcon
@@ -170,7 +186,12 @@ export default function Header(props) {
         aria-describedby="modal-modal-description"
       >
         <Box>
-          <ProfileForm />
+          <ProfileForm
+            openProfile={openProfile}
+            handleCloseProfile={handleCloseProfile}
+            handleRefresh={handleRefresh}
+            userInfo={userInfo}
+          />
         </Box>
       </Modal>
     </>

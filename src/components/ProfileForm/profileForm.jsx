@@ -7,12 +7,15 @@ import {
   Container,
   Paper,
   Avatar,
+  Button,
+  Alert,
 } from "@mui/material";
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import dayjs from "dayjs";
+import UserService from "../../services/user.service";
 
 const style = {
   position: "absolute",
@@ -31,29 +34,47 @@ const style = {
   paddingBottom: "40px",
 };
 
-const ProfileForm = () => {
+const ProfileForm = (props) => {
   const [selectedFile, setSelectedFile] = useState(null);
-  const [timeDeadline, setTimeDeadline] = useState(
-    dayjs("2014-08-18T21:11:54")
+  const [updateProfileFail, setUpdateProfileFail] = useState(false);
+  const [timeBirthDate, setTimeBirthDate] = useState(
+    dayjs("01-02-2003", "DD-MM-YYYY")
   );
 
+  useEffect(() => {
+    setTimeBirthDate(props.userInfo.DateOfBirth)
+  },[props.userInfo])
+
   const handleTimeChange = (newValue) => {
-    setTimeDeadline(newValue);
+    setTimeBirthDate(newValue);
   };
 
   const handleFileInput = (e) => {
-    console.log(e.target.files[0]);
+    console.log(selectedFile);
     setSelectedFile(e.target.files[0]);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // const data = event.target;
-    console.log(selectedFile);
-    console.log(event.target.header.value);
-    console.log(event.target.content.value);
-    console.log(timeDeadline);
+    event.target.dateOfBirth.value = event.target.dateOfBirth.value.replace(
+      "/",
+      ""
+    );
+    UserService.updateUserInfo(event.target)
+      .then((res) => {
+        if (res.status === 200) {
+          props.handleCloseProfile();
+          props.handleRefresh();
+        } else {
+          const error = new Error(res.error);
+          throw error;
+        }
+      })
+      .catch((err) => {
+        setUpdateProfileFail(true);
+      });
   };
+  
   return (
     <Box sx={style}>
       <Grid
@@ -107,7 +128,7 @@ const ProfileForm = () => {
               }}
             >
               <Typography fontSize={32} fontWeight={600} color="black">
-                Phạm Vũ Minh
+                {props.userInfo.FullName}
               </Typography>
             </Box>
           </Container>
@@ -123,6 +144,9 @@ const ProfileForm = () => {
           }}
         >
           <Container maxWidth={false} disableGutters sx={{}}>
+            {updateProfileFail ? (
+              <Alert severity="error">Cập nhật thông tin thất bại</Alert>
+            ) : null}
             <Paper
               style={{
                 // padding: "40px 20px",
@@ -141,10 +165,9 @@ const ProfileForm = () => {
               </Typography>
               <Box component={"form"} onSubmit={handleSubmit}>
                 <TextField
-                  id="name"
-                  name="name"
+                  name="fullname"
                   label="Họ và tên"
-                  defaultValue="Phạm Vũ Minh"
+                  defaultValue={props.userInfo.FullName}
                   variant="standard"
                   fullWidth
                   sx={{ marginBottom: "30px" }}
@@ -153,11 +176,10 @@ const ProfileForm = () => {
                   }}
                 />
                 <TextField
-                  id="email"
                   name="email"
                   disabled
                   label="Email"
-                  defaultValue="wibu@gmail.com"
+                  defaultValue={props.userInfo.Email}
                   variant="standard"
                   fullWidth
                   sx={{ marginBottom: "30px" }}
@@ -169,7 +191,7 @@ const ProfileForm = () => {
                   id="phoneNumber"
                   name="phoneNumber"
                   label="Số điện thoại"
-                  defaultValue="0321654789"
+                  defaultValue={props.userInfo.PhoneNumber}
                   variant="standard"
                   fullWidth
                   sx={{ marginBottom: "30px" }}
@@ -179,9 +201,10 @@ const ProfileForm = () => {
                 />
                 <TextField
                   id="class"
+                  disabled
                   name="class"
                   label="Lớp quản lý"
-                  defaultValue="K64CACLC2"
+                  defaultValue={props.userInfo.ClassName}
                   variant="standard"
                   fullWidth
                   sx={{ marginBottom: "30px" }}
@@ -192,11 +215,12 @@ const ProfileForm = () => {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DesktopDatePicker
                     label="Ngày sinh"
-                    inputFormat="DD/MM/YYYY"
-                    value={timeDeadline}
+                    inputFormat="DD-MM-YYYY"
+                    value={timeBirthDate}
                     onChange={handleTimeChange}
                     renderInput={(params) => (
                       <TextField
+                        name="dateOfBirth"
                         InputLabelProps={{
                           style: {
                             color: "black",
@@ -219,6 +243,20 @@ const ProfileForm = () => {
                   Thay avatar
                 </Typography>
                 <input type="file" name="file" onChange={handleFileInput} />
+                <Button
+                  type="submit"
+                  variant="contained"
+                  sx={{
+                    backgroundColor: "#1967D2",
+                    borderRadius: 4,
+                    width: "40%",
+                    marginLeft: "90px",
+                  }}
+                >
+                  <Typography paddingLeft={1} fontSize={20} fontWeight={500}>
+                    Cập nhật
+                  </Typography>
+                </Button>
               </Box>
             </Paper>
           </Container>
