@@ -27,36 +27,56 @@ import JoinClass from "../../components/JoinClass/joinClass";
 import AuthService from "../../services/auth.service";
 import {useNavigate} from "react-router-dom";
 import classService from "../../services/class.service";
+import TeacherDeleteClass from "../../components/TeacherDeleteClass/teacherDeleteClass";
 
 const Home = () => {
     const [openCreateClass, setOpenCreateClass] = useState(false);
     const handleOpenCreateClass = () => setOpenCreateClass(true);
     const handleCloseCreateClass = () => setOpenCreateClass(false);
 
+    const [openDeleteClass, setOpenDeleteClass] = useState(false);
+    const handleOpenDeleteClass = () => setOpenDeleteClass(true);
+    const handleCloseDeleteClass = () => setOpenDeleteClass(false);
+
     const [openJoinClass, setOpenJoinClass] = useState(false);
     const handleOpenJoinClass = () => setOpenJoinClass(true);
-    const handleCloseJoinClass = () => {setOpenJoinClass(false)}
-    
-    const[refreshClass, setRefreshClass] = useState(false)
-    const handleRefresh = () => {setRefreshClass(current => !current)}
+    const handleCloseJoinClass = () => setOpenJoinClass(false)
+
+    const [deleteClassID, setDeleteClassID] = useState()
+
+
+    const [refreshClass, setRefreshClass] = useState(false)
+    const handleRefresh = () => {
+        setRefreshClass(current => !current)
+    }
 
     const [isShow, setIsShow] = useState(false);
 
     const [classes, setClasses] = useState();
 
     const navigate = useNavigate();
-    
+
     const getClassTeacher = () => {
         classService.listClass()
-        .then( (listClass) => {
-          const classArr = [];
-                for (let i = 0; i < (listClass.data.message.teacherClasses).length;i++) {
-                    if (listClass.data.message.teacherClasses[i].DeletedAt == null) {
-                        classArr.push(listClass.data.message.teacherClasses[i])
+            .then((listClass) => {
+                console.log(listClass)
+                const classArr = [];
+                if (listClass.data.message.teacherClasses != null) {
+                    for (let i = 0; i < (listClass.data.message.teacherClasses).length; i++) {
+                        if (listClass.data.message.teacherClasses[i].DeletedAt == null) {
+                            classArr.push(listClass.data.message.teacherClasses[i])
+                        }
+                    }
+                }
+                if (listClass.data.message.studentClasses != null) {
+                    for (let i = 0; i < (listClass.data.message.studentClasses).length; i++) {
+                        if (listClass.data.message.studentClasses[i].DeletedAt == null) {
+                            classArr.push(listClass.data.message.studentClasses[i])
+                        }
                     }
                 }
                 setClasses(classArr);
-        })
+            })
     }
 
     useEffect(() => {
@@ -75,7 +95,7 @@ const Home = () => {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [refreshClass]);
-    
+
 
     console.log(classes)
 
@@ -202,7 +222,13 @@ const Home = () => {
                                             </CardContent>
                                             <CardActions>
                                                 <Button size={"small"} color={"primary"}>Vào lớp</Button>
-                                                <Button size={"small"} color={"primary"}>Xóa lớp</Button>
+                                                <Button
+                                                    size={"small"} color={"primary"}
+                                                    onClick={() => {
+                                                        handleOpenDeleteClass();
+                                                        setDeleteClassID(userClass.ID);
+                                                    }}
+                                                >Xóa lớp</Button>
                                             </CardActions>
                                         </Card>
                                     </Grid>
@@ -217,8 +243,21 @@ const Home = () => {
                             aria-describedby="modal-modal-description"
                         >
                             <Box>
-                                <CreateClass handleRefresh={handleRefresh} handleCloseCreateClass={handleCloseCreateClass}/>
+                                <CreateClass handleRefresh={handleRefresh}
+                                             handleCloseCreateClass={handleCloseCreateClass}/>
                             </Box>
+                        </Modal>
+
+                        <Modal
+                            open={openDeleteClass}
+                            onClose={handleCloseDeleteClass}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
+                        >
+                            <TeacherDeleteClass handleCloseDeleteClass={handleCloseDeleteClass}
+                                                handleRefresh={handleRefresh}
+                                                deleteClassID={deleteClassID}
+                            />
                         </Modal>
 
                         <Modal
@@ -228,7 +267,7 @@ const Home = () => {
                             aria-describedby="modal-modal-description"
                         >
                             <Box>
-                                <JoinClass/>
+                                <JoinClass handleCloseDeleteClass={handleCloseDeleteClass}/>
                             </Box>
                         </Modal>
                     </Container>

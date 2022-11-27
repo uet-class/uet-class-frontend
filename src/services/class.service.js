@@ -28,9 +28,11 @@ class ClassService {
             });
     }
 
-    deleteClass() {
+    deleteClass(classID) {
         document.cookie = `sessionId=${localStorage.getItem("sessionId")}`;
-        return axios.delete('/class').then(function (response) {
+        const id = classID
+        const url = `/class/${id}`;
+        return axios.delete(url).then(function (response) {
             console.log(response);
             return response;
         })
