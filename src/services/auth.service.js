@@ -11,7 +11,7 @@ class AuthService {
             .then(function (response) {
                 console.log(response.data.message.sessionId)
                 axios.defaults.headers.cookie = response.data.message.sessionId
-                localStorage.setItem("session", JSON.stringify(response.data.message.sessionId));
+                localStorage.setItem("sessionId", JSON.stringify(response.data.message.sessionId));
                 return response;
             })
             .catch(function (error) {
@@ -20,8 +20,7 @@ class AuthService {
     }
 
     isUser() {
-        const data = JSON.parse(localStorage.getItem("session"));
-        console.log(data)
+        const data = JSON.parse(localStorage.getItem("sessionId"));
         if (data) {
             return true;
         }
@@ -43,7 +42,7 @@ class AuthService {
     }
 
     logout() {
-        const userId = localStorage.getItem('session')
+        const userId = localStorage.getItem('sessionId')
         console.log(userId)
         return axios.post(API_URL + '/auth/signout', {}, {
             headers: {

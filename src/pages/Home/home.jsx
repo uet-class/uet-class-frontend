@@ -1,23 +1,32 @@
 import Header from "../../components/Header/header";
 import {
+
     Box,
+
     Button,
+
     Card, CardActions, CardContent,
-    CardMedia,
     Container,
+
     createTheme,
+
     Grid,
+
     Modal,
+
     ThemeProvider,
-    Typography
+
+    Typography,
+
 } from "@mui/material";
-import "./home.css"
+import "./home.css";
 import React, {useEffect, useState} from "react";
-import AddIcon from '@mui/icons-material/Add';
+import AddIcon from "@mui/icons-material/Add";
 import CreateClass from "../../components/CreateClass/createClass";
 import JoinClass from "../../components/JoinClass/joinClass";
 import AuthService from "../../services/auth.service";
 import {useNavigate} from "react-router-dom";
+import classService from "../../services/class.service";
 
 const Home = () => {
     const [openCreateClass, setOpenCreateClass] = useState(false);
@@ -30,21 +39,35 @@ const Home = () => {
 
     const [isShow, setIsShow] = useState(false);
 
+    const [classes, setClasses] = useState();
+
     const navigate = useNavigate();
 
     useEffect(() => {
         if (!AuthService.isUser()) {
-        // if (false) {
+            // if (false) {
             navigate("/signin");
         } else {
+            document.cookie = `sessionId=${localStorage.getItem("sessionId")}`;
             const fetchData = async () => {
                 setIsShow(true);
+                const listClass = await classService.listClass();
+                const classArr = [];
+                for (let i = 0; i < (listClass.data.message.teacherClasses).length;i++) {
+                    if (listClass.data.message.teacherClasses[i].DeletedAt == null) {
+                        classArr.push(listClass.data.message.teacherClasses[i])
+                    }
+                }
+                await setClasses(classArr);
             };
             fetchData();
         }
-    }, );
+        return;
 
-    const classes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    console.log(classes)
 
     const theme = createTheme({
         typography: {
@@ -79,14 +102,10 @@ const Home = () => {
                                         fontSize={32}
                                         fontWeight={600}
                                     >
-                                        Lớp học của tôi
+                                        Lớp của tôi
                                     </Typography>
                                 </Grid>
-                                <Grid
-                                    item xs={4.25}
-                                    display="flex"
-                                    justifyContent="flex-end"
-                                >
+                                <Grid item xs={4.25} display="flex" justifyContent="flex-end">
                                     <Button
                                         onClick={handleOpenCreateClass}
                                         variant="contained"
@@ -95,7 +114,7 @@ const Home = () => {
                                             borderRadius: 4,
                                         }}
                                     >
-                                        <AddIcon style={{color: 'white'}}/>
+                                        <AddIcon style={{color: "white"}}/>
                                         <Typography
                                             paddingLeft={1}
                                             className={"sign-in"}
@@ -106,11 +125,7 @@ const Home = () => {
                                         </Typography>
                                     </Button>
                                 </Grid>
-                                <Grid
-                                    item xs={1.75}
-                                    display="flex"
-                                    justifyContent="flex-end"
-                                >
+                                <Grid item xs={1.75} display="flex" justifyContent="flex-end">
                                     <Button
                                         onClick={handleOpenJoinClass}
                                         variant="contained"
@@ -119,7 +134,7 @@ const Home = () => {
                                             borderRadius: 4,
                                         }}
                                     >
-                                        <AddIcon style={{color: 'white'}}/>
+                                        <AddIcon style={{color: "white"}}/>
                                         <Typography
                                             paddingLeft={1}
                                             className={"sign-in"}
@@ -141,11 +156,11 @@ const Home = () => {
                             <Grid
                                 container spacing={4}
                                 sx={{
-                                    maxHeight: '78vh',
+                                    maxHeight: '79vh',
                                     overflow: 'auto'
                                 }}
                             >
-                                {classes.map((n) => (
+                                {classes?.map((userClass) => (
                                     <Grid item>
                                         <Card
                                             sx={{
@@ -156,27 +171,28 @@ const Home = () => {
                                                 maxWidth: 310,
                                             }}
                                         >
-                                            <CardMedia
-                                                image="https://source.unsplash.com/random"
-                                                title="Image title"
+                                            <Box
                                                 sx={{
-                                                    paddingTop: "56.25%"
+                                                    paddingTop: "56.25%",
+                                                    backgroundColor: 'primary.dark',
                                                 }}
-                                            />
+                                            >
+                                            </Box>
                                             <CardContent
                                                 sx={{
                                                     flexGrow: 1,
                                                 }}
                                             >
                                                 <Typography variant={"h5"}>
-                                                    Lớp số {n}
+                                                    {userClass.ClassName}
                                                 </Typography>
                                                 <Typography>
-                                                    INT3117 40
+                                                    {userClass.Description}
                                                 </Typography>
                                             </CardContent>
                                             <CardActions>
                                                 <Button size={"small"} color={"primary"}>Vào lớp</Button>
+                                                <Button size={"small"} color={"primary"}>Xóa lớp</Button>
                                             </CardActions>
                                         </Card>
                                     </Grid>
@@ -209,7 +225,7 @@ const Home = () => {
                 </Header>
             ) : null}
         </ThemeProvider>
-    )
-}
+    );
+};
 
 export default Home;
