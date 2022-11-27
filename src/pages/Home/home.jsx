@@ -35,13 +35,29 @@ const Home = () => {
 
     const [openJoinClass, setOpenJoinClass] = useState(false);
     const handleOpenJoinClass = () => setOpenJoinClass(true);
-    const handleCloseJoinClass = () => setOpenJoinClass(false);
+    const handleCloseJoinClass = () => {setOpenJoinClass(false)}
+    
+    const[refreshClass, setRefreshClass] = useState(false)
+    const handleRefresh = () => {setRefreshClass(current => !current)}
 
     const [isShow, setIsShow] = useState(false);
 
     const [classes, setClasses] = useState();
 
     const navigate = useNavigate();
+    
+    const getClassTeacher = () => {
+        classService.listClass()
+        .then( (listClass) => {
+          const classArr = [];
+                for (let i = 0; i < (listClass.data.message.teacherClasses).length;i++) {
+                    if (listClass.data.message.teacherClasses[i].DeletedAt == null) {
+                        classArr.push(listClass.data.message.teacherClasses[i])
+                    }
+                }
+                setClasses(classArr);
+        })
+    }
 
     useEffect(() => {
         if (!AuthService.isUser()) {
@@ -51,21 +67,15 @@ const Home = () => {
             document.cookie = `sessionId=${localStorage.getItem("sessionId")}`;
             const fetchData = async () => {
                 setIsShow(true);
-                const listClass = await classService.listClass();
-                const classArr = [];
-                for (let i = 0; i < (listClass.data.message.teacherClasses).length;i++) {
-                    if (listClass.data.message.teacherClasses[i].DeletedAt == null) {
-                        classArr.push(listClass.data.message.teacherClasses[i])
-                    }
-                }
-                await setClasses(classArr);
+                await getClassTeacher()
             };
             fetchData();
         }
         return;
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [refreshClass]);
+    
 
     console.log(classes)
 
@@ -207,7 +217,7 @@ const Home = () => {
                             aria-describedby="modal-modal-description"
                         >
                             <Box>
-                                <CreateClass/>
+                                <CreateClass handleRefresh={handleRefresh} handleCloseCreateClass={handleCloseCreateClass}/>
                             </Box>
                         </Modal>
 
