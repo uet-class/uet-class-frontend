@@ -44,10 +44,10 @@ class AuthService {
     logout() {
         const userId = localStorage.getItem('sessionId')
         console.log(userId)
-        return axios.post(API_URL + '/auth/signout', {}, {
-            headers: {
-                Cookie: `sessionId=${userId}`
-            }
+        return axios.post('/auth/signout', {}, {
+            // headers: {
+            //     Cookie: `sessionId=${userId}`
+            // }
         })
             .then(function (response) {
                 console.log(response);
