@@ -15,7 +15,7 @@ const style = {
     p: 4,
 };
 
-const CreateClass = () => {
+const CreateClass = (props) => {
     const [createClassFail, setCreateClassFail] = React.useState(false);
 
     const handleSubmit = async (event) => {
@@ -27,6 +27,8 @@ const CreateClass = () => {
             .then((res) => {
                 if (res.status === 200) {
                     console.log("Success");
+                    props.handleCloseCreateClass()
+                    props.handleRefresh()
                 } else {
                     const error = new Error(res.error);
                     throw error;
