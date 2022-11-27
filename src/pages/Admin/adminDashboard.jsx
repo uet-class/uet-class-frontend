@@ -18,7 +18,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import AdminAddUser from "../../components/AdminAddUser/adminAddUser";
 import AdminDeleteUser from "../../components/AdminDeleteUser/adminDeleteUser";
-import AdminDeleteClass from "../../components/AdminDeleteClass/adminDeleteClass";
 import ReportContent from "../../components/ReportContent/reportContent";
 
 const AdminDashboard = () => {
@@ -33,13 +32,13 @@ const AdminDashboard = () => {
     const handleOpenDeleteUser = () => setOpenDeleteUser(true);
     const handleCloseDeleteUser = () => setOpenDeleteUser(false);
 
-    const [openDeleteClass, setOpenDeleteClass] = useState(false);
-    const handleOpenDeleteClass = () => setOpenDeleteClass(true);
-    const handleCloseDeleteClass = () => setOpenDeleteClass(false);
-
     const [openReportContent, setOpenReportContent] = useState(false)
     const handleOpenReportContent = () => setOpenReportContent(true);
     const handleCloseReportContent = () => setOpenReportContent(false);
+
+    const [refreshState, setRefreshState] = useState(false)
+    const handleRefresh = () => setRefreshState(current => !current)
+
 
     const reports = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 
@@ -53,7 +52,9 @@ const AdminDashboard = () => {
             };
             fetchData();
         }
-    },);
+        return;
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [refreshState]);
 
     const theme = createTheme({
         typography: {
@@ -82,7 +83,7 @@ const AdminDashboard = () => {
                             }}
                         >
                             <Grid container>
-                                <Grid item xs={6.75}>
+                                <Grid item xs={8}>
                                     <Typography
                                         className={"your-class"}
                                         fontSize={32}
@@ -136,30 +137,6 @@ const AdminDashboard = () => {
                                             fontWeight={500}
                                         >
                                             Xóa người dùng
-                                        </Typography>
-                                    </Button>
-                                </Grid>
-                                <Grid
-                                    item xs={1.25}
-                                    display="flex"
-                                    justifyContent="flex-end"
-                                >
-                                    <Button
-                                        onClick={handleOpenDeleteClass}
-                                        variant="contained"
-                                        sx={{
-                                            backgroundColor: "#305264",
-                                            borderRadius: 4,
-                                        }}
-                                    >
-                                        <DeleteIcon style={{color: 'white'}}/>
-                                        <Typography
-                                            paddingLeft={1}
-                                            className={"sign-in"}
-                                            fontSize={20}
-                                            fontWeight={500}
-                                        >
-                                            Xóa lớp
                                         </Typography>
                                     </Button>
                                 </Grid>
@@ -228,7 +205,8 @@ const AdminDashboard = () => {
                             aria-labelledby="modal-modal-title"
                             aria-describedby="modal-modal-description"
                         >
-                            <AdminAddUser/>
+                            <AdminAddUser handleCloseAddUser={handleCloseAddUser}
+                            />
                         </Modal>
 
                         <Modal
@@ -237,16 +215,9 @@ const AdminDashboard = () => {
                             aria-labelledby="modal-modal-title"
                             aria-describedby="modal-modal-description"
                         >
-                            <AdminDeleteUser/>
-                        </Modal>
-
-                        <Modal
-                            open={openDeleteClass}
-                            onClose={handleCloseDeleteClass}
-                            aria-labelledby="modal-modal-title"
-                            aria-describedby="modal-modal-description"
-                        >
-                            <AdminDeleteClass/>
+                            <AdminDeleteUser handleRefresh={handleRefresh}
+                                             handleCloseDeleteUser={handleCloseDeleteUser}
+                            />
                         </Modal>
 
                         <Modal

@@ -15,7 +15,7 @@ const style = {
     p: 4,
 };
 
-const AdminAddUser = () => {
+const AdminAddUser = (props) => {
     const [createUserFail, setCreateUserFail] = React.useState(false);
 
     const handleSubmit = async (event) => {
@@ -26,6 +26,7 @@ const AdminAddUser = () => {
             .then((res) => {
                 if (res.status === 200) {
                     console.log("Success")
+                    props.handleCloseAddUser()
                 } else {
                     const error = new Error(res.error);
                     throw error;

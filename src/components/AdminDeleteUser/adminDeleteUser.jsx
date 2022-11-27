@@ -15,7 +15,7 @@ const style = {
     p: 4,
 };
 
-const AdminDeleteUser = () => {
+const AdminDeleteUser = (props) => {
     const [deleteUserFail, setDeleteUserFail] = React.useState(false);
 
     const handleSubmit = async (event) => {
@@ -26,6 +26,8 @@ const AdminDeleteUser = () => {
             .then((res) => {
                 if (res.status === 200) {
                     console.log("Success");
+                    props.handleRefresh()
+                    props.handleCloseDeleteUser()
                 } else {
                     const error = new Error(res.error);
                     throw error;

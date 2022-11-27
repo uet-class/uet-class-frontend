@@ -23,7 +23,6 @@ import "./home.css";
 import React, {useEffect, useState} from "react";
 import AddIcon from "@mui/icons-material/Add";
 import CreateClass from "../../components/CreateClass/createClass";
-import JoinClass from "../../components/JoinClass/joinClass";
 import AuthService from "../../services/auth.service";
 import {useNavigate} from "react-router-dom";
 import classService from "../../services/class.service";
@@ -37,10 +36,6 @@ const Home = () => {
     const [openDeleteClass, setOpenDeleteClass] = useState(false);
     const handleOpenDeleteClass = () => setOpenDeleteClass(true);
     const handleCloseDeleteClass = () => setOpenDeleteClass(false);
-
-    const [openJoinClass, setOpenJoinClass] = useState(false);
-    const handleOpenJoinClass = () => setOpenJoinClass(true);
-    const handleCloseJoinClass = () => setOpenJoinClass(false)
 
     const [deleteClassID, setDeleteClassID] = useState()
 
@@ -126,7 +121,7 @@ const Home = () => {
                             }}
                         >
                             <Grid container>
-                                <Grid item xs={6}>
+                                <Grid item xs={7}>
                                     <Typography
                                         className={"your-class"}
                                         fontSize={32}
@@ -135,7 +130,7 @@ const Home = () => {
                                         Lớp của tôi
                                     </Typography>
                                 </Grid>
-                                <Grid item xs={4.25} display="flex" justifyContent="flex-end">
+                                <Grid item xs={5} display="flex" justifyContent="flex-end">
                                     <Button
                                         onClick={handleOpenCreateClass}
                                         variant="contained"
@@ -152,26 +147,6 @@ const Home = () => {
                                             fontWeight={500}
                                         >
                                             Tạo lớp
-                                        </Typography>
-                                    </Button>
-                                </Grid>
-                                <Grid item xs={1.75} display="flex" justifyContent="flex-end">
-                                    <Button
-                                        onClick={handleOpenJoinClass}
-                                        variant="contained"
-                                        sx={{
-                                            backgroundColor: "#305264",
-                                            borderRadius: 4,
-                                        }}
-                                    >
-                                        <AddIcon style={{color: "white"}}/>
-                                        <Typography
-                                            paddingLeft={1}
-                                            className={"sign-in"}
-                                            fontSize={20}
-                                            fontWeight={500}
-                                        >
-                                            Tham gia lớp
                                         </Typography>
                                     </Button>
                                 </Grid>
@@ -258,17 +233,6 @@ const Home = () => {
                                                 handleRefresh={handleRefresh}
                                                 deleteClassID={deleteClassID}
                             />
-                        </Modal>
-
-                        <Modal
-                            open={openJoinClass}
-                            onClose={handleCloseJoinClass}
-                            aria-labelledby="modal-modal-title"
-                            aria-describedby="modal-modal-description"
-                        >
-                            <Box>
-                                <JoinClass handleCloseDeleteClass={handleCloseDeleteClass}/>
-                            </Box>
                         </Modal>
                     </Container>
                 </Header>
