@@ -18,7 +18,7 @@ class ClassService {
 
     listClass() {
         return axios.get('/class/all', {
-            // withCredentials: true,
+            withCredentials: true,
         })
             .then(function (response) {
                 return response;

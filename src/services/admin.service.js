@@ -1,11 +1,9 @@
 import axios from "axios";
 
-const API_URL = process.env.REACT_APP_SERVER_URL;
-
 class AdminService {
     deleteUser(email) {
         const userId = localStorage.getItem('session')
-        return axios.post(API_URL + '/auth/:email', {
+        return axios.post('/auth/:email', {
             email: email
         }, {
             headers: {
