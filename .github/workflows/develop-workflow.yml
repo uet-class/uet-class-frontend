@@ -15,22 +15,10 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     steps:
-      - name: Installing NodeJS & Yarn
-        run: |
-          curl -fsSL https://deb.nodesource.com/setup_19.x | bash - &&\
-          apt-get install -y nodejs
-          npm install --global yarn
-
       - name: Authenticating with Docker Hub
         run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login docker.io --username "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
       - uses: actions/checkout@v3
-
-      - name: Installing dependencies
-        run: yarn install
-
-      - name: Building static files with environment variables
-        run: export $(cat .env.production); yarn build
 
       - name: Building Docker image
         run: |
