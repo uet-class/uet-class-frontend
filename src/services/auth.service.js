@@ -7,7 +7,7 @@ class AuthService {
         return axios.post(API_URL + '/auth/signin', {
             email: email,
             password: password,
-        },)
+        },{withCredentials:true})
             .then(function (response) {
                 // console.log(response.data.message.sessionId)
                 // axios.defaults.headers.cookie = response.data.message.sessionId
@@ -52,11 +52,7 @@ class AuthService {
         localStorage.removeItem("sessionId");
         localStorage.removeItem("userId");
  
-        return axios.post('/auth/signout', {}, {
-            // headers: {
-            //     Cookie: `sessionId=${userId}`
-            // }
-        })
+        return axios.post(API_URL + '/auth/signout', {},{withCredentials: true})
             .then(function (response) {
                 console.log(response);
                 return response;

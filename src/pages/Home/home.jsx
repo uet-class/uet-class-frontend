@@ -60,7 +60,7 @@ const Home = () => {
       // if (false) {
       navigate("/signin");
     } else {
-      document.cookie = `sessionId=${localStorage.getItem("sessionId")}`;
+      // document.cookie = `sessionId=${localStorage.getItem("sessionId")}`;
       const fetchData = async () => {
         setIsShow(true);
         await getClassTeacher();
