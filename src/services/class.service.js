@@ -6,7 +6,7 @@ class ClassService {
         return axios.post('/class', {
             className: className,
             description: description,
-        })
+        },{withCredentials: true})
             .then(function (response) {
                 console.log(response);
                 return response;
