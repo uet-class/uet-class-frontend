@@ -12,8 +12,10 @@ import {
   Avatar,
   Box,
   Button,
-  createTheme, Grid,
-  Modal, TextField,
+  createTheme,
+  Grid,
+  Modal,
+  TextField,
   ThemeProvider,
   Typography,
 } from "@mui/material";
@@ -54,15 +56,12 @@ const News = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!AuthService.isUser()) {
-    // if (false) {
-      navigate("/signin");
-    } else {
-      const fetchData = async () => {
-        setIsShow(true);
-      };
-      fetchData();
-    }
+    AuthService.isUser(navigate);
+
+    const fetchData = async () => {
+      setIsShow(true);
+    };
+    fetchData();
   });
 
   const handleOpenCreatePost = () => setOpenCreatePost(true);
@@ -74,7 +73,7 @@ const News = () => {
     },
   });
 
-  const news = [1, 2, 3, 4, 5]
+  const news = [1, 2, 3, 4, 5];
   const comment_example = [
     {
       name: "Phạm Vũ Minh",
@@ -152,107 +151,108 @@ const News = () => {
               }}
             >
               <Grid
-                  container
-                  sx={{
-                    maxHeight: '70vh',
-                    overflow: 'auto'
-                  }}
+                container
+                sx={{
+                  maxHeight: "70vh",
+                  overflow: "auto",
+                }}
               >
                 {news.map(() => (
-                    <Grid item xs={12} paddingBottom={3}>
-                      <Box
+                  <Grid item xs={12} paddingBottom={3}>
+                    <Box
+                      sx={{
+                        border: 1,
+                        bgcolor: "white",
+                      }}
+                    >
+                      <Grid
+                        container
                         sx={{
-                          border: 1,
-                          bgcolor: "white",
+                          paddingLeft: 2,
+                          paddingTop: 2,
                         }}
                       >
-                        <Grid container
-                            sx={{
-                              paddingLeft: 2,
-                              paddingTop: 2,
-                          }}
-                        >
-                          <Grid item xs={0.5}>
-                            <Avatar alt="Remy Sharp" src={"https://i.insider.com/61135525ad63f30019501966?width=700"} />
-                          </Grid>
-                          <Grid item xs={11.5}>
-                            <Grid container>
-                              <Grid item xs={12}>
-                                <Typography variant={"h5"}>
-                                  Phạm Vũ Minh
-                                </Typography>
-                              </Grid>
-                              <Grid item xs={12}>
-                                <Typography variant={"normal-text"}>
-                                  13:13
-                                </Typography>
-                              </Grid>
+                        <Grid item xs={0.5}>
+                          <Avatar
+                            alt="Remy Sharp"
+                            src={
+                              "https://i.insider.com/61135525ad63f30019501966?width=700"
+                            }
+                          />
+                        </Grid>
+                        <Grid item xs={11.5}>
+                          <Grid container>
+                            <Grid item xs={12}>
+                              <Typography variant={"h5"}>
+                                Phạm Vũ Minh
+                              </Typography>
+                            </Grid>
+                            <Grid item xs={12}>
+                              <Typography variant={"normal-text"}>
+                                13:13
+                              </Typography>
                             </Grid>
                           </Grid>
                         </Grid>
-                        <Grid
-                            item
-                            sx={{
-                              paddingLeft: 2,
-                              paddingTop: 2,
-                            }}
-                        >
-                          <Typography variant={"h4"}>
-                            Đây là tiêu đề
-                          </Typography>
-                          <Typography variant={"h5"}>
-                            Đây là nội dung
-                          </Typography>
-                        </Grid>
+                      </Grid>
+                      <Grid
+                        item
+                        sx={{
+                          paddingLeft: 2,
+                          paddingTop: 2,
+                        }}
+                      >
+                        <Typography variant={"h4"}>Đây là tiêu đề</Typography>
+                        <Typography variant={"h5"}>Đây là nội dung</Typography>
+                      </Grid>
 
-                        <Grid
-                            item
-                            sx={{
-                              paddingLeft: 10,
-                              paddingTop: 5,
-                              maxHeight: "30vh",
-                              overflow: 'auto'
-                            }}
-                        >
-                          {comment_example.map((comment) => {
-                            return (
-                                <Comment
-                                    name={comment.name}
-                                    avatar={comment.avatar}
-                                    content={comment.content}
-                                    time={comment.time}
-                                />
-                            );
-                          })}
-                        </Grid>
+                      <Grid
+                        item
+                        sx={{
+                          paddingLeft: 10,
+                          paddingTop: 5,
+                          maxHeight: "30vh",
+                          overflow: "auto",
+                        }}
+                      >
+                        {comment_example.map((comment) => {
+                          return (
+                            <Comment
+                              name={comment.name}
+                              avatar={comment.avatar}
+                              content={comment.content}
+                              time={comment.time}
+                            />
+                          );
+                        })}
+                      </Grid>
 
-                        <Grid container
-                              sx={{
-                                paddingLeft: 2,
-                                paddingTop: 2,
-                              }}
+                      <Grid
+                        container
+                        sx={{
+                          paddingLeft: 2,
+                          paddingTop: 2,
+                        }}
+                      >
+                        <Box
+                          component={"form"}
+                          sx={{
+                            paddingBottom: 2,
+                            width: "80vw",
+                          }}
                         >
-                          <Box component={"form"}
-                               sx={{
-                                 paddingBottom: 2,
-                                 width: "80vw"
-                               }}
-                          >
-                            <TextField
-                                name={"comment"}
-                                sx={{
-                                  bgcolor: "#D9D9D9",
-                                  width: "100%",
-                                }}
-                            >
-                            </TextField>
-                            <Button>
-                              Bình luận
-                            </Button>
-                          </Box>
-                        </Grid>
-                      </Box>
-                    </Grid>
+                          <TextField
+                            name={"comment"}
+                            sx={{
+                              bgcolor: "#D9D9D9",
+                              width: "100%",
+                            }}
+                          ></TextField>
+                          <Button>Bình luận</Button>
+                        </Box>
+                      </Grid>
+                    </Box>
+                  </Grid>
                 ))}
               </Grid>
             </Box>
@@ -264,7 +264,7 @@ const News = () => {
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
           >
-              <CreatePost />
+            <CreatePost />
           </Modal>
         </DashbroadLayout>
       ) : null}

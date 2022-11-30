@@ -1,12 +1,13 @@
 import axios from "axios";
 
+
 class ClassService {
     createClass(className, description) {
-        document.cookie = `sessionId=${localStorage.getItem("sessionId")}`;
+        // document.cookie = `sessionId=${localStorage.getItem("sessionId")}`;
         return axios.post('/class', {
             className: className,
             description: description,
-        })
+        }, { withCredentials: true })
             .then(function (response) {
                 console.log(response);
                 return response;
@@ -29,10 +30,12 @@ class ClassService {
     }
 
     deleteClass() {
-        document.cookie = `sessionId=${localStorage.getItem("sessionId")}`;
+        // document.cookie = `sessionId=${localStorage.getItem("sessionId")}`;
         return axios.delete('/class').then(function (response) {
             console.log(response);
             return response;
+        }, {
+            withCredentials: true,
         })
             .catch(function (error) {
                 console.log(error);

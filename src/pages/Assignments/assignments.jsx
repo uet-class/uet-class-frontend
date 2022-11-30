@@ -8,7 +8,7 @@ import OtherIcon from "../../components/Icon/otherIcon";
 import ClassHeader from "../../components/ClassHeader/classHeader";
 import ArticleIcon from "@mui/icons-material/Article";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import * as React from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -21,6 +21,8 @@ import SubmitAssignmentForm from "../../components/submitAssignmentForm/submitAs
 import { Button, Typography, Box, Modal } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CreateAssignmentForm from "../../components/createAssignmentForm/createAssignmentForm";
+import { useNavigate } from "react-router-dom";
+import AuthService from "../../services/auth.service";
 
 const columns = [
   { id: "name", label: "Bài tập", minWidth: 300 },
@@ -60,6 +62,8 @@ const Assignments = () => {
   const handleOpenCreateAssignment = () => setCreateAssignment(true);
   const isTeacher = false; //tam thoi
 
+  const navigate = useNavigate();
+
   var sideBar = {};
   sideBar.classLinks = ["/home", "/assignments"];
   sideBar.classes = ["Tương tác người máy", "Xác suất thống kê"];
@@ -84,6 +88,12 @@ const Assignments = () => {
     <HomeworkIcon />,
     <OtherIcon />,
   ];
+
+  useEffect(() => {
+    AuthService.isUser(navigate)
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },);
 
   const assignmentStatus = (done) => {
     if (done) {
