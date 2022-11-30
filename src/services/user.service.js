@@ -20,13 +20,16 @@ class UserService {
 
     getUserInfo() {
         const userId = localStorage.getItem("userId")
-        return axios.get(`/user/${userId}`)
+        return axios.get(`/user/${userId}`, {
+            withCredentials: true
+        })
             .then(function (response) {
                 // console.log(response.data.message)
                 return response.data.message
             })
             .catch(function (error) {
                 console.log(error);
+                return false
             });
     }
 }

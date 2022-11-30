@@ -11,7 +11,7 @@ import ClassHeader from "../../components/ClassHeader/classHeader";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DownloadIcon from "@mui/icons-material/Download";
 import ArticleIcon from "@mui/icons-material/Article";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import * as React from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -21,6 +21,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import CreateDocuments from "../../components/createDocuments/createDocumentsForm";
+import AuthService from "../../services/auth.service";
+import { useNavigate } from "react-router-dom";
 
 const columns = [
   { id: "name", label: "Tên tài liệu", minWidth: 220 },
@@ -130,6 +132,8 @@ const Documents = () => {
   const handleCloseCreateDocument = () => setOpenCreateDocument(false);
   const isTeacher = true; //tam thoi
 
+  const navigate = useNavigate();
+
   var sideBar = {};
   sideBar.classLinks = ["/home", "/assignments"];
   sideBar.classes = ["Tương tác người máy", "Xác suất thống kê"];
@@ -154,6 +158,12 @@ const Documents = () => {
     <HomeworkIcon />,
     <OtherIcon />,
   ];
+  
+  useEffect(() => {
+    AuthService.isUser(navigate)
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },);
 
   const handleDelete = (a) => {
     console.log(a);

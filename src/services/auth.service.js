@@ -1,17 +1,16 @@
 import axios from "axios";
-
-const API_URL = process.env.REACT_APP_SERVER_URL;
+import UserService from "./user.service";
 
 class AuthService {
     login(email, password) {
-        return axios.post(API_URL + '/auth/signin', {
+        return axios.post('/auth/signin', {
             email: email,
             password: password,
         },{withCredentials:true})
             .then(function (response) {
                 // console.log(response.data.message.sessionId)
                 // axios.defaults.headers.cookie = response.data.message.sessionId
-                localStorage.setItem("sessionId", JSON.stringify(response.data.message.sessionId));
+                // localStorage.setItem("sessionId", JSON.stringify(response.data.message.sessionId));
                 localStorage.setItem("userId", JSON.stringify(response.data.message.userId));
                 return response;
             })
@@ -20,27 +19,32 @@ class AuthService {
             });
     }
 
-    isUser() {
+    async isUser(navigate) {
         try {
-            const data = JSON.parse(localStorage.getItem("sessionId"));
-            if (data) {
-                return true;
-            }
-            return false;
+            await UserService.getUserInfo()
+            .then((res) => {
+                console.log(res)
+                if (res === false){
+                    navigate("/signin");
+                    return false
+                }
+                return true
+            })
         }
         catch (e) {
+            navigate("/signin");
             return false;
         }
        
     }
 
     register(email, password) {
-        return axios.post(API_URL + '/auth/signup', {
+        return axios.post('/auth/signup', {
             email: email,
             password: password,
         })
             .then(function (response) {
-                console.log(response);
+                // console.log(response);
                 return response;
             })
             .catch(function (error) {
@@ -52,9 +56,9 @@ class AuthService {
         localStorage.removeItem("sessionId");
         localStorage.removeItem("userId");
  
-        return axios.post(API_URL + '/auth/signout', {},{withCredentials: true})
+        return axios.post('/auth/signout', {},{withCredentials: true})
             .then(function (response) {
-                console.log(response);
+                // console.log(response);
                 return response;
             })
             .catch(function (error) {

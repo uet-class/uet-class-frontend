@@ -56,23 +56,16 @@ const Home = () => {
   };
 
   useEffect(() => {
-    if (!AuthService.isUser()) {
-      // if (false) {
-      navigate("/signin");
-    } else {
-      // document.cookie = `sessionId=${localStorage.getItem("sessionId")}`;
-      const fetchData = async () => {
-        setIsShow(true);
-        await getClassTeacher();
-      };
-      fetchData();
-    }
-    return;
+    AuthService.isUser(navigate)
+    const fetchData = async () => {
+      setIsShow(true);
+      await getClassTeacher();
+    };
+    fetchData()
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refreshClass]);
 
-//   console.log(classes);
 
   const theme = createTheme({
     typography: {

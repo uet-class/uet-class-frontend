@@ -1,14 +1,13 @@
 import axios from "axios";
 
-const API_URL = process.env.REACT_APP_SERVER_URL;
 
 class ClassService {
     createClass(className, description) {
         // document.cookie = `sessionId=${localStorage.getItem("sessionId")}`;
-        return axios.post(API_URL + '/class', {
+        return axios.post('/class', {
             className: className,
             description: description,
-        },{withCredentials: true})
+        }, { withCredentials: true })
             .then(function (response) {
                 console.log(response);
                 return response;
@@ -19,7 +18,7 @@ class ClassService {
     }
 
     listClass() {
-        return axios.get(API_URL + '/class/all', {
+        return axios.get('/class/all', {
             withCredentials: true,
         })
             .then(function (response) {
@@ -32,10 +31,10 @@ class ClassService {
 
     deleteClass() {
         // document.cookie = `sessionId=${localStorage.getItem("sessionId")}`;
-        return axios.delete(API_URL + '/class').then(function (response) {
+        return axios.delete('/class').then(function (response) {
             console.log(response);
             return response;
-        },{
+        }, {
             withCredentials: true,
         })
             .catch(function (error) {
