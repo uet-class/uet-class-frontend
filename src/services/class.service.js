@@ -29,14 +29,13 @@ class ClassService {
             });
     }
 
-    deleteClass() {
-        // document.cookie = `sessionId=${localStorage.getItem("sessionId")}`;
-        return axios.delete('/class').then(function (response) {
-            console.log(response);
-            return response;
-        }, {
-            withCredentials: true,
-        })
+    deleteClass(classId) {
+        let url = `/class/${classId}`
+        return axios.delete(url, { withCredentials: true })
+            .then(function (response) {
+                console.log(response);
+                return response;
+            })
             .catch(function (error) {
                 console.log(error);
             });

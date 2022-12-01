@@ -16,21 +16,21 @@ import "./home.css";
 import React, { useEffect, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import CreateClass from "../../components/CreateClass/createClass";
-import JoinClass from "../../components/JoinClass/joinClass";
 import AuthService from "../../services/auth.service";
 import { useNavigate } from "react-router-dom";
 import classService from "../../services/class.service";
+import TeacherDeleteClass from "../../components/TeacherDeleteClass/teacherDeleteClass";
 
 const Home = () => {
   const [openCreateClass, setOpenCreateClass] = useState(false);
   const handleOpenCreateClass = () => setOpenCreateClass(true);
   const handleCloseCreateClass = () => setOpenCreateClass(false);
 
-  const [openJoinClass, setOpenJoinClass] = useState(false);
-  const handleOpenJoinClass = () => setOpenJoinClass(true);
-  const handleCloseJoinClass = () => {
-    setOpenJoinClass(false);
-  };
+  const [openTeacherDeleteClass, setOpenTeacherDeleteClass] = useState(false);
+  const handleOpenTeacherDeleteClass = () => setOpenTeacherDeleteClass(true);
+  const handleCloseTeacherDeleteClass = () => setOpenTeacherDeleteClass(false);
+
+  const [deleteClassID, setDeleteClassID] = useState()
 
   const [refreshClass, setRefreshClass] = useState(false);
   const handleRefresh = () => {
@@ -94,7 +94,7 @@ const Home = () => {
               }}
             >
               <Grid container>
-                <Grid item xs={6}>
+                <Grid item xs={8}>
                   <Typography
                     className={"your-class"}
                     fontSize={32}
@@ -103,7 +103,7 @@ const Home = () => {
                     Lớp của tôi
                   </Typography>
                 </Grid>
-                <Grid item xs={4.25} display="flex" justifyContent="flex-end">
+                <Grid item xs={4} display="flex" justifyContent="flex-end">
                   <Button
                     onClick={handleOpenCreateClass}
                     variant="contained"
@@ -120,26 +120,6 @@ const Home = () => {
                       fontWeight={500}
                     >
                       Tạo lớp
-                    </Typography>
-                  </Button>
-                </Grid>
-                <Grid item xs={1.75} display="flex" justifyContent="flex-end">
-                  <Button
-                    onClick={handleOpenJoinClass}
-                    variant="contained"
-                    sx={{
-                      backgroundColor: "#305264",
-                      borderRadius: 4,
-                    }}
-                  >
-                    <AddIcon style={{ color: "white" }} />
-                    <Typography
-                      paddingLeft={1}
-                      className={"sign-in"}
-                      fontSize={20}
-                      fontWeight={500}
-                    >
-                      Tham gia lớp
                     </Typography>
                   </Button>
                 </Grid>
@@ -190,7 +170,14 @@ const Home = () => {
                         <Button size={"small"} color={"primary"}>
                           Vào lớp
                         </Button>
-                        <Button size={"small"} color={"primary"}>
+                        <Button
+                            size={"small"}
+                            color={"primary"}
+                            onClick={() => {
+                              handleOpenTeacherDeleteClass();
+                              setDeleteClassID(userClass.ID);
+                            }}
+                        >
                           Xóa lớp
                         </Button>
                       </CardActions>
@@ -215,13 +202,32 @@ const Home = () => {
             </Modal>
 
             <Modal
-              open={openJoinClass}
-              onClose={handleCloseJoinClass}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
+                open={openCreateClass}
+                onClose={handleCloseCreateClass}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
             >
               <Box>
-                <JoinClass />
+                <CreateClass
+                    handleRefresh={handleRefresh}
+                    handleCloseCreateClass={handleCloseCreateClass}
+
+                />
+              </Box>
+            </Modal>
+
+            <Modal
+                open={openTeacherDeleteClass}
+                onClose={handleCloseTeacherDeleteClass}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+              <Box>
+                <TeacherDeleteClass
+                    handleRefresh={handleRefresh}
+                    handleCloseTeacherDeleteClass={handleCloseTeacherDeleteClass}
+                    deleteClassID={deleteClassID}
+                />
               </Box>
             </Modal>
           </Container>

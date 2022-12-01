@@ -6,7 +6,7 @@ class AuthService {
         return axios.post('/auth/signin', {
             email: email,
             password: password,
-        },{withCredentials:true})
+        }, {withCredentials: true})
             .then(function (response) {
                 // console.log(response.data.message.sessionId)
                 // axios.defaults.headers.cookie = response.data.message.sessionId
@@ -22,20 +22,19 @@ class AuthService {
     async isUser(navigate) {
         try {
             await UserService.getUserInfo()
-            .then((res) => {
-                console.log(res)
-                if (res === false){
-                    navigate("/signin");
-                    return false
-                }
-                return true
-            })
-        }
-        catch (e) {
+                .then((res) => {
+                    console.log(res)
+                    if (res === false) {
+                        navigate("/signin");
+                        return false
+                    }
+                    return true
+                })
+        } catch (e) {
             navigate("/signin");
             return false;
         }
-       
+
     }
 
     register(email, password) {
@@ -55,8 +54,8 @@ class AuthService {
     logout() {
         localStorage.removeItem("sessionId");
         localStorage.removeItem("userId");
- 
-        return axios.post('/auth/signout', {},{withCredentials: true})
+
+        return axios.post('/auth/signout', {}, {withCredentials: true})
             .then(function (response) {
                 // console.log(response);
                 return response;

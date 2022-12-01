@@ -2,10 +2,8 @@ import axios from "axios";
 
 class AdminService {
     deleteUser(email) {
-        // const userId = localStorage.getItem('session')
-        return axios.post('/auth/:email', {
-            email: email
-        }, {withCredentials: true})
+        let url = `/user/${email}`
+        return axios.delete(url, { withCredentials: true })
             .then(function (response) {
                 console.log(response);
                 return response;
