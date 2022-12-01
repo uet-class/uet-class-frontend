@@ -7,9 +7,9 @@ class ClassService {
         return axios.post('/class', {
             className: className,
             description: description,
-        }, { withCredentials: true })
+        })
             .then(function (response) {
-                console.log(response);
+                // console.log(response);
                 return response;
             })
             .catch(function (error) {
@@ -18,9 +18,7 @@ class ClassService {
     }
 
     listClass() {
-        return axios.get('/class/all', {
-            withCredentials: true,
-        })
+        return axios.get('/class/all')
             .then(function (response) {
                 return response;
             })
@@ -31,9 +29,9 @@ class ClassService {
 
     deleteClass(classId) {
         let url = `/class/${classId}`
-        return axios.delete(url, { withCredentials: true })
+        return axios.delete(url)
             .then(function (response) {
-                console.log(response);
+                // console.log(response);
                 return response;
             })
             .catch(function (error) {
