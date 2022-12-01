@@ -1,23 +1,16 @@
 import Header from "../../components/Header/header";
 import {
-
     Box,
-
     Button,
-
-    Card, CardActions, CardContent,
+    Card,
+    CardActions,
+    CardContent,
     Container,
-
     createTheme,
-
     Grid,
-
     Modal,
-
     ThemeProvider,
-
     Typography,
-
 } from "@mui/material";
 import "./home.css";
 import React, {useEffect, useState} from "react";
@@ -26,24 +19,16 @@ import CreateClass from "../../components/CreateClass/createClass";
 import AuthService from "../../services/auth.service";
 import {useNavigate} from "react-router-dom";
 import classService from "../../services/class.service";
-import TeacherDeleteClass from "../../components/TeacherDeleteClass/teacherDeleteClass";
 
 const Home = () => {
     const [openCreateClass, setOpenCreateClass] = useState(false);
     const handleOpenCreateClass = () => setOpenCreateClass(true);
     const handleCloseCreateClass = () => setOpenCreateClass(false);
 
-    const [openDeleteClass, setOpenDeleteClass] = useState(false);
-    const handleOpenDeleteClass = () => setOpenDeleteClass(true);
-    const handleCloseDeleteClass = () => setOpenDeleteClass(false);
-
-    const [deleteClassID, setDeleteClassID] = useState()
-
-
-    const [refreshClass, setRefreshClass] = useState(false)
+    const [refreshClass, setRefreshClass] = useState(false);
     const handleRefresh = () => {
-        setRefreshClass(current => !current)
-    }
+        setRefreshClass((current) => !current);
+    };
 
     const [isShow, setIsShow] = useState(false);
 
@@ -52,27 +37,16 @@ const Home = () => {
     const navigate = useNavigate();
 
     const getClassTeacher = () => {
-        classService.listClass()
-            .then((listClass) => {
-                console.log(listClass)
-                const classArr = [];
-                if (listClass.data.message.teacherClasses != null) {
-                    for (let i = 0; i < (listClass.data.message.teacherClasses).length; i++) {
-                        if (listClass.data.message.teacherClasses[i].DeletedAt == null) {
-                            classArr.push(listClass.data.message.teacherClasses[i])
-                        }
-                    }
+        classService.listClass().then((listClass) => {
+            const classArr = [];
+            for (let i = 0; i < listClass.data.message.teacherClasses.length; i++) {
+                if (listClass.data.message.teacherClasses[i].DeletedAt == null) {
+                    classArr.push(listClass.data.message.teacherClasses[i]);
                 }
-                if (listClass.data.message.studentClasses != null) {
-                    for (let i = 0; i < (listClass.data.message.studentClasses).length; i++) {
-                        if (listClass.data.message.studentClasses[i].DeletedAt == null) {
-                            classArr.push(listClass.data.message.studentClasses[i])
-                        }
-                    }
-                }
-                setClasses(classArr);
-            })
-    }
+            }
+            setClasses(classArr);
+        });
+    };
 
     useEffect(() => {
         if (!AuthService.isUser()) {
@@ -82,7 +56,7 @@ const Home = () => {
             document.cookie = `sessionId=${localStorage.getItem("sessionId")}`;
             const fetchData = async () => {
                 setIsShow(true);
-                await getClassTeacher()
+                await getClassTeacher();
             };
             fetchData();
         }
@@ -91,8 +65,7 @@ const Home = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [refreshClass]);
 
-
-    console.log(classes)
+//   console.log(classes);
 
     const theme = createTheme({
         typography: {
@@ -121,7 +94,7 @@ const Home = () => {
                             }}
                         >
                             <Grid container>
-                                <Grid item xs={7}>
+                                <Grid item xs={8}>
                                     <Typography
                                         className={"your-class"}
                                         fontSize={32}
@@ -130,7 +103,7 @@ const Home = () => {
                                         Lớp của tôi
                                     </Typography>
                                 </Grid>
-                                <Grid item xs={5} display="flex" justifyContent="flex-end">
+                                <Grid item xs={4} display="flex" justifyContent="flex-end">
                                     <Button
                                         onClick={handleOpenCreateClass}
                                         variant="contained"
@@ -159,10 +132,11 @@ const Home = () => {
                             }}
                         >
                             <Grid
-                                container spacing={4}
+                                container
+                                spacing={4}
                                 sx={{
-                                    maxHeight: '79vh',
-                                    overflow: 'auto'
+                                    maxHeight: "79vh",
+                                    overflow: "auto",
                                 }}
                             >
                                 {classes?.map((userClass) => (
@@ -179,10 +153,9 @@ const Home = () => {
                                             <Box
                                                 sx={{
                                                     paddingTop: "56.25%",
-                                                    backgroundColor: 'primary.dark',
+                                                    backgroundColor: "primary.dark",
                                                 }}
-                                            >
-                                            </Box>
+                                            ></Box>
                                             <CardContent
                                                 sx={{
                                                     flexGrow: 1,
@@ -191,19 +164,15 @@ const Home = () => {
                                                 <Typography variant={"h5"}>
                                                     {userClass.ClassName}
                                                 </Typography>
-                                                <Typography>
-                                                    {userClass.Description}
-                                                </Typography>
+                                                <Typography>{userClass.Description}</Typography>
                                             </CardContent>
                                             <CardActions>
-                                                <Button size={"small"} color={"primary"}>Vào lớp</Button>
-                                                <Button
-                                                    size={"small"} color={"primary"}
-                                                    onClick={() => {
-                                                        handleOpenDeleteClass();
-                                                        setDeleteClassID(userClass.ID);
-                                                    }}
-                                                >Xóa lớp</Button>
+                                                <Button size={"small"} color={"primary"}>
+                                                    Vào lớp
+                                                </Button>
+                                                <Button size={"small"} color={"primary"}>
+                                                    Xóa lớp
+                                                </Button>
                                             </CardActions>
                                         </Card>
                                     </Grid>
@@ -218,21 +187,11 @@ const Home = () => {
                             aria-describedby="modal-modal-description"
                         >
                             <Box>
-                                <CreateClass handleRefresh={handleRefresh}
-                                             handleCloseCreateClass={handleCloseCreateClass}/>
+                                <CreateClass
+                                    handleRefresh={handleRefresh}
+                                    handleCloseCreateClass={handleCloseCreateClass}
+                                />
                             </Box>
-                        </Modal>
-
-                        <Modal
-                            open={openDeleteClass}
-                            onClose={handleCloseDeleteClass}
-                            aria-labelledby="modal-modal-title"
-                            aria-describedby="modal-modal-description"
-                        >
-                            <TeacherDeleteClass handleCloseDeleteClass={handleCloseDeleteClass}
-                                                handleRefresh={handleRefresh}
-                                                deleteClassID={deleteClassID}
-                            />
                         </Modal>
                     </Container>
                 </Header>

@@ -2,13 +2,18 @@ import axios from "axios";
 
 class AdminService {
     deleteUser(email) {
-        document.cookie = `sessionId=${localStorage.getItem("sessionId")}`;
-        const userEmail = email
-        const url = `/user/${userEmail}`;
-        return axios.delete(url).then(function (response) {
-            console.log(response);
-            return response;
+        const userId = localStorage.getItem('session')
+        return axios.post('/auth/:email', {
+            email: email
+        }, {
+            headers: {
+                Cookie: `sessionId=${userId}`
+            }
         })
+            .then(function (response) {
+                console.log(response);
+                return response;
+            })
             .catch(function (error) {
                 console.log(error);
             });

@@ -1,17 +1,16 @@
 import axios from "axios";
 
-const API_URL = process.env.REACT_APP_SERVER_URL;
-
 class AuthService {
     login(email, password) {
-        return axios.post(API_URL + '/auth/signin', {
+        return axios.post('/auth/signin', {
             email: email,
             password: password,
         },)
             .then(function (response) {
-                console.log(response.data.message.sessionId)
-                axios.defaults.headers.cookie = response.data.message.sessionId
+                // console.log(response.data.message.sessionId)
+                // axios.defaults.headers.cookie = response.data.message.sessionId
                 localStorage.setItem("sessionId", JSON.stringify(response.data.message.sessionId));
+                localStorage.setItem("userId", JSON.stringify(response.data.message.userId));
                 return response;
             })
             .catch(function (error) {
@@ -20,15 +19,21 @@ class AuthService {
     }
 
     isUser() {
-        const data = JSON.parse(localStorage.getItem("sessionId"));
-        if (data) {
-            return true;
+        try {
+            const data = JSON.parse(localStorage.getItem("sessionId"));
+            if (data) {
+                return true;
+            }
+            return false;
         }
-        return false;
+        catch (e) {
+            return false;
+        }
+       
     }
 
     register(email, password) {
-        return axios.post(API_URL + '/auth/signup', {
+        return axios.post('/auth/signup', {
             email: email,
             password: password,
         })
@@ -42,12 +47,13 @@ class AuthService {
     }
 
     logout() {
-        const userId = localStorage.getItem('sessionId')
-        console.log(userId)
-        return axios.post(API_URL + '/auth/signout', {}, {
-            headers: {
-                Cookie: `sessionId=${userId}`
-            }
+        localStorage.removeItem("sessionId");
+        localStorage.removeItem("userId");
+ 
+        return axios.post('/auth/signout', {}, {
+            // headers: {
+            //     Cookie: `sessionId=${userId}`
+            // }
         })
             .then(function (response) {
                 console.log(response);
