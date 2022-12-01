@@ -14,6 +14,7 @@ root.render(
 );
 
 axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL
+axios.defaults.withCredentials = true
 
 
 // If you want to start measuring performance in your app, pass a function
