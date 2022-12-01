@@ -25,7 +25,7 @@ const TeacherDeleteClass = (props) => {
         event.preventDefault();
         if (state.button === 0) {
             console.log("No clicked!");
-            props.handleCloseDeleteClass()
+            props.handleCloseTeacherDeleteClass()
         }
         if (state.button === 1) {
             console.log("Yes clicked!");
@@ -33,7 +33,7 @@ const TeacherDeleteClass = (props) => {
                 .then((res) => {
                     if (res.status === 200) {
                         console.log("Success");
-                        props.handleCloseDeleteClass()
+                        props.handleCloseTeacherDeleteClass()
                         props.handleRefresh()
                     } else {
                         const error = new Error(res.error);
