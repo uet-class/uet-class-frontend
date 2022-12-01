@@ -1,15 +1,16 @@
 import axios from "axios";
+import UserService from "./user.service";
 
 class AuthService {
     login(email, password) {
         return axios.post('/auth/signin', {
             email: email,
             password: password,
-        },)
+        },{withCredentials:true})
             .then(function (response) {
                 // console.log(response.data.message.sessionId)
                 // axios.defaults.headers.cookie = response.data.message.sessionId
-                localStorage.setItem("sessionId", JSON.stringify(response.data.message.sessionId));
+                // localStorage.setItem("sessionId", JSON.stringify(response.data.message.sessionId));
                 localStorage.setItem("userId", JSON.stringify(response.data.message.userId));
                 return response;
             })
@@ -18,18 +19,23 @@ class AuthService {
             });
     }
 
-    isUser() {
+    async isUser(navigate) {
         try {
-            const data = JSON.parse(localStorage.getItem("sessionId"));
-            if (data) {
-                return true;
-            }
-            return false;
+            await UserService.getUserInfo()
+                .then((res) => {
+                    console.log(res)
+                    if (res === false){
+                        navigate("/signin");
+                        return false
+                    }
+                    return true
+                })
         }
         catch (e) {
+            navigate("/signin");
             return false;
         }
-       
+
     }
 
     register(email, password) {
@@ -38,7 +44,7 @@ class AuthService {
             password: password,
         })
             .then(function (response) {
-                console.log(response);
+                // console.log(response);
                 return response;
             })
             .catch(function (error) {
@@ -49,14 +55,10 @@ class AuthService {
     logout() {
         localStorage.removeItem("sessionId");
         localStorage.removeItem("userId");
- 
-        return axios.post('/auth/signout', {}, {
-            // headers: {
-            //     Cookie: `sessionId=${userId}`
-            // }
-        })
+
+        return axios.post('/auth/signout', {},{withCredentials: true})
             .then(function (response) {
-                console.log(response);
+                // console.log(response);
                 return response;
             })
             .catch(function (error) {

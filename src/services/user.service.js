@@ -29,6 +29,7 @@ class UserService {
             })
             .catch(function (error) {
                 console.log(error);
+                return false
             });
     }
 }
