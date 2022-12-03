@@ -163,7 +163,7 @@ const Documents = () => {
     AuthService.isUser(navigate)
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },);
+  },[]);
 
   const handleDelete = (a) => {
     console.log(a);

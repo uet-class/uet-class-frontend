@@ -93,7 +93,7 @@ const Assignments = () => {
         AuthService.isUser(navigate)
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },);
+    },[]);
 
     const assignmentStatus = (done) => {
         if (done) {

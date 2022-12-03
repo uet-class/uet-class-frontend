@@ -199,7 +199,7 @@ const ProfileForm = (props) => {
                     style: { color: "black", fontSize: 20, fontWeight: "bold" },
                   }}
                 />
-                <TextField
+                {/* <TextField
                   id="class"
                   disabled
                   name="class"
@@ -211,7 +211,7 @@ const ProfileForm = (props) => {
                   InputLabelProps={{
                     style: { color: "black", fontSize: 20, fontWeight: "bold" },
                   }}
-                />
+                /> */}
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DesktopDatePicker
                     label="Ngày sinh"
