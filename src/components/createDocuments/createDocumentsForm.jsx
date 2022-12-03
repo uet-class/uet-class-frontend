@@ -2,6 +2,7 @@ import { Box, Button, Grid, Typography } from "@mui/material";
 import { React, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import "./createDocumentsForm.css";
+import ClassService from "../../services/class.service";
 
 const style = {
   position: "absolute",
@@ -17,17 +18,23 @@ const style = {
   borderRadius: "25px",
 };
 
-const CreateDocuments = () => {
+const CreateDocuments = (props) => {
   const [selectedFile, setSelectedFile] = useState(null);
+  var formData = new FormData();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     // const data = event.target;
-    console.log(selectedFile);
+    // console.log(selectedFile);
+    formData.append("file", selectedFile);
+    ClassService.uploadClassMaterial(20, formData).then(() => {
+      props.handleRefresh();
+      props.handleCloseCreateDocument();
+    });
   };
 
   const handleFileInput = (e) => {
-    console.log(e.target.files[0]);
+    // console.log(typeof e.target.files[0]);
     setSelectedFile(e.target.files[0]);
   };
   return (
