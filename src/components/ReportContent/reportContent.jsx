@@ -13,13 +13,13 @@ const style = {
 };
 
 
-const ReportContent = () => {
+const ReportContent = (props) => {
     return (
         <Box sx={style}>
             <Grid container>
                 <Grid item xs={12}>
                     <Typography variant={"h5"}>
-                        Báo cáo của Phạm Vũ Minh
+                        Báo cáo của người dùng số {props.reporterID}
                     </Typography>
                 </Grid>
                 <Grid
@@ -31,7 +31,7 @@ const ReportContent = () => {
                     <Typography
                         variant={"normal-text"}
                     >
-                        Ae lừa tôi, xóa hết DB đi rồi chúng ta đi ngủ là vừa
+                        {props.reportMessage}
                     </Typography>
                 </Grid>
             </Grid>

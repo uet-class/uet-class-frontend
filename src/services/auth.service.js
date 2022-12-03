@@ -6,7 +6,7 @@ class AuthService {
         return axios.post('/auth/signin', {
             email: email,
             password: password,
-        })
+        }, {withCredentials: true})
             .then(function (response) {
                 // console.log(response.data.message.sessionId)
                 // axios.defaults.headers.cookie = response.data.message.sessionId
@@ -23,18 +23,38 @@ class AuthService {
         try {
             await UserService.getUserInfo()
                 .then((res) => {
-                    // console.log(res)
-                    if (res === false) {
+                    console.log(res)
+                    if (res === false || res.IsAdmin) {
                         navigate("/signin");
                         return false
                     }
-                    return true
+                    if (!res.IsAdmin) {
+                        return true
+                    }
                 })
         } catch (e) {
             navigate("/signin");
             return false;
         }
+    }
 
+    async isAdmin(navigate) {
+        try {
+            await UserService.getUserInfo()
+                .then((res) => {
+                    console.log(res)
+                    if (res === false || res.IsAdmin === false) {
+                        navigate("/signin");
+                        return false
+                    }
+                    if (res.IsAdmin) {
+                        return true
+                    }
+                })
+        } catch (e) {
+            navigate("/signin");
+            return false;
+        }
     }
 
     register(email, password) {
@@ -52,10 +72,10 @@ class AuthService {
     }
 
     logout() {
-        // localStorage.removeItem("sessionId");
+        localStorage.removeItem("sessionId");
         localStorage.removeItem("userId");
 
-        return axios.post('/auth/signout')
+        return axios.post('/auth/signout', {}, {withCredentials: true})
             .then(function (response) {
                 // console.log(response);
                 return response;

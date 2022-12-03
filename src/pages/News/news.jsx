@@ -53,15 +53,10 @@ const News = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!AuthService.isUser()) {
-            // if (false) {
-            navigate("/signin");
-        } else {
-            const fetchData = async () => {
-            };
-            fetchData();
-        }
-    });
+        AuthService.isUser(navigate)
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },);
 
     const handleOpenCreatePost = () => setOpenCreatePost(true);
     const handleCloseCreatePost = () => setOpenCreatePost(false);

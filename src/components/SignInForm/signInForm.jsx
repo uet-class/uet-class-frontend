@@ -19,7 +19,12 @@ const SignInForm = () => {
         AuthService.login(data.email.value, data.password.value)
             .then((res) => {
                 if (res.status === 200) {
-                    navigate('/home');
+                    console.log(res)
+                    if (res.data.message.isAdmin === true) {
+                        navigate('/admin/reports')
+                    } else {
+                        navigate('/home');
+                    }
                 } else {
                     const error = new Error(res.error);
                     throw error;
