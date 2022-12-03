@@ -3,9 +3,9 @@ import axios from "axios";
 class AdminService {
     deleteUser(email) {
         let url = `/user/${email}`
-        return axios.delete(url, { withCredentials: true })
+        return axios.delete(url)
             .then(function (response) {
-                console.log(response);
+                // console.log(response);
                 return response;
             })
             .catch(function (error) {
