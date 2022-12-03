@@ -13,6 +13,7 @@ import {
   Container,
   Paper,
   Avatar,
+  Modal,
 } from "@mui/material";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import Table from "@mui/material/Table";
@@ -25,6 +26,7 @@ import ArticleIcon from "@mui/icons-material/Article";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useState, useEffect } from "react";
 import UserService from "../../services/user.service";
+import AddMemberClassForm from "../../components/AddMemberClassForm/addMemberClassForm";
 
 const columns = [
   { id: "FullName", label: "", minWidth: 220 },
@@ -45,15 +47,25 @@ function createData(FullName, DateOfBirth, isTeacher, UserInfo) {
 // ];
 
 const Other = () => {
-  const isTeacher = false; //tam thoi
-  const [refreshPage, setRefreshPage] = useState(false);
+  const isTeacher = true; //tam thoi
+  // const [refreshPage, setRefreshPage] = useState(false);
   const [userInfo, setUserInfo] = useState();
   const [rows, setRows] = useState([]);
+
+  const [addMemberClass, setAddMemberClass] = useState(false);
+  const handleCloseAddMemberClass = () => setAddMemberClass(false);
+  const handleOpenAddMemeberClass = () => setAddMemberClass(true);
+
+  const handleDeleteMember = (id) => {
+    console.log(id)
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       await UserService.getUserInfo().then((info) => {
-        console.log(userInfo)
+        console.log(userInfo);
         setUserInfo(info);
+        setRows([]);
         for (let i = 0; i < 3; i++) {
           setRows((rows) => [
             ...rows,
@@ -70,7 +82,7 @@ const Other = () => {
     };
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refreshPage]);
+  },[]);
 
   var sideBar = {};
   sideBar.classLinks = ["/home", "/assignments"];
@@ -98,8 +110,8 @@ const Other = () => {
   ];
 
   const handleAddPeople = () => {
-    setRefreshPage(prev => !prev)
-    console.log("addpeople");
+    // setRefreshPage((prev) => !prev);
+    handleOpenAddMemeberClass()
   };
 
   return (
@@ -238,7 +250,7 @@ const Other = () => {
                                   //     handleDelete(row.id);
                                   //   }}
                                 >
-                                  <DeleteIcon style={{ color: "red" }} />
+                                  <DeleteIcon style={{ color: "red" }} onClick={() => {handleDeleteMember(row.UserInfo.ID)}}/>
                                 </Button>
                               )}{" "}
                             </TableCell>
@@ -251,6 +263,16 @@ const Other = () => {
               </Paper>
             </Box>
           </Container>
+          <Modal
+            open={addMemberClass}
+            onClose={handleCloseAddMemberClass}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box>
+              <AddMemberClassForm />
+            </Box>
+          </Modal>
         </div>
       </ClassHeader>
     </DashbroadLayout>
