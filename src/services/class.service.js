@@ -3,7 +3,6 @@ import axios from "axios";
 
 class ClassService {
     createClass(className, description) {
-        // document.cookie = `sessionId=${localStorage.getItem("sessionId")}`;
         return axios.post('/class', {
             className: className,
             description: description,
@@ -24,6 +23,42 @@ class ClassService {
             })
             .catch(function (error) {
                 console.error(error);
+            });
+    }
+
+    listClassMaterials(classId) {
+        return axios.get(`/class/${classId}/materials`)
+            .then(function (response) {
+                return response;
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    }
+
+    uploadClassMaterial(classId, data) {
+        return axios.post(`/class/${classId}/upload-material`, data, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+            .then(function (response) {
+                // console.log(response)
+                return response;
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    }
+
+    deleteClassMaterial(classId, fileName) {
+        return axios.delete(`/class/${classId}/materials/${fileName}`)
+            .then(function (response) {
+                // console.log(response);
+                return response;
+            })
+            .catch(function (error) {
+                console.log(error);
             });
     }
 
