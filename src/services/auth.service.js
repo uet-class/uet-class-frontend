@@ -24,17 +24,37 @@ class AuthService {
             await UserService.getUserInfo()
                 .then((res) => {
                     console.log(res)
-                    if (res === false) {
+                    if (res === false || res.IsAdmin) {
                         navigate("/signin");
                         return false
                     }
-                    return true
+                    if (!res.IsAdmin) {
+                        return true
+                    }
                 })
         } catch (e) {
             navigate("/signin");
             return false;
         }
+    }
 
+    async isAdmin(navigate) {
+        try {
+            await UserService.getUserInfo()
+                .then((res) => {
+                    console.log(res)
+                    if (res === false || res.IsAdmin === false) {
+                        navigate("/signin");
+                        return false
+                    }
+                    if (res.IsAdmin) {
+                        return true
+                    }
+                })
+        } catch (e) {
+            navigate("/signin");
+            return false;
+        }
     }
 
     register(email, password) {

@@ -8,7 +8,7 @@ class UserService {
             DateOfBirth: data.dateOfBirth.value,
             Password: "1",
             PhoneNumber: data.phoneNumber.value
-        },)
+        },{withCredentials: true})
             .then(function (response) {
 
                 return response;

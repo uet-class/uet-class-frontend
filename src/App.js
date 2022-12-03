@@ -9,7 +9,8 @@ import SignUp from "./pages/SignUp/signUp";
 import Home from "./pages/Home/home";
 import News from "./pages/News/news";
 import Other from "./pages/Other/other";
-import AdminDashboard from "./pages/Admin/adminDashboard";
+import AdminReports from "./pages/Admin/adminReports";
+import AdminClasses from "./pages/Admin/adminClasses";
 
 function App() {
   return (
@@ -23,9 +24,8 @@ function App() {
           <Route path="/assignments" element={<Assignments />} />
           <Route path="/news" element={<News />} />
           <Route path="/other" element={<Other />} />
-          <Route path="/news" element={<News />} />
-          <Route path="/other" element={<Other />} />
-          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/reports" element={<AdminReports />} />
+          <Route path="/admin/class" element={<AdminClasses />} />
       </Routes>
   );
 }
