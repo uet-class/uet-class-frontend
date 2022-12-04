@@ -51,7 +51,7 @@ function createData(FullName, DateOfBirth, isTeacher, UserInfo) {
 
 const Other = () => {
   const isTeacher = true; //tam thoi
-  let classId = 20;
+  let classId = localStorage.getItem("classID");;
   const [refreshPage, setRefreshPage] = useState(false);
   const [userInfoDelete, setUserInfoDelete] = useState();
   const [rows, setRows] = useState([]);

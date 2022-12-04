@@ -6,7 +6,7 @@ class UserService {
         return axios.post(`/user/${userId}`,  {
             FullName: data.fullname.value,
             DateOfBirth: data.dateOfBirth.value,
-            Password: "1",
+            // Password: "1",
             PhoneNumber: data.phoneNumber.value
         },{withCredentials: true})
             .then(function (response) {
