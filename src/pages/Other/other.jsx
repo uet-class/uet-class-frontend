@@ -84,15 +84,18 @@ const Other = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
 
+  //hardcode for class id
+  let classID = localStorage.getItem("classID");
+
   var sideBar = {};
   sideBar.classLinks = ["/home", "/assignments"];
   sideBar.classes = ["Tương tác người máy", "Xác suất thống kê"];
   sideBar.basicLink = [
     "/home",
-    "/news",
-    "/documents",
-    "/assignments",
-    "/other",
+    `/class/${classID}/posts`,
+    `/class/${classID}/documents`,
+    `/class/${classID}/assignments`,
+    `/class/${classID}/other`,
   ];
   sideBar.basicLinkName = [
     "Trang chủ",

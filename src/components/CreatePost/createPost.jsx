@@ -1,6 +1,8 @@
-import {Box, Button, Grid, TextField, Typography} from "@mui/material";
-import React, {useState} from "react";
+import {Alert, Box, Button, Grid, TextField, Typography} from "@mui/material";
+import React, {useEffect, useState} from "react";
 import AddIcon from "@mui/icons-material/Add";
+import UserService from "../../services/user.service";
+import PostService from "../../services/post.service";
 
 const style = {
     position: 'absolute',
@@ -14,30 +16,47 @@ const style = {
     p: 4,
 };
 
-const CreatePost = () => {
-    //const [createPostFail, setCreatePostFail] = useState(false);
-    const [selectedFile, setSelectedFile] = useState(null);
+const CreatePost = (props) => {
+    const [createPostFail, setCreatePostFail] = useState(false);
+    const [creatorID, setCreatorID] = useState()
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
+    useEffect(() => {
+        const fetchData = async () => {
+            UserService.getUserInfo().then((info) => {
+                setCreatorID(info.ID)
+            });
+        };
+        fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    const handleSubmit = async (event) => {
+        event.preventDefault()
         const data = event.target;
-        console.log(data.title.value)
-        console.log(data.content.value)
-        console.log(selectedFile);
-    };
-
-    const handleFileInput = (e) => {
-        console.log(e.target.files[0])
-        setSelectedFile(e.target.files[0])
+        let classID = parseInt(localStorage.getItem("classID"))
+        PostService.createPost(classID, creatorID, data.title.value, data.content.value)
+            .then((res) => {
+                if (res.status === 200) {
+                    console.log("Success");
+                    props.handleCloseCreatePost()
+                    props.handleRefresh()
+                } else {
+                    const error = new Error(res.error);
+                    throw error;
+                }
+            })
+            .catch((err) => {
+                setCreatePostFail(true);
+            });
     };
 
     return (
         <Box sx={style}>
-            {/*{createPostFail ? (*/}
-            {/*    <Alert severity="error">*/}
-            {/*        Tạo bài đăng thất bại*/}
-            {/*    </Alert>*/}
-            {/*) : null}*/}
+            {createPostFail ? (
+                <Alert severity="error">
+                    Tạo bài đăng thất bại
+                </Alert>
+            ) : null}
             <Box
                 component={"form"} onSubmit={handleSubmit}
             >
@@ -74,16 +93,6 @@ const CreatePost = () => {
                         paddingBottom: 3,
                     }}
                 ></TextField>
-                <Button
-                    variant="contained"
-                    component="label"
-                >
-                    <input
-                        name="file"
-                        type="file"
-                        onChange={handleFileInput}
-                    />
-                </Button>
                 <Grid
                     display="flex"
                     justifyContent="flex-end"
