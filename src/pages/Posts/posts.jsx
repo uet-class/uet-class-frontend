@@ -13,14 +13,15 @@ import {
     Box,
     Button,
     createTheme, Grid,
-    Modal, TextField,
+    Modal,
     ThemeProvider,
     Typography,
 } from "@mui/material";
 import ClassHeader from "../../components/ClassHeader/classHeader";
 import AddIcon from "@mui/icons-material/Add";
 import CreatePost from "../../components/CreatePost/createPost";
-import Comment from "../../components/Comment/comment";
+import postService from "../../services/post.service";
+import UserService from "../../services/user.service";
 
 const Posts = () => {
     //hardcode for class id
@@ -58,11 +59,42 @@ const Posts = () => {
 
     const navigate = useNavigate();
 
+    const [post, setPost] = useState()
+    const [creator, setCreator] = useState()
+
+    const getAllPosts = () => {
+        postService.getAllPosts(classID).then((listPosts) => {
+            const postArr = [];
+            const creatorArr = [];
+            if (listPosts.data.message != null) {
+                for(let i = 0;i < listPosts.data.message.length;i++) {
+                    if (listPosts.data.message[i].DeletedAt == null) {
+                        postArr.push(listPosts.data.message[i]);
+                    }
+                    console.log(listPosts.data.message[i].CreatorID)
+                    UserService.getCreatorName(listPosts.data.message[i].CreatorID).then((creatorName) => {
+                        creatorArr.push(creatorName)
+                    })
+                }
+            }
+            postArr.reverse();
+            creatorArr.reverse();
+            setCreator(creatorArr);
+            setPost(postArr);
+        });
+    };
+
+    console.log(creator)
+
     useEffect(() => {
         AuthService.isUser(navigate)
+        const fetchData = async () => {
+            await getAllPosts();
+        };
+        fetchData()
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[refreshPost]);
+    }, [refreshPost]);
 
     const handleOpenCreatePost = () => setOpenCreatePost(true);
     const handleCloseCreatePost = () => setOpenCreatePost(false);
@@ -72,49 +104,6 @@ const Posts = () => {
             fontFamily: ["Inter", "sans-serif"].join(","),
         },
     });
-
-    const news = [1, 2, 3, 4, 5]
-    const comment_example = [
-        {
-            name: "Phạm Vũ Minh",
-            content: "Vâng ạ",
-            time: "1 giờ trước",
-            avatar: "https://i.insider.com/61135525ad63f30019501966?width=700",
-        },
-        {
-            name: "Phạm Vũ Minh",
-            content: "Vâng ạ",
-            time: "1 giờ trước",
-            avatar: "https://i.insider.com/61135525ad63f30019501966?width=700",
-        },
-        {
-            name: "Phạm Vũ Minh",
-            content: "Vâng ạ",
-            time: "1 giờ trước",
-            avatar: "https://i.insider.com/61135525ad63f30019501966?width=700",
-        },
-
-        {
-            name: "Phạm Vũ Minh",
-            content: "Vâng ạ",
-            time: "1 giờ trước",
-            avatar: "https://i.insider.com/61135525ad63f30019501966?width=700",
-        },
-
-        {
-            name: "Phạm Vũ Minh",
-            content: "Vâng ạ",
-            time: "1 giờ trước",
-            avatar: "https://i.insider.com/61135525ad63f30019501966?width=700",
-        },
-
-        {
-            name: "Phạm Vũ Minh",
-            content: "Vâng ạ",
-            time: "1 giờ trước",
-            avatar: "https://i.insider.com/61135525ad63f30019501966?width=700",
-        },
-    ];
 
     return (
         <ThemeProvider theme={theme}>
@@ -156,7 +145,7 @@ const Posts = () => {
                                 overflow: 'auto'
                             }}
                         >
-                            {news.map(() => (
+                            {post?.map((post) => (
                                 <Grid item xs={12} paddingBottom={3}>
                                     <Box
                                         sx={{
@@ -178,12 +167,7 @@ const Posts = () => {
                                                 <Grid container>
                                                     <Grid item xs={12}>
                                                         <Typography variant={"h5"}>
-                                                            Phạm Vũ Minh
-                                                        </Typography>
-                                                    </Grid>
-                                                    <Grid item xs={12}>
-                                                        <Typography variant={"normal-text"}>
-                                                            13:13
+                                                            {post.CreatorID}
                                                         </Typography>
                                                     </Grid>
                                                 </Grid>
@@ -197,58 +181,11 @@ const Posts = () => {
                                             }}
                                         >
                                             <Typography variant={"h4"}>
-                                                Đây là tiêu đề
+                                                {post.Title}
                                             </Typography>
                                             <Typography variant={"h5"}>
-                                                Đây là nội dung
+                                                {post.Content}
                                             </Typography>
-                                        </Grid>
-
-                                        <Grid
-                                            item
-                                            sx={{
-                                                paddingLeft: 10,
-                                                paddingTop: 5,
-                                                maxHeight: "30vh",
-                                                overflow: 'auto'
-                                            }}
-                                        >
-                                            {comment_example.map((comment) => {
-                                                return (
-                                                    <Comment
-                                                        name={comment.name}
-                                                        avatar={comment.avatar}
-                                                        content={comment.content}
-                                                        time={comment.time}
-                                                    />
-                                                );
-                                            })}
-                                        </Grid>
-
-                                        <Grid container
-                                              sx={{
-                                                  paddingLeft: 2,
-                                                  paddingTop: 2,
-                                              }}
-                                        >
-                                            <Box component={"form"}
-                                                 sx={{
-                                                     paddingBottom: 2,
-                                                     width: "80vw"
-                                                 }}
-                                            >
-                                                <TextField
-                                                    name={"comment"}
-                                                    sx={{
-                                                        bgcolor: "#D9D9D9",
-                                                        width: "100%",
-                                                    }}
-                                                >
-                                                </TextField>
-                                                <Button>
-                                                    Bình luận
-                                                </Button>
-                                            </Box>
                                         </Grid>
                                     </Box>
                                 </Grid>
