@@ -51,6 +51,17 @@ class ClassService {
             });
     }
 
+    inviteMember(classId, email) {
+        return axios.post(`/class/${classId}/send-invitation`, email)
+            .then(function (response) {
+                console.log(response)
+                return response;
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    }
+
     deleteClassMaterial(classId, fileName) {
         return axios.delete(`/class/${classId}/materials/${fileName}`)
             .then(function (response) {

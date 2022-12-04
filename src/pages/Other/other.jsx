@@ -273,7 +273,7 @@ const Other = () => {
             aria-describedby="modal-modal-description"
           >
             <Box>
-              <AddMemberClassForm />
+              <AddMemberClassForm handleCloseAddMemberClass={handleCloseAddMemberClass} />
             </Box>
           </Modal>
         </div>
