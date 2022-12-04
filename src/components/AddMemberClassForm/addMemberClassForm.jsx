@@ -96,7 +96,7 @@ const AddMemberClassForm = () => {
       <Container maxWidth={false} disableGutters>
         <Box
           sx={{
-            borderBottom: 1,
+            // borderBottom: 1,
             borderColor: "black",
             paddingTop: 3,
             // paddingBottom: 1,
