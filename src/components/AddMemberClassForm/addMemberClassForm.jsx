@@ -5,12 +5,14 @@ import {
   Grid,
   Typography,
   Container,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
   Paper,
-  Button,
 } from "@mui/material";
 import { React, useState } from "react";
 import SuggestMember from "../SuggestMember/suggestMember";
-import ClassService from "../../services/class.service";
 
 const style = {
   position: "absolute",
@@ -63,32 +65,27 @@ const suggest_example = [
 ];
 
 const AddMemberClassForm = () => {
-  const [emailAdd, setEmailAdd] = useState([]);
-  // const [role, setRole] = useState("Học viên");
-  let classId = 20;
+  const [emailAdd, setEmailAdd] = useState();
+  const [role, setRole] = useState("");
 
-  // const handleChangeRole = (event) => {
-  //   setRole(event.target.value);
-  // };
+  const handleChangeRole = (event) => {
+    setRole(event.target.value);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     // const data = event.target;
-    ClassService.inviteMember(classId, emailAdd)
-    setEmailAdd([""]);
-    console.log(emailAdd);
+    console.log(event.target);
   };
 
   const handleChangeEmailInput = (e) => {
-    console.log(emailAdd);
-    setEmailAdd([]);
-    setEmailAdd((emails) => [...emails, e.target.value]);
+    console.log(e.target.value);
+    setEmailAdd(e.target.value);
   };
 
   const handleChooseEmailInput = (email) => {
     // console.log(e.target.value);
-    setEmailAdd([]);
-    setEmailAdd((emails) => [...emails, email]);
+    setEmailAdd(email);
   };
 
   return (
@@ -104,70 +101,43 @@ const AddMemberClassForm = () => {
           }}
         >
           <Container maxWidth={false} disableGutters>
-            <Typography
-              fontSize={25}
-              fontWeight={600}
-              color="black"
-              paddingBottom={"10px"}
-            >
-              Mời học viên mới
+            <Typography fontSize={25} fontWeight={600} color="black" paddingBottom={"10px"}>
+              Mời thành viên mới
             </Typography>
             <Box component={"form"} onSubmit={handleSubmit}>
               <Grid container>
-                <Grid item xs={12} sx={{ marginTop: "0px" }}>
+                <Grid item xs={9.8} sx={{ marginTop: "0px" }}>
                   <TextField
                     name="email"
-                    // label="Email"
+                    label="Email người dùng"
                     defaultValue={"example@gmail.com"}
                     variant="standard"
                     fullWidth
-                    sx={{ marginBottom: "10px" }}
+                    sx={{ marginBottom: "30px" }}
                     onChange={handleChangeEmailInput}
-                    value={emailAdd[0]}
+                    value={emailAdd}
                   />
                 </Grid>
-                {/* <Grid item xs={0.2} sx={{ marginTop: "0px" }}></Grid>
+                <Grid item xs={0.2} sx={{ marginTop: "0px" }}></Grid>
                 <Grid item xs={2} sx={{ marginTop: "0px" }}>
                   <FormControl variant="standard" sx={{ minWidth: "100%" }}>
                     <InputLabel id="demo-simple-select-standard-label">
                       Vai trò
                     </InputLabel>
                     <Select
-                      labelId="role"
-                      id="role"
-                      name="role"
+                      labelId="demo-simple-select-standard-label"
+                      id="demo-simple-select-standard"
                       value={role}
                       onChange={handleChangeRole}
                       defaultValue={"Học viên"}
-                      // label="Age"
+                      label="Age"
                     >
                       <MenuItem value={"Giảng viên"}>Giảng viên</MenuItem>
                       <MenuItem value={"Học viên"}>Học viên</MenuItem>
                     </Select>
                   </FormControl>
-                </Grid> */}
+                </Grid>
               </Grid>
-              <Box display="flex" justifyContent="flex-end">
-                <Button
-                  type="submit"
-                  variant="contained"
-                  sx={{
-                    backgroundColor: "#1967D2",
-                    borderRadius: 4,
-                    width: "15%",
-                    marginBottom: "10px",
-                  }}
-                >
-                  <Typography
-                    // paddingLeft={1}
-                    className={"sign-in"}
-                    fontSize={15}
-                    fontWeight={500}
-                  >
-                    Mời
-                  </Typography>
-                </Button>
-              </Box>
             </Box>
           </Container>
         </Box>
@@ -185,11 +155,10 @@ const AddMemberClassForm = () => {
               return (
                 <Box
                   onClick={() => {
-                    // handleChooseEmailInput(suggest.email);
-                    handleChooseEmailInput("minhquan.vo01@gmail.com");
+                    handleChooseEmailInput(suggest.email);
                   }}
                   sx={{
-                    cursor: "pointer",
+                    cursor: "pointer"
                   }}
                 >
                   <SuggestMember

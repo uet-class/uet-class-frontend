@@ -26,6 +26,16 @@ class ClassService {
             });
     }
 
+    memberClass(classId) {
+        return axios.get(`/class/${classId}`)
+            .then(function (response) {
+                return response;
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    }
+
     listClassMaterials(classId) {
         return axios.get(`/class/${classId}/materials`)
             .then(function (response) {
@@ -53,6 +63,21 @@ class ClassService {
 
     inviteMember(classId, email) {
         return axios.post(`/class/${classId}/send-invitation`, email)
+            .then(function (response) {
+                console.log(response)
+                return response;
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    }
+
+    removeMember(classId, studentEmail) {
+        return axios.post(`/class/${classId}/remove-student`, null, {
+            params: {
+                studentEmail: studentEmail
+            }
+        })
             .then(function (response) {
                 console.log(response)
                 return response;

@@ -14,6 +14,9 @@ import {
   Paper,
   Avatar,
   Modal,
+  Dialog,
+  DialogTitle,
+  DialogActions,
 } from "@mui/material";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import Table from "@mui/material/Table";
@@ -25,8 +28,8 @@ import TableRow from "@mui/material/TableRow";
 import ArticleIcon from "@mui/icons-material/Article";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useState, useEffect } from "react";
-import UserService from "../../services/user.service";
 import AddMemberClassForm from "../../components/AddMemberClassForm/addMemberClassForm";
+import ClassService from "../../services/class.service";
 
 const columns = [
   { id: "FullName", label: "", minWidth: 220 },
@@ -48,41 +51,66 @@ function createData(FullName, DateOfBirth, isTeacher, UserInfo) {
 
 const Other = () => {
   const isTeacher = true; //tam thoi
-  // const [refreshPage, setRefreshPage] = useState(false);
-  const [userInfo, setUserInfo] = useState();
+  let classId = 20;
+  const [refreshPage, setRefreshPage] = useState(false);
+  const [userInfoDelete, setUserInfoDelete] = useState();
   const [rows, setRows] = useState([]);
+  // const [teacherList, setTeacherList] = useState([]);
+  // const [studentList, setStudentList] = useState([]);
 
   const [addMemberClass, setAddMemberClass] = useState(false);
   const handleCloseAddMemberClass = () => setAddMemberClass(false);
   const handleOpenAddMemeberClass = () => setAddMemberClass(true);
 
-  const handleDeleteMember = (id) => {
-    console.log(id)
-  }
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const handleRefreshPage = () => {
+    setRefreshPage((prev => !prev))
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
+  const handleOpenDialog = (info) => {
+    console.log(userInfoDelete);
+    setUserInfoDelete(info);
+    setOpenDialog(true);
+  };
+
+  const handleDeleteMember = () => {
+    // console.log(userInfoDelete);
+    ClassService.removeMember(classId, userInfoDelete.Email).then(() => {
+      handleRefreshPage()
+    });
+    handleCloseDialog();
+  };
 
   useEffect(() => {
     const fetchData = async () => {
-      await UserService.getUserInfo().then((info) => {
-        console.log(userInfo);
-        setUserInfo(info);
-        setRows([]);
-        for (let i = 0; i < 3; i++) {
+      await ClassService.memberClass(classId).then((info) => {
+        const students = info.data.message.Students
+        const teachers = info.data.message.Teachers
+        setRows([])
+        console.log(teachers[0]);
+
+        for (let i = 0; i < teachers.length; i++){
           setRows((rows) => [
             ...rows,
-            createData(info.FullName, info.DateOfBirth, true, info),
+            createData(teachers[i].FullName, teachers[i].DateOfBirth, true, teachers[i]),
           ]);
         }
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < students.length; i++){
           setRows((rows) => [
             ...rows,
-            createData(info.FullName, info.DateOfBirth, false, info),
+            createData(students[i].FullName, students[i].DateOfBirth, false, students[i]),
           ]);
         }
       });
     };
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[]);
+  }, [refreshPage]);
 
   var sideBar = {};
   sideBar.classLinks = ["/home", "/assignments"];
@@ -111,7 +139,7 @@ const Other = () => {
 
   const handleAddPeople = () => {
     // setRefreshPage((prev) => !prev);
-    handleOpenAddMemeberClass()
+    handleOpenAddMemeberClass();
   };
 
   return (
@@ -244,13 +272,13 @@ const Other = () => {
                             </TableCell>
                             <TableCell>
                               {isTeacher && (
-                                <Button
-                                  sx={{ width: 3 }}
-                                  //   onClick={() => {
-                                  //     handleDelete(row.id);
-                                  //   }}
-                                >
-                                  <DeleteIcon style={{ color: "red" }} onClick={() => {handleDeleteMember(row.UserInfo.ID)}}/>
+                                <Button sx={{ width: 3 }}>
+                                  <DeleteIcon
+                                    style={{ color: "red" }}
+                                    onClick={() => {
+                                      handleOpenDialog(row.UserInfo);
+                                    }}
+                                  />
                                 </Button>
                               )}{" "}
                             </TableCell>
@@ -270,9 +298,38 @@ const Other = () => {
             aria-describedby="modal-modal-description"
           >
             <Box>
-              <AddMemberClassForm handleCloseAddMemberClass={handleCloseAddMemberClass} />
+              <AddMemberClassForm
+                handleCloseAddMemberClass={handleCloseAddMemberClass}
+              />
             </Box>
           </Modal>
+          <Dialog
+            open={openDialog}
+            onClose={handleCloseDialog}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              {`Bạn muốn xóa người dùng "${
+                userInfoDelete ? userInfoDelete.FullName : ""
+              }" ra khỏi lớp?`}
+            </DialogTitle>
+            <DialogActions>
+              <Button
+                type="submit"
+                variant="contained"
+                onClick={handleCloseDialog}
+                sx={{
+                  backgroundColor: "#1967D2",
+                }}
+              >
+                Hủy
+              </Button>
+              <Button onClick={handleDeleteMember} autoFocus>
+                Xóa
+              </Button>
+            </DialogActions>
+          </Dialog>
         </div>
       </ClassHeader>
     </DashbroadLayout>
