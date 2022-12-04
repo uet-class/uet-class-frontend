@@ -30,6 +30,18 @@ class UserService {
                 return false
             });
     }
+
+    getCreatorName(creatorID) {
+        return axios.get(`/user/${creatorID}`)
+            .then(function (response) {
+                // console.log(response.data.message)
+                return response.data.message.FullName
+            })
+            .catch(function (error) {
+                console.log(error);
+                return false
+            });
+    }
 }
 
 export default new UserService();

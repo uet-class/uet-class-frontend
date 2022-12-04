@@ -46,14 +46,28 @@ const Home = () => {
   const getClassTeacher = () => {
     classService.listClass().then((listClass) => {
       const classArr = [];
-      for (let i = 0; i < listClass.data.message.teacherClasses.length; i++) {
-        if (listClass.data.message.teacherClasses[i].DeletedAt == null) {
-          classArr.push(listClass.data.message.teacherClasses[i]);
+      if (listClass.data.message.teacherClasses != null) {
+        for (let i = 0; i < listClass.data.message.teacherClasses.length; i++) {
+          if (listClass.data.message.teacherClasses[i].DeletedAt == null) {
+            classArr.push(listClass.data.message.teacherClasses[i]);
+          }
+        }
+      }
+      if (listClass.data.message.studentClasses != null) {
+        for (let i = 0; i < listClass.data.message.studentClasses.length; i++) {
+          if (listClass.data.message.studentClasses[i].DeletedAt == null) {
+            classArr.push(listClass.data.message.studentClasses[i]);
+          }
         }
       }
       setClasses(classArr);
     });
   };
+
+  const handleJoinClass = (id) => {
+    localStorage.setItem("classID", id);
+    navigate(`/class/${id}/posts`);
+  }
 
   useEffect(() => {
     AuthService.isUser(navigate)
@@ -167,7 +181,13 @@ const Home = () => {
                         <Typography>{userClass.Description}</Typography>
                       </CardContent>
                       <CardActions>
-                        <Button size={"small"} color={"primary"}>
+                        <Button
+                            size={"small"}
+                            color={"primary"}
+                            onClick={() => {
+                              handleJoinClass(userClass.ID);
+                            }}
+                        >
                           Vào lớp
                         </Button>
                         <Button
