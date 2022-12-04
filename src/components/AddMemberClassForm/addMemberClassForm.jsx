@@ -65,7 +65,7 @@ const style = {
 const AddMemberClassForm = () => {
   const [emailAdd, setEmailAdd] = useState([]);
   // const [role, setRole] = useState("Học viên");
-  let classId = 20;
+  let classId = localStorage.getItem("classID");
 
   // const handleChangeRole = (event) => {
   //   setRole(event.target.value);
