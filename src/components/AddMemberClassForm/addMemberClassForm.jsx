@@ -5,11 +5,11 @@ import {
   Grid,
   Typography,
   Container,
-  Paper,
+  // Paper,
   Button,
 } from "@mui/material";
 import { React, useState } from "react";
-import SuggestMember from "../SuggestMember/suggestMember";
+// import SuggestMember from "../SuggestMember/suggestMember";
 import ClassService from "../../services/class.service";
 
 const style = {
@@ -26,41 +26,41 @@ const style = {
   borderRadius: "25px",
 };
 
-const suggest_example = [
-  {
-    name: "Phạm Vũ Minh",
-    email: "minhwjbu@gmail.com",
-    avatar: "https://i.insider.com/61135525ad63f30019501966?width=700",
-  },
-  {
-    name: "Phạm Vũ Minh",
-    email: "minhwjbu@gmail.com",
-    avatar: "https://i.insider.com/61135525ad63f30019501966?width=700",
-  },
-  {
-    name: "Phạm Vũ Minh",
-    email: "minhwjbu@gmail.com",
-    avatar: "https://i.insider.com/61135525ad63f30019501966?width=700",
-  },
+// const suggest_example = [
+//   {
+//     name: "Phạm Vũ Minh",
+//     email: "minhwjbu@gmail.com",
+//     avatar: "https://i.insider.com/61135525ad63f30019501966?width=700",
+//   },
+//   {
+//     name: "Phạm Vũ Minh",
+//     email: "minhwjbu@gmail.com",
+//     avatar: "https://i.insider.com/61135525ad63f30019501966?width=700",
+//   },
+//   {
+//     name: "Phạm Vũ Minh",
+//     email: "minhwjbu@gmail.com",
+//     avatar: "https://i.insider.com/61135525ad63f30019501966?width=700",
+//   },
 
-  {
-    name: "Phạm Vũ Minh",
-    email: "minhwjbu@gmail.com",
-    avatar: "https://i.insider.com/61135525ad63f30019501966?width=700",
-  },
+//   {
+//     name: "Phạm Vũ Minh",
+//     email: "minhwjbu@gmail.com",
+//     avatar: "https://i.insider.com/61135525ad63f30019501966?width=700",
+//   },
 
-  {
-    name: "Phạm Vũ Minh",
-    email: "minhwjbu@gmail.com",
-    avatar: "https://i.insider.com/61135525ad63f30019501966?width=700",
-  },
+//   {
+//     name: "Phạm Vũ Minh",
+//     email: "minhwjbu@gmail.com",
+//     avatar: "https://i.insider.com/61135525ad63f30019501966?width=700",
+//   },
 
-  {
-    name: "Phạm Vũ Minh",
-    email: "minhwjbu@gmail.com",
-    avatar: "https://i.insider.com/61135525ad63f30019501966?width=700",
-  },
-];
+//   {
+//     name: "Phạm Vũ Minh",
+//     email: "minhwjbu@gmail.com",
+//     avatar: "https://i.insider.com/61135525ad63f30019501966?width=700",
+//   },
+// ];
 
 const AddMemberClassForm = () => {
   const [emailAdd, setEmailAdd] = useState([]);
@@ -85,18 +85,18 @@ const AddMemberClassForm = () => {
     setEmailAdd((emails) => [...emails, e.target.value]);
   };
 
-  const handleChooseEmailInput = (email) => {
-    // console.log(e.target.value);
-    setEmailAdd([]);
-    setEmailAdd((emails) => [...emails, email]);
-  };
+  // const handleChooseEmailInput = (email) => {
+  //   // console.log(e.target.value);
+  //   setEmailAdd([]);
+  //   setEmailAdd((emails) => [...emails, email]);
+  // };
 
   return (
     <Box sx={style}>
       <Container maxWidth={false} disableGutters>
         <Box
           sx={{
-            borderBottom: 1,
+            // borderBottom: 1,
             borderColor: "black",
             paddingTop: 3,
             // paddingBottom: 1,
@@ -171,7 +171,7 @@ const AddMemberClassForm = () => {
             </Box>
           </Container>
         </Box>
-        <Box>
+        {/* <Box>
           <Paper
             style={{
               padding: "10px 20px",
@@ -201,7 +201,7 @@ const AddMemberClassForm = () => {
               );
             })}
           </Paper>
-        </Box>
+        </Box> */}
       </Container>
     </Box>
   );
