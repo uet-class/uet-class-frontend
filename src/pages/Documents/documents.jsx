@@ -92,7 +92,7 @@ const Documents = () => {
 
   useEffect(() => {
     AuthService.isUser(navigate);
-    ClassService.listClassMaterials(20).then((res) => {
+    ClassService.listClassMaterials(classID).then((res) => {
       console.log(res.data.message.files);
       setRows([]);
       for (let i = 0; i < res.data.message.files.length; i++) {
@@ -108,7 +108,7 @@ const Documents = () => {
 
   const handleDelete = (fileName) => {
     console.log(fileName);
-    ClassService.deleteClassMaterial(20, fileName).then(() => {
+    ClassService.deleteClassMaterial(classID, fileName).then(() => {
       handleRefresh();
     });
   };
