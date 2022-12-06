@@ -21,13 +21,14 @@ const style = {
 const CreateDocuments = (props) => {
   const [selectedFile, setSelectedFile] = useState(null);
   var formData = new FormData();
+  let classID = localStorage.getItem("classID");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     // const data = event.target;
     // console.log(selectedFile);
     formData.append("file", selectedFile);
-    ClassService.uploadClassMaterial(20, formData).then(() => {
+    ClassService.uploadClassMaterial(classID, formData).then(() => {
       props.handleRefresh();
       props.handleCloseCreateDocument();
     });
