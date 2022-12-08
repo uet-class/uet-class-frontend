@@ -22,6 +22,7 @@ import AddIcon from "@mui/icons-material/Add";
 import CreatePost from "../../components/CreatePost/createPost";
 import postService from "../../services/post.service";
 import UserService from "../../services/user.service";
+import PostComments from "../../components/PostComments/postComments";
 
 const Posts = () => {
     //hardcode for class id
@@ -60,7 +61,6 @@ const Posts = () => {
     const navigate = useNavigate();
 
     const [post, setPost] = useState()
-    const [creator, setCreator] = useState()
 
     const getAllPosts = () => {
         postService.getAllPosts(classID).then((listPosts) => {
@@ -71,7 +71,6 @@ const Posts = () => {
                     if (listPosts.data.message[i].DeletedAt == null) {
                         postArr.push(listPosts.data.message[i]);
                     }
-                    console.log(listPosts.data.message[i].CreatorID)
                     UserService.getCreatorName(listPosts.data.message[i].CreatorID).then((creatorName) => {
                         creatorArr.push(creatorName)
                     })
@@ -79,12 +78,9 @@ const Posts = () => {
             }
             postArr.reverse();
             creatorArr.reverse();
-            setCreator(creatorArr);
             setPost(postArr);
         });
     };
-
-    console.log(creator)
 
     useEffect(() => {
         AuthService.isUser(navigate)
@@ -98,6 +94,12 @@ const Posts = () => {
 
     const handleOpenCreatePost = () => setOpenCreatePost(true);
     const handleCloseCreatePost = () => setOpenCreatePost(false);
+
+    const [openPostComment, setOpenPostComment] = useState(false);
+    const handleOpenPostComment = () => setOpenPostComment(true);
+    const handleClosePostComment = () => setOpenPostComment(false);
+
+    const [postID, setPostID] = useState()
 
     const theme = createTheme({
         typography: {
@@ -167,7 +169,7 @@ const Posts = () => {
                                                 <Grid container>
                                                     <Grid item xs={12}>
                                                         <Typography variant={"h5"}>
-                                                            {post.CreatorID}
+                                                            {post.CreatorName}
                                                         </Typography>
                                                     </Grid>
                                                 </Grid>
@@ -176,16 +178,39 @@ const Posts = () => {
                                         <Grid
                                             item
                                             sx={{
-                                                paddingLeft: 2,
+                                                paddingLeft: 10,
                                                 paddingTop: 2,
                                             }}
                                         >
-                                            <Typography variant={"h4"}>
+                                            <Typography
+                                                variant={"h4"}
+                                                sx={{
+                                                    paddingBottom: 2,
+                                                }}
+                                            >
                                                 {post.Title}
                                             </Typography>
-                                            <Typography variant={"h5"}>
+                                            <Typography
+                                                variant={"h5"}
+                                                sx={{
+                                                    paddingBottom: 2,
+                                                }}
+                                            >
                                                 {post.Content}
                                             </Typography>
+                                        </Grid>
+                                        <Grid
+                                            item
+                                            sx={{
+                                                paddingLeft: 10,
+                                            }}
+                                        >
+                                            <Button
+                                                onClick={() => {
+                                                    handleOpenPostComment();
+                                                    setPostID(post.ID);
+                                                }}
+                                            >Hiển thị bình luận</Button>
                                         </Grid>
                                     </Box>
                                 </Grid>
@@ -204,6 +229,17 @@ const Posts = () => {
                                 handleRefresh={handleRefresh}
                     />
                 </Modal>
+
+                <Modal open={openPostComment}
+                       onClose={handleClosePostComment}
+                       aria-labelledby="modal-modal-title"
+                       aria-describedby="modal-modal-description"
+                >
+                    <PostComments handleRefresh={handleRefresh}
+                                  postID={postID}
+                    />
+                </Modal>
+
             </DashbroadLayout>
         </ThemeProvider>
     );

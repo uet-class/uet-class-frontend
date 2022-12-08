@@ -91,6 +91,7 @@ const CreatePost = (props) => {
                     sx={{
                         width: "100%",
                         paddingBottom: 3,
+                        fontWeight: 300,
                     }}
                 ></TextField>
                 <Grid
