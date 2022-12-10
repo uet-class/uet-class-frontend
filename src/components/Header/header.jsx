@@ -124,7 +124,7 @@ export default function Header(props) {
               )}
             </div>
             <img
-              src={require("../../assets/pic1.png")}
+              src={userInfo.AvatarUrl}
               alt="UET CLASS"
               width="40"
               height="40"
