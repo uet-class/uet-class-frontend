@@ -30,24 +30,12 @@ const columns = [
   { id: "updateDate", label: "Ngày đăng tải", minWidth: 100 },
 ];
 
+// const {Storage} = require('@google-cloud/storage');
+// const storage = new Storage();
+
 function createData(name, updateDate) {
   return { name, updateDate };
 }
-
-// const rows = [
-//   createData(
-//       "bai1.pdf",
-//       "23/10/2012",
-//       "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-//       1
-//   ),
-//   createData(
-//       "bai1.pdf",
-//       "23/10/2012",
-//       "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-//       1
-//   ),
-// ];
 
 const Documents = () => {
   const [openCreateDocument, setOpenCreateDocument] = useState(false);
@@ -59,10 +47,7 @@ const Documents = () => {
     setRefreshPage((current) => !current);
   };
   const [rows, setRows] = useState([]);
-
   const navigate = useNavigate();
-
-  //hardcode for classID
   let classID = localStorage.getItem("classID");
 
   var sideBar = {};
@@ -113,8 +98,10 @@ const Documents = () => {
     });
   };
 
+
   const handleDownload = (fileName) => {
     console.log(fileName);
+    // storage.bucket('uc-class-27').file("text.txt").download();
   };
 
   return (

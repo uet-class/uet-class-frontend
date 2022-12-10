@@ -60,7 +60,7 @@ const Assignments = () => {
     const [openCreateAssignment, setCreateAssignment] = useState(false);
     const handleCloseCreateAssignment = () => setCreateAssignment(false);
     const handleOpenCreateAssignment = () => setCreateAssignment(true);
-    const isTeacher = false; //tam thoi
+    const isTeacher = true; //tam thoi
 
     const navigate = useNavigate();
 

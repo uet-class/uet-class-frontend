@@ -42,8 +42,8 @@ const ProfileForm = (props) => {
   );
 
   useEffect(() => {
-    setTimeBirthDate(props.userInfo.DateOfBirth)
-  },[props.userInfo])
+    setTimeBirthDate(props.userInfo.DateOfBirth);
+  }, [props.userInfo]);
 
   const handleTimeChange = (newValue) => {
     setTimeBirthDate(newValue);
@@ -60,21 +60,34 @@ const ProfileForm = (props) => {
       "/",
       ""
     );
+
+    // UserService.updateUserAvatar(selectedFile).then((res) => {
+    //   if (res.status === 200) {
+    //     props.handleCloseProfile();
+    //     props.handleRefresh();
+    //   } else {
+    //     const error = new Error(res.error);
+    //     throw error;
+    //   }
+    // });
+
     UserService.updateUserInfo(event.target)
       .then((res) => {
-        if (res.status === 200) {
-          props.handleCloseProfile();
-          props.handleRefresh();
-        } else {
-          const error = new Error(res.error);
-          throw error;
-        }
+        UserService.updateUserAvatar(selectedFile).then(() => {
+          if (res.status === 200) {
+            props.handleCloseProfile();
+            props.handleRefresh();
+          } else {
+            const error = new Error(res.error);
+            throw error;
+          }
+        });
       })
       .catch((err) => {
         setUpdateProfileFail(true);
       });
   };
-  
+
   return (
     <Box sx={style}>
       <Grid
@@ -113,7 +126,7 @@ const ProfileForm = (props) => {
             >
               <Avatar
                 alt="Remy Sharp"
-                src="https://i.insider.com/61135525ad63f30019501966?width=700"
+                src={props.userInfo.AvatarUrl}
                 sx={{
                   height: "180px",
                   width: "180px",
