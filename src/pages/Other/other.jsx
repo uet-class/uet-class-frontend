@@ -1,10 +1,5 @@
 import "./other.css";
 import DashbroadLayout from "../../layouts/DashbroadLayout/dashbroadLayout";
-import HomeIcon from "../../components/Icon/homeIcon";
-import NewsIcon from "../../components/Icon/newsIcon";
-import DocumentIcon from "../../components/Icon/documentIcon";
-import HomeworkIcon from "../../components/Icon/homeworkIcon";
-import OtherIcon from "../../components/Icon/otherIcon";
 import ClassHeader from "../../components/ClassHeader/classHeader";
 import {
   Box,
@@ -94,7 +89,7 @@ const Other = () => {
   };
 
   const handleReportMember = (userInfo) => {
-    setUserInfoReport(userInfo)
+    setUserInfoReport(userInfo);
     handleOpenReportMemeberClass();
   };
 
@@ -135,30 +130,7 @@ const Other = () => {
   }, [refreshPage]);
 
   //hardcode for class id
-  let classID = localStorage.getItem("classID");
-
-  var sideBar = {};
-  sideBar.basicLink = [
-    "/home",
-    `/class/${classID}/posts`,
-    `/class/${classID}/documents`,
-    `/class/${classID}/assignments`,
-    `/class/${classID}/other`,
-  ];
-  sideBar.basicLinkName = [
-    "Trang chủ",
-    "Bảng tin",
-    "Tài liệu",
-    "Bài tập",
-    "Khác",
-  ];
-  sideBar.basicIcon = [
-    <HomeIcon />,
-    <NewsIcon />,
-    <DocumentIcon />,
-    <HomeworkIcon />,
-    <OtherIcon />,
-  ];
+  // let classID = localStorage.getItem("classID");
 
   const handleAddPeople = () => {
     // setRefreshPage((prev) => !prev);
@@ -166,8 +138,8 @@ const Other = () => {
   };
 
   return (
-    <DashbroadLayout sideBar={sideBar}>
-      <ClassHeader className={"Tương tác người máy"} classCode={"INT1234_21"}>
+    <DashbroadLayout>
+      <ClassHeader>
         <div className="dataTable">
           <Container
             maxWidth={false}
@@ -310,7 +282,9 @@ const Other = () => {
                               <Button sx={{ width: 3 }}>
                                 <ReportProblemIcon
                                   style={{ color: "#cccc00" }}
-                                  onClick={() => {handleReportMember(row.UserInfo)}}
+                                  onClick={() => {
+                                    handleReportMember(row.UserInfo);
+                                  }}
                                 />
                               </Button>
                             </TableCell>

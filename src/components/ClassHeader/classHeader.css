@@ -6,6 +6,7 @@
     margin: 10px;
     padding: 5px;
     border-radius: 20px;
+    max-width: 100%;
 }
 
 .className {
@@ -13,12 +14,15 @@
     font-size: 30px;
     font-weight: 600;
     margin-left: 20px;
+    max-width: 100%;
 }
 
 .classCode {
     color: white;
     font-size: 17px;
     font-weight: 500;
-    margin-left: 20px;
-    margin-top: 5px
+    margin-left: 17px;
+    margin-top: 0px;
+    max-width: 100%;
+    max-height: 30px;
 }

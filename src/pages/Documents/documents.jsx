@@ -2,11 +2,6 @@ import "./documents.css";
 import { Button, Typography, Modal } from "@mui/material";
 import DashbroadLayout from "../../layouts/DashbroadLayout/dashbroadLayout";
 import AddIcon from "@mui/icons-material/Add";
-import HomeIcon from "../../components/Icon/homeIcon";
-import NewsIcon from "../../components/Icon/newsIcon";
-import DocumentIcon from "../../components/Icon/documentIcon";
-import HomeworkIcon from "../../components/Icon/homeworkIcon";
-import OtherIcon from "../../components/Icon/otherIcon";
 import ClassHeader from "../../components/ClassHeader/classHeader";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DownloadIcon from "@mui/icons-material/Download";
@@ -50,29 +45,6 @@ const Documents = () => {
   const navigate = useNavigate();
   let classID = localStorage.getItem("classID");
 
-  var sideBar = {};
-  sideBar.basicLink = [
-    "/home",
-    `/class/${classID}/posts`,
-    `/class/${classID}/documents`,
-    `/class/${classID}/assignments`,
-    `/class/${classID}/other`,
-  ];
-  sideBar.basicLinkName = [
-    "Trang chủ",
-    "Bảng tin",
-    "Tài liệu",
-    "Bài tập",
-    "Khác",
-  ];
-  sideBar.basicIcon = [
-    <HomeIcon />,
-    <NewsIcon />,
-    <DocumentIcon />,
-    <HomeworkIcon />,
-    <OtherIcon />,
-  ];
-
   useEffect(() => {
     AuthService.isUser(navigate);
     ClassService.listClassMaterials(classID).then((res) => {
@@ -96,15 +68,14 @@ const Documents = () => {
     });
   };
 
-
   const handleDownload = (fileName) => {
     console.log(fileName);
     // storage.bucket('uc-class-27').file("text.txt").download();
   };
 
   return (
-    <DashbroadLayout sideBar={sideBar}>
-      <ClassHeader className={"Tương tác người máy"} classCode={"INT1234_21"}>
+    <DashbroadLayout>
+      <ClassHeader>
         <div className="section">
           {isTeacher && (
             <Button
