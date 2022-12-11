@@ -28,8 +28,6 @@ const Posts = () => {
     //hardcode for class id
     let classID = localStorage.getItem("classID");
     var sideBar = {};
-    sideBar.classLinks = ["/home", "/assignments"];
-    sideBar.classes = ["Tương tác người máy", "Xác suất thống kê"];
     sideBar.basicLink = [
         "/home",
         `/class/${classID}/posts`,
