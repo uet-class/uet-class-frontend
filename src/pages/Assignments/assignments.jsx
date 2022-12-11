@@ -60,7 +60,7 @@ const Assignments = () => {
   const navigate = useNavigate();
 
   //hardcode for classID
-//   let classID = localStorage.getItem("classID");
+  //   let classID = localStorage.getItem("classID");
 
   useEffect(() => {
     AuthService.isUser(navigate);
@@ -101,7 +101,7 @@ const Assignments = () => {
 
   return (
     <DashbroadLayout>
-      <ClassHeader className={"Tương tác người máy"} classCode={"INT1234_21"}>
+      <ClassHeader>
         <div className="section">
           {isTeacher && (
             <Button

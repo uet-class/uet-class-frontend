@@ -139,7 +139,7 @@ const Other = () => {
 
   return (
     <DashbroadLayout>
-      <ClassHeader className={"Tương tác người máy"} classCode={"INT1234_21"}>
+      <ClassHeader>
         <div className="dataTable">
           <Container
             maxWidth={false}

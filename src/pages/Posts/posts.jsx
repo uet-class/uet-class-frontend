@@ -84,7 +84,7 @@ const Posts = () => {
   return (
     <ThemeProvider theme={theme}>
       <DashbroadLayout>
-        <ClassHeader className={"Tương tác người máy"} classCode={"INT1234_21"}>
+        <ClassHeader>
           <Button
             onClick={handleOpenCreatePost}
             variant="contained"
