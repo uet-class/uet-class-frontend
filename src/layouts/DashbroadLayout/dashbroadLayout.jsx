@@ -7,7 +7,7 @@ const DashbroadLayout = (props) => {
     <Header>
       <div className="sidebar-section">
         <div className="_sidebar">
-          <Sidebar info={props.sideBar} />
+          <Sidebar />
         </div>
         <div className="section">{props.children}</div>
       </div>
