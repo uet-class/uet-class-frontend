@@ -1,6 +1,6 @@
 import {Alert, Box, Button, Grid, Typography} from "@mui/material";
-import postService from "../../services/post.service";
 import React from "react";
+import commentService from "../../services/comment.service";
 
 const style = {
     position: 'absolute',
@@ -14,8 +14,8 @@ const style = {
     p: 4,
 };
 
-const DeletePost = (props) => {
-    const [deletePostFail, setDeletePostFail] = React.useState(false);
+const DeleteComment = (props) => {
+    const [deleteCommentFail, setDeleteCommentFail] = React.useState(false);
 
     const state = {
         button: 0
@@ -25,15 +25,15 @@ const DeletePost = (props) => {
         event.preventDefault();
         if (state.button === 0) {
             console.log("No clicked!");
-            props.handleCloseDeletePost()
+            props.handleCloseDeleteComment()
         }
         if (state.button === 1) {
             console.log("Yes clicked!");
-            postService.deletePost(props.postID)
+            commentService.deleteComment(props.commentID)
                 .then((res) => {
                     if (res.status === 200) {
                         console.log("Success");
-                        props.handleCloseDeletePost()
+                        props.handleCloseDeleteComment()
                         props.handleRefresh()
                     } else {
                         const error = new Error(res.error);
@@ -41,16 +41,16 @@ const DeletePost = (props) => {
                     }
                 })
                 .catch((err) => {
-                    setDeletePostFail(true);
+                    setDeleteCommentFail(true);
                 });
         }
     }
 
     return (
         <Box sx={style}>
-            {deletePostFail ? (
+            {deleteCommentFail ? (
                 <Alert severity={"error"}>
-                    Xóa bài viết thất bại
+                    Xóa bình luận thất bại
                 </Alert>
             ) : null}
             <Box component={"form"} onSubmit={handleSubmit}>
@@ -62,7 +62,7 @@ const DeletePost = (props) => {
                         fontWeight: 600,
                     }}
                 >
-                    Xóa bài viết?
+                    Xóa bình luận?
                 </Typography>
                 <Grid container
                       sx={{
@@ -127,4 +127,4 @@ const DeletePost = (props) => {
     )
 }
 
-export default DeletePost;
+export default DeleteComment;

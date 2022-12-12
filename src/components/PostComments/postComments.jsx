@@ -58,6 +58,7 @@ const PostComments = (props) => {
                     throw error;
                 }
             })
+        data.reset();
     }
 
     useEffect(() => {
@@ -134,6 +135,8 @@ const PostComments = (props) => {
                             avatar={"https://i.insider.com/61135525ad63f30019501966?width=700"}
                             content={comment.Content}
                             time={moment(comment.UpdatedAt).format("DD/MM/YYYY, h:mm:ss a")}
+                            creatorID={creatorID}
+                            commentID={comment.ID}
                         />
                     );
                 })}

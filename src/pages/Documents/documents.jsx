@@ -2,11 +2,6 @@ import "./documents.css";
 import { Button, Typography, Modal } from "@mui/material";
 import DashbroadLayout from "../../layouts/DashbroadLayout/dashbroadLayout";
 import AddIcon from "@mui/icons-material/Add";
-import HomeIcon from "../../components/Icon/homeIcon";
-import NewsIcon from "../../components/Icon/newsIcon";
-import DocumentIcon from "../../components/Icon/documentIcon";
-import HomeworkIcon from "../../components/Icon/homeworkIcon";
-import OtherIcon from "../../components/Icon/otherIcon";
 import ClassHeader from "../../components/ClassHeader/classHeader";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DownloadIcon from "@mui/icons-material/Download";
@@ -30,24 +25,12 @@ const columns = [
   { id: "updateDate", label: "Ngày đăng tải", minWidth: 100 },
 ];
 
+// const {Storage} = require('@google-cloud/storage');
+// const storage = new Storage();
+
 function createData(name, updateDate) {
   return { name, updateDate };
 }
-
-// const rows = [
-//   createData(
-//       "bai1.pdf",
-//       "23/10/2012",
-//       "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-//       1
-//   ),
-//   createData(
-//       "bai1.pdf",
-//       "23/10/2012",
-//       "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-//       1
-//   ),
-// ];
 
 const Documents = () => {
   const [openCreateDocument, setOpenCreateDocument] = useState(false);
@@ -59,36 +42,8 @@ const Documents = () => {
     setRefreshPage((current) => !current);
   };
   const [rows, setRows] = useState([]);
-
   const navigate = useNavigate();
-
-  //hardcode for classID
   let classID = localStorage.getItem("classID");
-
-  var sideBar = {};
-  sideBar.classLinks = ["/home", "/assignments"];
-  sideBar.classes = ["Tương tác người máy", "Xác suất thống kê"];
-  sideBar.basicLink = [
-    "/home",
-    `/class/${classID}/posts`,
-    `/class/${classID}/documents`,
-    `/class/${classID}/assignments`,
-    `/class/${classID}/other`,
-  ];
-  sideBar.basicLinkName = [
-    "Trang chủ",
-    "Bảng tin",
-    "Tài liệu",
-    "Bài tập",
-    "Danh sách lớp",
-  ];
-  sideBar.basicIcon = [
-    <HomeIcon />,
-    <NewsIcon />,
-    <DocumentIcon />,
-    <HomeworkIcon />,
-    <OtherIcon />,
-  ];
 
   useEffect(() => {
     AuthService.isUser(navigate);
@@ -115,11 +70,12 @@ const Documents = () => {
 
   const handleDownload = (fileName) => {
     console.log(fileName);
+    // storage.bucket('uc-class-27').file("text.txt").download();
   };
 
   return (
-    <DashbroadLayout sideBar={sideBar}>
-      <ClassHeader className={"Tương tác người máy"} classCode={"INT1234_21"}>
+    <DashbroadLayout>
+      <ClassHeader>
         <div className="section">
           {isTeacher && (
             <Button

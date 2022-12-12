@@ -18,7 +18,7 @@ import AddIcon from "@mui/icons-material/Add";
 import CreateClass from "../../components/CreateClass/createClass";
 import AuthService from "../../services/auth.service";
 import { useNavigate } from "react-router-dom";
-import classService from "../../services/class.service";
+import ClassService from "../../services/class.service";
 import TeacherDeleteClass from "../../components/TeacherDeleteClass/teacherDeleteClass";
 
 const Home = () => {
@@ -44,7 +44,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   const getClassTeacher = () => {
-    classService.listClass().then((listClass) => {
+    ClassService.listClass().then((listClass) => {
       const classArr = [];
       if (listClass.data.message.teacherClasses != null) {
         for (let i = 0; i < listClass.data.message.teacherClasses.length; i++) {

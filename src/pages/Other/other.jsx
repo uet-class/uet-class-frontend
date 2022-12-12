@@ -1,10 +1,5 @@
 import "./other.css";
 import DashbroadLayout from "../../layouts/DashbroadLayout/dashbroadLayout";
-import HomeIcon from "../../components/Icon/homeIcon";
-import NewsIcon from "../../components/Icon/newsIcon";
-import DocumentIcon from "../../components/Icon/documentIcon";
-import HomeworkIcon from "../../components/Icon/homeworkIcon";
-import OtherIcon from "../../components/Icon/otherIcon";
 import ClassHeader from "../../components/ClassHeader/classHeader";
 import {
   Box,
@@ -30,6 +25,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useState, useEffect } from "react";
 import AddMemberClassForm from "../../components/AddMemberClassForm/addMemberClassForm";
 import ClassService from "../../services/class.service";
+import ReportProblemIcon from "@mui/icons-material/ReportProblem";
+import CreateReportUserForm from "../../components/CreateReportUserForm/createReportUserForm";
 
 const columns = [
   { id: "FullName", label: "", minWidth: 220 },
@@ -51,9 +48,10 @@ function createData(FullName, DateOfBirth, isTeacher, UserInfo) {
 
 const Other = () => {
   const isTeacher = true; //tam thoi
-  let classId = localStorage.getItem("classID");;
+  let classId = localStorage.getItem("classID");
   const [refreshPage, setRefreshPage] = useState(false);
   const [userInfoDelete, setUserInfoDelete] = useState();
+  const [userInfoReport, setUserInfoReport] = useState();
   const [rows, setRows] = useState([]);
   // const [teacherList, setTeacherList] = useState([]);
   // const [studentList, setStudentList] = useState([]);
@@ -62,10 +60,14 @@ const Other = () => {
   const handleCloseAddMemberClass = () => setAddMemberClass(false);
   const handleOpenAddMemeberClass = () => setAddMemberClass(true);
 
+  const [reportMemberClass, setReportMemberClass] = useState(false);
+  const handleCloseReportMemberClass = () => setReportMemberClass(false);
+  const handleOpenReportMemeberClass = () => setReportMemberClass(true);
+
   const [openDialog, setOpenDialog] = useState(false);
 
   const handleRefreshPage = () => {
-    setRefreshPage((prev => !prev))
+    setRefreshPage((prev) => !prev);
   };
 
   const handleCloseDialog = () => {
@@ -81,29 +83,44 @@ const Other = () => {
   const handleDeleteMember = () => {
     // console.log(userInfoDelete);
     ClassService.removeMember(classId, userInfoDelete.Email).then(() => {
-      handleRefreshPage()
+      handleRefreshPage();
     });
     handleCloseDialog();
+  };
+
+  const handleReportMember = (userInfo) => {
+    setUserInfoReport(userInfo);
+    handleOpenReportMemeberClass();
   };
 
   useEffect(() => {
     const fetchData = async () => {
       await ClassService.memberClass(classId).then((info) => {
-        const students = info.data.message.Students
-        const teachers = info.data.message.Teachers
-        setRows([])
+        const students = info.data.message.Students;
+        const teachers = info.data.message.Teachers;
+        setRows([]);
         console.log(teachers[0]);
 
-        for (let i = 0; i < teachers.length; i++){
+        for (let i = 0; i < teachers.length; i++) {
           setRows((rows) => [
             ...rows,
-            createData(teachers[i].FullName, teachers[i].DateOfBirth, true, teachers[i]),
+            createData(
+              teachers[i].FullName,
+              teachers[i].DateOfBirth,
+              true,
+              teachers[i]
+            ),
           ]);
         }
-        for (let i = 0; i < students.length; i++){
+        for (let i = 0; i < students.length; i++) {
           setRows((rows) => [
             ...rows,
-            createData(students[i].FullName, students[i].DateOfBirth, false, students[i]),
+            createData(
+              students[i].FullName,
+              students[i].DateOfBirth,
+              false,
+              students[i]
+            ),
           ]);
         }
       });
@@ -113,32 +130,7 @@ const Other = () => {
   }, [refreshPage]);
 
   //hardcode for class id
-  let classID = localStorage.getItem("classID");
-
-  var sideBar = {};
-  sideBar.classLinks = ["/home", "/assignments"];
-  sideBar.classes = ["Tương tác người máy", "Xác suất thống kê"];
-  sideBar.basicLink = [
-    "/home",
-    `/class/${classID}/posts`,
-    `/class/${classID}/documents`,
-    `/class/${classID}/assignments`,
-    `/class/${classID}/other`,
-  ];
-  sideBar.basicLinkName = [
-    "Trang chủ",
-    "Bảng tin",
-    "Tài liệu",
-    "Bài tập",
-    "Danh sách lớp",
-  ];
-  sideBar.basicIcon = [
-    <HomeIcon />,
-    <NewsIcon />,
-    <DocumentIcon />,
-    <HomeworkIcon />,
-    <OtherIcon />,
-  ];
+  // let classID = localStorage.getItem("classID");
 
   const handleAddPeople = () => {
     // setRefreshPage((prev) => !prev);
@@ -146,8 +138,8 @@ const Other = () => {
   };
 
   return (
-    <DashbroadLayout sideBar={sideBar}>
-      <ClassHeader className={"Tương tác người máy"} classCode={"INT1234_21"}>
+    <DashbroadLayout>
+      <ClassHeader>
         <div className="dataTable">
           <Container
             maxWidth={false}
@@ -204,6 +196,7 @@ const Other = () => {
                           </TableCell>
                         ))}
                         <TableCell></TableCell>
+                        <TableCell style={{ width: 100 }}></TableCell>
                         <TableCell style={{ width: 100 }}></TableCell>
                       </TableRow>
                     </TableHead>
@@ -285,6 +278,16 @@ const Other = () => {
                                 </Button>
                               )}{" "}
                             </TableCell>
+                            <TableCell>
+                              <Button sx={{ width: 3 }}>
+                                <ReportProblemIcon
+                                  style={{ color: "#cccc00" }}
+                                  onClick={() => {
+                                    handleReportMember(row.UserInfo);
+                                  }}
+                                />
+                              </Button>
+                            </TableCell>
                           </TableRow>
                         );
                       })}
@@ -303,6 +306,19 @@ const Other = () => {
             <Box>
               <AddMemberClassForm
                 handleCloseAddMemberClass={handleCloseAddMemberClass}
+              />
+            </Box>
+          </Modal>
+          <Modal
+            open={reportMemberClass}
+            onClose={handleCloseReportMemberClass}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box>
+              <CreateReportUserForm
+                handleCloseReportMemberClass={handleCloseReportMemberClass}
+                userInfoReport={userInfoReport}
               />
             </Box>
           </Modal>
