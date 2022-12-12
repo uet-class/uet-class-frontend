@@ -19,16 +19,19 @@ import CreateDocuments from "../../components/createDocuments/createDocumentsFor
 import AuthService from "../../services/auth.service";
 import { useNavigate } from "react-router-dom";
 import ClassService from "../../services/class.service";
+import moment from "moment";
+
 
 const columns = [
   { id: "name", label: "Tên tài liệu", minWidth: 220 },
-  { id: "updateDate", label: "Ngày đăng tải", minWidth: 100 },
+  { id: "updateDate", label: "Thời gian đăng tải", minWidth: 100 },
 ];
 
 // const {Storage} = require('@google-cloud/storage');
 // const storage = new Storage();
 
 function createData(name, updateDate) {
+  updateDate = moment(updateDate).format("DD/MM/YYYY h:mm:ss a")
   return { name, updateDate };
 }
 
@@ -48,12 +51,12 @@ const Documents = () => {
   useEffect(() => {
     AuthService.isUser(navigate);
     ClassService.listClassMaterials(classID).then((res) => {
-      console.log(res.data.message.files);
+      // console.log(res.data.message);
       setRows([]);
-      for (let i = 0; i < res.data.message.files.length; i++) {
+      for (let i = 0; i < res.data.message.length; i++) {
         setRows((rows) => [
           ...rows,
-          createData(res.data.message.files[i], "23/10/2012"),
+          createData(res.data.message[i].fileName, res.data.message[i].createdAt),
         ]);
       }
     });
@@ -104,7 +107,7 @@ const Documents = () => {
 
           <div className="dataTable">
             <Paper sx={{ width: "100%", overflow: "hidden" }}>
-              <TableContainer sx={{ height: 550 }}>
+              <TableContainer sx={{ height: 590 }}>
                 <Table stickyHeader aria-label="sticky table">
                   <TableHead>
                     <TableRow>

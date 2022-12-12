@@ -36,15 +36,7 @@ const columns = [
 function createData(FullName, DateOfBirth, isTeacher, UserInfo) {
   return { FullName, DateOfBirth, isTeacher, UserInfo };
 }
-// const rows = [
-//   createData(
-//     "bai1.pdf",
-//     "23/10/2012",
-//     "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-//     1
-//   ),
 
-// ];
 
 const Other = () => {
   const isTeacher = true; //tam thoi
@@ -212,7 +204,7 @@ const Other = () => {
                             <TableCell style={{ width: 3 }}>
                               <Avatar
                                 alt="Remy Sharp"
-                                src="https://i.insider.com/61135525ad63f30019501966?width=700"
+                                src={row.UserInfo.AvatarUrl}
                                 sx={{
                                   height: "45px",
                                   width: "45px",
