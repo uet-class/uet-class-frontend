@@ -1,8 +1,7 @@
 import {Alert, Box, Button, Grid, TextField, Typography} from "@mui/material";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import AddIcon from "@mui/icons-material/Add";
-import UserService from "../../services/user.service";
-import PostService from "../../services/post.service";
+import commentService from "../../services/comment.service";
 
 const style = {
     position: 'absolute',
@@ -16,29 +15,16 @@ const style = {
     p: 4,
 };
 
-const CreatePost = (props) => {
-    const [createPostFail, setCreatePostFail] = useState(false);
-    const [creatorID, setCreatorID] = useState()
-
-    useEffect(() => {
-        const fetchData = async () => {
-            UserService.getUserInfo().then((info) => {
-                setCreatorID(info.ID)
-            });
-        };
-        fetchData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
+const UpdateComment = (props) => {
+    const [updateComment, setUpdateComment] = useState(false);
     const handleSubmit = async (event) => {
         event.preventDefault()
         const data = event.target;
-        let classID = parseInt(localStorage.getItem("classID"))
-        PostService.createPost(classID, creatorID, data.title.value, data.content.value)
+        commentService.updateComment(props.commentID, data.content.value)
             .then((res) => {
                 if (res.status === 200) {
                     console.log("Success");
-                    props.handleCloseCreatePost()
+                    props.handleCloseUpdateComment()
                     props.handleRefresh()
                 } else {
                     const error = new Error(res.error);
@@ -46,36 +32,20 @@ const CreatePost = (props) => {
                 }
             })
             .catch((err) => {
-                setCreatePostFail(true);
+                setUpdateComment(true);
             });
     };
 
     return (
         <Box sx={style}>
-            {createPostFail ? (
+            {updateComment ? (
                 <Alert severity="error">
-                    Tạo bài đăng thất bại
+                    Chỉnh sửa thất bại
                 </Alert>
             ) : null}
             <Box
                 component={"form"} onSubmit={handleSubmit}
             >
-                <Typography
-                    className={"login-info"}
-                    fontSize={20}
-                    fontWeight={500}
-                >
-                    Tiêu đề
-                </Typography>
-                <TextField
-                    name="title"
-                    className={"input-rounded"}
-                    autoComplete='off'
-                    sx={{
-                        width: "100%",
-                        paddingBottom: 3,
-                    }}
-                ></TextField>
                 <Typography
                     className={"login-info"}
                     fontSize={20}
@@ -114,7 +84,7 @@ const CreatePost = (props) => {
                             fontSize={20}
                             fontWeight={500}
                         >
-                            Đăng
+                            Cập nhật
                         </Typography>
                     </Button>
                 </Grid>
@@ -123,4 +93,4 @@ const CreatePost = (props) => {
     )
 }
 
-export default CreatePost;
+export default UpdateComment;

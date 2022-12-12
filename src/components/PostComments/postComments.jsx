@@ -3,6 +3,8 @@ import React, {useEffect, useState} from "react";
 import postService from "../../services/post.service";
 import commentService from "../../services/comment.service";
 import UserService from "../../services/user.service";
+import Comment from "../Comment/comment";
+import moment from "moment/moment";
 
 const style = {
     position: 'absolute',
@@ -56,6 +58,7 @@ const PostComments = (props) => {
                     throw error;
                 }
             })
+        data.reset();
     }
 
     useEffect(() => {
@@ -108,9 +111,10 @@ const PostComments = (props) => {
                         {title}
                     </Typography>
                     <Typography
-                        variant={"h5"}
                         sx={{
                             paddingBottom: 2,
+                            maxHeight: '20vh',
+                            overflow: 'auto'
                         }}
                     >
                         {content}
@@ -124,48 +128,18 @@ const PostComments = (props) => {
                     overflow: 'auto'
                 }}
             >
-                {comment?.map((comment) => (
-                    <Grid item xs={12} paddingBottom={3}>
-                        <Box
-                            sx={{
-                                borderRadius: 8,
-                                bgcolor: "white",
-                            }}
-                        >
-                            <Grid container
-                                  sx={{
-                                      paddingLeft: 2,
-                                      paddingTop: 2,
-                                  }}
-                            >
-                                <Grid item xs={1}>
-                                    <Avatar alt="Remy Sharp"
-                                            src={"https://i.insider.com/61135525ad63f30019501966?width=700"}/>
-                                </Grid>
-                                <Grid item xs={11}>
-                                    <Grid container>
-                                        <Grid item xs={12}>
-                                            <Typography variant={"h6"}>
-                                                {comment.CreatorID}
-                                            </Typography>
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-                                <Grid item>
-                                    <Typography
-                                        variant={"normal-text"}
-                                        sx={{
-                                            paddingBottom: 2,
-                                            paddingLeft: 7
-                                        }}
-                                    >
-                                        {comment.Content}
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                        </Box>
-                    </Grid>
-                ))}
+                {comment?.map((comment) => {
+                    return (
+                        <Comment
+                            name={comment.CreatorID}
+                            avatar={"https://i.insider.com/61135525ad63f30019501966?width=700"}
+                            content={comment.Content}
+                            time={moment(comment.UpdatedAt).format("DD/MM/YYYY, h:mm:ss a")}
+                            creatorID={creatorID}
+                            commentID={comment.ID}
+                        />
+                    );
+                })}
             </Grid>
             <Box component={"form"} onSubmit={handleComment}>
                 <Grid container

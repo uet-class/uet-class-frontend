@@ -1,7 +1,6 @@
 import {Alert, Box, Button, Grid, TextField, Typography} from "@mui/material";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import AddIcon from "@mui/icons-material/Add";
-import UserService from "../../services/user.service";
 import PostService from "../../services/post.service";
 
 const style = {
@@ -16,29 +15,16 @@ const style = {
     p: 4,
 };
 
-const CreatePost = (props) => {
-    const [createPostFail, setCreatePostFail] = useState(false);
-    const [creatorID, setCreatorID] = useState()
-
-    useEffect(() => {
-        const fetchData = async () => {
-            UserService.getUserInfo().then((info) => {
-                setCreatorID(info.ID)
-            });
-        };
-        fetchData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
+const UpdatePost = (props) => {
+    const [updatePostFail, setUpdatePostFail] = useState(false);
     const handleSubmit = async (event) => {
         event.preventDefault()
         const data = event.target;
-        let classID = parseInt(localStorage.getItem("classID"))
-        PostService.createPost(classID, creatorID, data.title.value, data.content.value)
+        PostService.updatePost(props.postID, data.title.value, data.content.value)
             .then((res) => {
                 if (res.status === 200) {
                     console.log("Success");
-                    props.handleCloseCreatePost()
+                    props.handleCloseUpdatePost()
                     props.handleRefresh()
                 } else {
                     const error = new Error(res.error);
@@ -46,15 +32,15 @@ const CreatePost = (props) => {
                 }
             })
             .catch((err) => {
-                setCreatePostFail(true);
+                setUpdatePostFail(true);
             });
     };
 
     return (
         <Box sx={style}>
-            {createPostFail ? (
+            {updatePostFail ? (
                 <Alert severity="error">
-                    Tạo bài đăng thất bại
+                    Chỉnh sửa thất bại
                 </Alert>
             ) : null}
             <Box
@@ -114,7 +100,7 @@ const CreatePost = (props) => {
                             fontSize={20}
                             fontWeight={500}
                         >
-                            Đăng
+                            Cập nhật
                         </Typography>
                     </Button>
                 </Grid>
@@ -123,4 +109,4 @@ const CreatePost = (props) => {
     )
 }
 
-export default CreatePost;
+export default UpdatePost;
