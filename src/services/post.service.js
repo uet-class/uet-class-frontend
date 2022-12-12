@@ -44,6 +44,32 @@ class PostService {
                 return false
             });
     }
+
+    updatePost(postID,  title, content) {
+        return axios.post(`/posts/${postID}`, {
+            Title: title,
+            Content: content,
+        })
+            .then(function (response) {
+                console.log(response);
+                return response;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+    deletePost(postID) {
+        return axios.delete(`/posts/${postID}`)
+            .then(function (response) {
+                // console.log(response);
+                return response;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
 }
 
 export default new PostService();

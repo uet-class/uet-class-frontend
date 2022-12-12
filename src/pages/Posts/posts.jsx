@@ -11,10 +11,9 @@ import AuthService from "../../services/auth.service";
 import {
     Avatar,
     Box,
-    Button,
-    createTheme, Grid,
+    Button, Fade,
+    Grid,
     Modal,
-    ThemeProvider,
     Typography,
 } from "@mui/material";
 import ClassHeader from "../../components/ClassHeader/classHeader";
@@ -23,6 +22,13 @@ import CreatePost from "../../components/CreatePost/createPost";
 import postService from "../../services/post.service";
 import UserService from "../../services/user.service";
 import PostComments from "../../components/PostComments/postComments";
+import moment from "moment";
+import Popper from "@mui/material/Popper";
+import Paper from "@mui/material/Paper";
+import PopupState, {bindToggle, bindPopper} from 'material-ui-popup-state';
+import MenuList from "@mui/material/MenuList";
+import MenuItem from "@mui/material/MenuItem";
+import DeletePost from "../../components/DeletePost/deletePost";
 
 const Posts = () => {
     //hardcode for class id
@@ -42,7 +48,7 @@ const Posts = () => {
         "Bảng tin",
         "Tài liệu",
         "Bài tập",
-        "Khác",
+        "Danh sách lớp",
     ];
     sideBar.basicIcon = [
         <HomeIcon/>,
@@ -82,10 +88,15 @@ const Posts = () => {
         });
     };
 
+    const [userID, setUserID] = useState()
+
     useEffect(() => {
         AuthService.isUser(navigate)
         const fetchData = async () => {
             await getAllPosts();
+            UserService.getUserInfo().then((info) => {
+                setUserID(info.ID)
+            });
         };
         fetchData()
 
@@ -101,14 +112,11 @@ const Posts = () => {
 
     const [postID, setPostID] = useState()
 
-    const theme = createTheme({
-        typography: {
-            fontFamily: ["Inter", "sans-serif"].join(","),
-        },
-    });
+    const [openDeletePost, setOpenDeletePost] = useState(false);
+    const handleOpenDeletePost = () => setOpenDeletePost(true);
+    const handleCloseDeletePost = () => setOpenDeletePost(false);
 
     return (
-        <ThemeProvider theme={theme}>
             <DashbroadLayout sideBar={sideBar}>
                 <ClassHeader
                     className={"Tương tác người máy"}
@@ -167,10 +175,60 @@ const Posts = () => {
                                             </Grid>
                                             <Grid item xs={11.5}>
                                                 <Grid container>
-                                                    <Grid item xs={12}>
-                                                        <Typography variant={"h5"}>
+                                                    <Grid item xs={1}>
+                                                        <Typography
+                                                            sx={{
+                                                                fontSize: 23,
+                                                                fontWeight: 600,
+                                                            }}
+                                                        >
                                                             {post.CreatorName}
                                                         </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={10}>
+                                                        <Typography>
+                                                            {moment(post.UpdatedAt).format("DD/MM/YYYY, h:mm:ss a")}
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid
+                                                        item xs={1}
+                                                        display="flex"
+                                                        justifyContent="flex-end"
+                                                    >
+                                                        {userID === post.CreatorID ? (
+                                                            <Grid>
+                                                                <PopupState variant="popper" popupId="demo-popup-popper">
+                                                                    {(popupState) => (
+                                                                        <div>
+                                                                            <Button {...bindToggle(popupState)}>
+                                                                                <OtherIcon />
+                                                                            </Button>
+                                                                            <Popper {...bindPopper(popupState)} transition>
+                                                                                {({ TransitionProps }) => (
+                                                                                    <Fade {...TransitionProps} timeout={350}>
+                                                                                        <Paper>
+                                                                                            <MenuList
+                                                                                                id="composition-menu"
+                                                                                                aria-labelledby="composition-button"
+                                                                                            >
+                                                                                                <MenuItem>
+                                                                                                    Sửa bài viết
+                                                                                                </MenuItem>
+                                                                                                <MenuItem
+                                                                                                    onClick={handleOpenDeletePost}
+                                                                                                >
+                                                                                                    Xóa bài viết
+                                                                                                </MenuItem>
+                                                                                            </MenuList>
+                                                                                        </Paper>
+                                                                                    </Fade>
+                                                                                )}
+                                                                            </Popper>
+                                                                        </div>
+                                                                    )}
+                                                                </PopupState>
+                                                            </Grid>
+                                                        ) : null}
                                                     </Grid>
                                                 </Grid>
                                             </Grid>
@@ -179,21 +237,21 @@ const Posts = () => {
                                             item
                                             sx={{
                                                 paddingLeft: 10,
-                                                paddingTop: 2,
                                             }}
                                         >
                                             <Typography
-                                                variant={"h4"}
                                                 sx={{
                                                     paddingBottom: 2,
+                                                    fontWeight: 600,
+                                                    fontSize: 25,
                                                 }}
                                             >
                                                 {post.Title}
                                             </Typography>
                                             <Typography
-                                                variant={"h5"}
                                                 sx={{
                                                     paddingBottom: 2,
+                                                    fontWeight:100,
                                                 }}
                                             >
                                                 {post.Content}
@@ -240,8 +298,14 @@ const Posts = () => {
                     />
                 </Modal>
 
+                <Modal open={openDeletePost}
+                       onClose={handleCloseDeletePost}
+                       aria-labelledby="modal-modal-title"
+                       aria-describedby="modal-modal-description"
+                >
+                    <DeletePost postID={postID} />
+                </Modal>
             </DashbroadLayout>
-        </ThemeProvider>
     );
 };
 

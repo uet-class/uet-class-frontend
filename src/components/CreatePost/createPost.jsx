@@ -88,6 +88,7 @@ const CreatePost = (props) => {
                     className={"input-rounded"}
                     autoComplete='off'
                     multiline
+                    maxRows={10}
                     sx={{
                         width: "100%",
                         paddingBottom: 3,

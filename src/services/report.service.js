@@ -2,9 +2,7 @@ import axios from "axios";
 
 class ReportService {
     getReports() {
-        return axios.get('/report', {
-            withCredentials: true,
-        })
+        return axios.get('/report')
             .then(function (response) {
                 return response;
             })

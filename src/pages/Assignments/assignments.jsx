@@ -81,7 +81,7 @@ const Assignments = () => {
         "Bảng tin",
         "Tài liệu",
         "Bài tập",
-        "Khác",
+        "Danh sách lớp",
     ];
     sideBar.basicIcon = [
         <HomeIcon/>,

@@ -14,9 +14,7 @@ class AdminService {
     }
 
     getAllClass() {
-        return axios.get('/class/all-classes', {
-            withCredentials: true,
-        })
+        return axios.get('/class/all-classes')
             .then(function (response) {
                 return response;
             })
