@@ -6,6 +6,7 @@ import {
   Typography,
   Container,
   Button,
+  Alert,
 } from "@mui/material";
 import { React, useState } from "react";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -13,6 +14,8 @@ import AddIcon from "@mui/icons-material/Add";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import dayjs from "dayjs";
+import AssignmentService from "../../services/assignment.service";
+import moment from "moment/moment";
 
 const style = {
   position: "absolute",
@@ -28,11 +31,14 @@ const style = {
   borderRadius: "25px",
 };
 
-const CreateAssignmentForm = () => {
+const CreateAssignmentForm = (props) => {
+  let classID = localStorage.getItem("classID");
+  let userID = localStorage.getItem("userId");
   const [selectedFile, setSelectedFile] = useState(null);
   const [timeDeadline, setTimeDeadline] = useState(
     dayjs("2014-08-18T21:11:54")
   );
+  const [createAssignmentFail, setCreateAssignmentFail] = useState(false);
 
   const handleTimeChange = (newValue) => {
     setTimeDeadline(newValue);
@@ -47,12 +53,35 @@ const CreateAssignmentForm = () => {
     event.preventDefault();
     // const data = event.target;
     console.log(selectedFile);
-    console.log(event.target.header.value);
-    console.log(event.target.content.value);
-    console.log(timeDeadline);
+    // console.log(event.target.header.value);
+    // console.log(event.target.content.value);
+    // console.log(timeDeadline);
+    // console.log(moment(timeDeadline).format("DD/MM/YYYY, h:mm:ss a"))
+    AssignmentService.createAssignment(
+      classID,
+      userID,
+      event.target,
+      moment(timeDeadline).format("DD/MM/YYYY, h:mm:ss a")
+    )
+      .then((res) => {
+        if (res.status === 200) {
+          console.log(res);
+          props.handleRefresh()
+          props.handleCloseCreateAssignment();
+        } else {
+          const error = new Error(res.error);
+          throw error;
+        }
+      })
+      .catch((err) => {
+        setCreateAssignmentFail(true);
+      });
   };
   return (
     <Box sx={style}>
+      {createAssignmentFail ? (
+        <Alert severity="error">Tạo bài tập thất bại</Alert>
+      ) : null}
       <Typography
         className={"sign-in"}
         fontSize={25}

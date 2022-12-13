@@ -18,6 +18,7 @@ import AddIcon from "@mui/icons-material/Add";
 import CreateAssignmentForm from "../../components/createAssignmentForm/createAssignmentForm";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../../services/auth.service";
+import AssignmentService from "../../services/assignment.service";
 
 const columns = [
   { id: "name", label: "Bài tập", minWidth: 300 },
@@ -30,24 +31,6 @@ function createData(name, updateDate, deadlineDate, id) {
   return { name, updateDate, deadlineDate, id };
 }
 
-const rows = [
-  createData("bai1 Gioi thieu", "20/11/2022", "25/11/2022", 1),
-  createData("bai1 Gioi thieu", "20/11/2022", "25/11/2022", 1),
-  createData("bai1 Gioi thieu", "20/11/2022", "25/11/2022", 1),
-  createData("bai1 Gioi thieu", "20/11/2022", "25/11/2022", 1),
-  createData("bai1 Gioi thieu", "20/11/2022", "25/11/2022", 1),
-  createData("bai1 Gioi thieu", "20/11/2022", "25/11/2022", 1),
-  createData("bai1 Gioi thieu", "20/11/2022", "25/11/2022", 1),
-  createData("bai1 Gioi thieu", "20/11/2022", "25/11/2022", 1),
-  createData("bai1 Gioi thieu", "20/11/2022", "25/11/2022", 1),
-  createData("bai1 Gioi thieu", "20/11/2022", "25/11/2022", 1),
-  createData("bai1 Gioi thieu", "20/11/2022", "25/11/2022", 1),
-  createData("bai1 Gioi thieu", "20/11/2022", "25/11/2022", 1),
-  createData("bai1 Gioi thieu", "20/11/2022", "25/11/2022", 1),
-  createData("bai1 Gioi thieu", "20/11/2022", "25/11/2022", 1),
-  createData("bai1 Gioi thieu", "20/11/2022", "25/11/2022", 1),
-];
-
 const Assignments = () => {
   const [openSubmitAssignment, setSubmitAssignment] = useState(false);
   const handleCloseSubmitAssignment = () => setSubmitAssignment(false);
@@ -55,18 +38,37 @@ const Assignments = () => {
   const [openCreateAssignment, setCreateAssignment] = useState(false);
   const handleCloseCreateAssignment = () => setCreateAssignment(false);
   const handleOpenCreateAssignment = () => setCreateAssignment(true);
+  const [refreshPage, setRefreshPage] = useState(false);
+  const handleRefresh = () => {
+    setRefreshPage((current) => !current);
+  };
+  const [rows, setRows] = useState([]);
   const isTeacher = true; //tam thoi
 
   const navigate = useNavigate();
 
   //hardcode for classID
-  //   let classID = localStorage.getItem("classID");
+  let classID = localStorage.getItem("classID");
 
   useEffect(() => {
     AuthService.isUser(navigate);
+    AssignmentService.listAssignment(classID).then((res) => {
+      setRows([]);
+      for (let i = 0; i < res.data.message.length; i++) {
+        setRows((rows) => [
+          ...rows,
+          createData(
+            res.data.message[i].Title,
+            res.data.message[i].CreatedAt,
+            res.data.message[i].Duedate,
+            res.data.message[i].ID,
+          ),
+        ]);
+      }
+    });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [refreshPage]);
 
   const assignmentStatus = (done) => {
     if (done) {
@@ -241,7 +243,10 @@ const Assignments = () => {
             aria-describedby="modal-modal-description"
           >
             <Box>
-              <CreateAssignmentForm />
+              <CreateAssignmentForm
+                handleCloseCreateAssignment={handleCloseCreateAssignment}
+                handleRefresh= {handleRefresh}
+              />
             </Box>
           </Modal>
         </div>
