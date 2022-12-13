@@ -163,7 +163,7 @@ const PostComments = (props) => {
                 {comment?.map((comment) => {
                     return (
                         <Comment
-                            name={comment.CreatorID}
+                            name={comment.CreatorName}
                             avatar={"https://i.insider.com/61135525ad63f30019501966?width=700"}
                             content={comment.Content}
                             creatorID={creatorID}
