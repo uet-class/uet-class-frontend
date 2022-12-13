@@ -27,8 +27,8 @@ const columns = [
   { id: "status", label: "Trạng thái", minWidth: 100 },
 ];
 
-function createData(name, updateDate, deadlineDate, id) {
-  return { name, updateDate, deadlineDate, id };
+function createData(name, updateDate, deadlineDate, id, info) {
+  return { name, updateDate, deadlineDate, id, info };
 }
 
 const Assignments = () => {
@@ -43,6 +43,7 @@ const Assignments = () => {
     setRefreshPage((current) => !current);
   };
   const [rows, setRows] = useState([]);
+  const [assigmentInfo, setAssignmentInfo] = useState();
   const isTeacher = true; //tam thoi
 
   const navigate = useNavigate();
@@ -62,6 +63,7 @@ const Assignments = () => {
             res.data.message[i].CreatedAt,
             res.data.message[i].Duedate,
             res.data.message[i].ID,
+            res.data.message[i]
           ),
         ]);
       }
@@ -168,6 +170,7 @@ const Assignments = () => {
                           key={row.code}
                           onClick={() => {
                             if (!isTeacher) {
+                              setAssignmentInfo(row.info);
                               handleOpenSubmitAssignment();
                             }
                           }}
@@ -233,7 +236,7 @@ const Assignments = () => {
             aria-describedby="modal-modal-description"
           >
             <Box>
-              <SubmitAssignmentForm />
+              <SubmitAssignmentForm info={assigmentInfo} />
             </Box>
           </Modal>
           <Modal
@@ -245,7 +248,7 @@ const Assignments = () => {
             <Box>
               <CreateAssignmentForm
                 handleCloseCreateAssignment={handleCloseCreateAssignment}
-                handleRefresh= {handleRefresh}
+                handleRefresh={handleRefresh}
               />
             </Box>
           </Modal>

@@ -3,7 +3,6 @@ import { Box, Button, Grid, Typography, Container, Paper } from "@mui/material";
 import { React, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import ArticleIcon from "@mui/icons-material/Article";
-import Comment from "../Comment/comment";
 
 const style = {
   position: "absolute",
@@ -19,55 +18,14 @@ const style = {
   borderRadius: "25px",
 };
 
-const comment_example = [
-  {
-    name: "Phạm Vũ Minh",
-    content: "Vâng ạ",
-    time: "1 giờ trước",
-    avatar: "https://i.insider.com/61135525ad63f30019501966?width=700",
-  },
-  {
-    name: "Phạm Vũ Minh",
-    content: "Vâng ạ",
-    time: "1 giờ trước",
-    avatar: "https://i.insider.com/61135525ad63f30019501966?width=700",
-  },
-  {
-    name: "Phạm Vũ Minh",
-    content: "Vâng ạ",
-    time: "1 giờ trước",
-    avatar: "https://i.insider.com/61135525ad63f30019501966?width=700",
-  },
-
-  {
-    name: "Phạm Vũ Minh",
-    content: "Vâng ạ",
-    time: "1 giờ trước",
-    avatar: "https://i.insider.com/61135525ad63f30019501966?width=700",
-  },
-
-  {
-    name: "Phạm Vũ Minh",
-    content: "Vâng ạ",
-    time: "1 giờ trước",
-    avatar: "https://i.insider.com/61135525ad63f30019501966?width=700",
-  },
-
-  {
-    name: "Phạm Vũ Minh",
-    content: "Vâng ạ",
-    time: "1 giờ trước",
-    avatar: "https://i.insider.com/61135525ad63f30019501966?width=700",
-  },
-];
-
-const SubmitAssignmentForm = () => {
+const SubmitAssignmentForm = (props) => {
   const [selectedFile, setSelectedFile] = useState(null);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     // const data = event.target;
     console.log(selectedFile);
+    console.log(props.info.ID)
   };
 
   const handleFileInput = (e) => {
@@ -107,7 +65,7 @@ const SubmitAssignmentForm = () => {
                     width: "40px",
                   }}
                 />
-                Bài tập tuần 4
+                {props.info?.Title}
               </Typography>
             </Grid>
             <Grid
@@ -130,7 +88,7 @@ const SubmitAssignmentForm = () => {
                 display="flex"
                 height={30}
               >
-                Hạn cuối ngày 09/10/2022, 13:00:00
+                Hạn cuối ngày {props.info?.Duedate}
               </Typography>
             </Grid>
           </Grid>
@@ -147,7 +105,7 @@ const SubmitAssignmentForm = () => {
             <Grid item xs={8.2}>
               <Box
                 sx={{
-                  borderBottom: 1,
+                  // borderBottom: 1,
                   borderColor: "black",
                   paddingTop: 3,
                   paddingBottom: 5,
@@ -155,27 +113,18 @@ const SubmitAssignmentForm = () => {
               >
                 <Paper
                   style={{
-                    padding: "40px 20px",
-                    maxHeight: "200px",
+                    padding: "10px 20px",
+                    maxHeight: "300px",
                     overflow: "auto",
                     boxShadow: "none",
                   }}
                 >
                   <Typography fontSize={20} fontWeight={100} color="black">
-                    Chào các em <br></br>
-                    Tuần này các em tự tập luyện rồi gửi bài nhé không phải lên
-                    lớp zoom nữa, có thể tuần từ ngày 14 lớp ta sẽ học trược
-                    tiếp trên sân (Thầy sẽ báo tới các em sớm nhất) <br></br>
-                    Các em tập luyện và nộp bài theo hướng dẫn nhé Chào các em{" "}
-                    <br></br>
-                    Tuần này các em tự tập luyện rồi gửi bài nhé không phải lên
-                    lớp zoom nữa, có thể tuần từ ngày 14 lớp ta sẽ học trược
-                    tiếp trên sân (Thầy sẽ báo tới các em sớm nhất) <br></br>
-                    Các em tập luyện và nộp bài theo hướng dẫn nhé
+                    {props.info?.Content}
                   </Typography>
                 </Paper>
               </Box>
-              <Box
+              {/* <Box
                 sx={{
                   // borderBottom: 1,
                   borderColor: "black",
@@ -204,7 +153,7 @@ const SubmitAssignmentForm = () => {
                     );
                   })}
                 </Paper>
-              </Box>
+              </Box> */}
             </Grid>
             <Grid
               item
