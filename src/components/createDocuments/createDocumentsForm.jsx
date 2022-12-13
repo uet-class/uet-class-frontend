@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography, Alert } from "@mui/material";
 import { React, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import "./createDocumentsForm.css";
@@ -22,16 +22,26 @@ const CreateDocuments = (props) => {
   const [selectedFile, setSelectedFile] = useState(null);
   var formData = new FormData();
   let classID = localStorage.getItem("classID");
+  const [uploadDocumentFail, setUploadDocumentsFail] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     // const data = event.target;
     // console.log(selectedFile);
     formData.append("file", selectedFile);
-    ClassService.uploadClassMaterial(classID, formData).then(() => {
-      props.handleRefresh();
-      props.handleCloseCreateDocument();
-    });
+    ClassService.uploadClassMaterial(classID, formData)
+      .then((res) => {
+        if (res.status === 200) {
+          props.handleRefresh();
+          props.handleCloseCreateDocument();
+        } else {
+          const error = new Error(res.error);
+          throw error;
+        }
+      })
+      .catch((err) => {
+        setUploadDocumentsFail(true);
+      });
   };
 
   const handleFileInput = (e) => {
@@ -40,6 +50,9 @@ const CreateDocuments = (props) => {
   };
   return (
     <Box sx={style}>
+      {uploadDocumentFail ? (
+        <Alert severity="error">Tải tài liệu lên thất bại</Alert>
+      ) : null}
       <Typography
         className={"sign-in"}
         fontSize={25}

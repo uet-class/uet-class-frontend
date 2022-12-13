@@ -75,6 +75,25 @@ class ClassService {
             });
     }
 
+    uploadAssignmentAttachment(ID, classId, creatorId, data) {
+        return axios.post(`/assignments/${ID}/upload-attachment`, data, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+            params: {
+                classId: classId,
+                creatorId: creatorId
+            }
+        })
+            .then(function (response) {
+                // console.log(response)
+                return response;
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    }
+
     inviteMember(classId, email) {
         return axios.post(`/class/${classId}/send-invitation`, email)
             .then(function (response) {

@@ -34,7 +34,7 @@ const style = {
 const CreateAssignmentForm = (props) => {
   let classID = localStorage.getItem("classID");
   let userID = localStorage.getItem("userId");
-  const [selectedFile, setSelectedFile] = useState(null);
+  // const [selectedFile, setSelectedFile] = useState(null);
   const [timeDeadline, setTimeDeadline] = useState(
     dayjs("2014-08-18T21:11:54")
   );
@@ -44,15 +44,15 @@ const CreateAssignmentForm = (props) => {
     setTimeDeadline(newValue);
   };
 
-  const handleFileInput = (e) => {
-    console.log(e.target.files[0]);
-    setSelectedFile(e.target.files[0]);
-  };
+  // const handleFileInput = (e) => {
+  //   console.log(e.target.files[0]);
+  //   setSelectedFile(e.target.files[0]);
+  // };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     // const data = event.target;
-    console.log(selectedFile);
+    // console.log(selectedFile);
     // console.log(event.target.header.value);
     // console.log(event.target.content.value);
     // console.log(timeDeadline);
@@ -108,7 +108,8 @@ const CreateAssignmentForm = (props) => {
             >
               <Grid
                 item
-                xs={5.9}
+                // xs={5.9}
+                xs={12}
                 display="flex"
                 justifyContent="flex-start"
                 sx={{ height: 110 }}
@@ -143,7 +144,7 @@ const CreateAssignmentForm = (props) => {
                   />
                 </Container>
               </Grid>
-              <Grid
+              {/* <Grid
                 item
                 xs={5.9}
                 display="flex"
@@ -171,7 +172,7 @@ const CreateAssignmentForm = (props) => {
                     <input type="file" name="file" onChange={handleFileInput} />
                   </Box>
                 </Container>
-              </Grid>
+              </Grid> */}
             </Grid>
           </Box>
           <Box
