@@ -6,10 +6,10 @@ import Assignments from "./pages/Assignments/assignments";
 import SignIn from "./pages/SignIn/signIn";
 import SignUp from "./pages/SignUp/signUp";
 import Home from "./pages/Home/home";
-import Posts from "./pages/Posts/posts";
 import Other from "./pages/Other/other";
 import AdminReports from "./pages/Admin/adminReports";
 import AdminClasses from "./pages/Admin/adminClasses";
+import Posts from "./pages/Posts/posts";
 
 function App() {
   return (
@@ -22,8 +22,8 @@ function App() {
               <Route path=":id">
                   <Route path="documents" element={<Documents />} />
                   <Route path="assignments" element={<Assignments />} />
-                  <Route path="posts" element={<Posts />} />
                   <Route path="other" element={<Other />} />
+                  <Route path="posts" element={<Posts />} />
               </Route>
           </Route>
           <Route path="/admin">

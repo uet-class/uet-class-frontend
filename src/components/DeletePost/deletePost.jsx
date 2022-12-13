@@ -7,11 +7,13 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 800,
+    width: 500,
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
-    p: 4,
+    p: 5,
+    minHeight: 100,
+    maxHeight: 200,
 };
 
 const DeletePost = (props) => {
@@ -54,72 +56,70 @@ const DeletePost = (props) => {
                 </Alert>
             ) : null}
             <Box component={"form"} onSubmit={handleSubmit}>
-                <Typography
-                    display={"flex"}
-                    justifyContent={"center"}
-                    sx={{
-                        fontSize: 30,
-                        fontWeight: 600,
-                    }}
-                >
-                    Xóa bài viết?
-                </Typography>
-                <Grid container
-                      sx={{
-                          paddingTop: 3
-                      }}
-                >
-                    <Grid
-                        item xs={6}
-                        display={"flex"}
-                        justifyContent={"center"}
-                    >
-                        <Button
-                            onClick={() => (state.button = 0)}
-                            name={"noBtn"}
-                            value={"noBtn"}
-                            type="submit"
-                            variant="contained"
+                <Grid container>
+                    <Grid item xs={12}>
+                        <Typography
+                            display={"flex"}
+                            justifyContent={"center"}
                             sx={{
-                                backgroundColor: "#FF0000",
-                                borderRadius: 4,
+                                fontSize: 30,
+                                fontWeight: 600,
                             }}
                         >
-                            <Typography
-                                paddingLeft={1}
-                                className={"sign-in"}
-                                fontSize={20}
-                                fontWeight={500}
-                            >
-                                Không
-                            </Typography>
-                        </Button>
+                            Xóa bài viết này?
+                        </Typography>
                     </Grid>
-                    <Grid
-                        item xs={6}
-                        display={"flex"}
-                        justifyContent={"center"}
-                    >
-                        <Button
-                            onClick={() => (state.button = 1)}
-                            name={"yesBtn"}
-                            value={"yesBtn"}
-                            type="submit"
-                            variant="contained"
-                            sx={{
-                                backgroundColor: "#00FF00",
-                                borderRadius: 4,
-                            }}
+                    <Grid item xs={12}>
+                        <Grid container
+                              sx={{
+                                  paddingRight: 2,
+                                  paddingTop: 3,
+                              }}
                         >
-                            <Typography
-                                paddingLeft={1}
-                                className={"sign-in"}
-                                fontSize={20}
-                                fontWeight={500}
+                            <Grid
+                                item
+                                xs={6}
+                                display={"flex"}
+                                justifyContent={"center"}
                             >
-                                Có
-                            </Typography>
-                        </Button>
+                                <Button
+                                    onClick={() => (state.button = 0)}
+                                    name={"noBtn"}
+                                    value={"noBtn"}
+                                    type="submit"
+                                    variant="contained"
+                                    sx={{
+                                        backgroundColor: "#FF0000" ,
+                                    }}
+                                >
+                                    <Typography
+                                        paddingLeft={1}
+                                        className={"sign-in"}
+                                    >
+                                        Không
+                                    </Typography>
+                                </Button>
+                            </Grid>
+                            <Grid item xs={6}
+                                  display={"flex"}
+                                  justifyContent={"center"}
+                            >
+                                <Button
+                                    onClick={() => (state.button = 1)}
+                                    name={"yesBtn"}
+                                    value={"yesBtn"}
+                                    type="submit"
+                                    variant="contained"
+                                >
+                                    <Typography
+                                        paddingLeft={1}
+                                        className={"sign-in"}
+                                    >
+                                        Xóa
+                                    </Typography>
+                                </Button>
+                            </Grid>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Box>
