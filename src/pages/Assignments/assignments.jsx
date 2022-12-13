@@ -18,6 +18,8 @@ import AddIcon from "@mui/icons-material/Add";
 import CreateAssignmentForm from "../../components/createAssignmentForm/createAssignmentForm";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../../services/auth.service";
+import UserService from "../../services/user.service";
+import ClassService from "../../services/class.service";
 
 const columns = [
   { id: "name", label: "Bài tập", minWidth: 300 },
@@ -55,7 +57,9 @@ const Assignments = () => {
   const [openCreateAssignment, setCreateAssignment] = useState(false);
   const handleCloseCreateAssignment = () => setCreateAssignment(false);
   const handleOpenCreateAssignment = () => setCreateAssignment(true);
-  const isTeacher = true; //tam thoi
+  const [userID, setUserID] = useState()
+  const [teacherID, setTeacherID] = useState()
+  let classID = localStorage.getItem("classID");
 
   const navigate = useNavigate();
 
@@ -65,8 +69,26 @@ const Assignments = () => {
   useEffect(() => {
     AuthService.isUser(navigate);
 
+    const fetchData = async () => {
+      UserService.getUserInfo().then((info) => {
+        setUserID(info.ID)
+      });
+      await ClassService.memberClass(classID).then((info) => {
+        const teachers = info.data.message.Teachers;
+        console.log(teachers[0]);
+        setTeacherID(teachers[0].ID)
+      });
+    }
+
+    fetchData();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  let isTeacher = true;
+  if (userID !== teacherID) {
+    isTeacher = false
+  }
 
   const assignmentStatus = (done) => {
     if (done) {

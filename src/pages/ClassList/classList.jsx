@@ -27,6 +27,10 @@ import AddMemberClassForm from "../../components/AddMemberClassForm/addMemberCla
 import ClassService from "../../services/class.service";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 import CreateReportUserForm from "../../components/CreateReportUserForm/createReportUserForm";
+import UserService from "../../services/user.service";
+import {useNavigate} from "react-router-dom";
+import AuthService from "../../services/auth.service";
+import * as React from "react";
 
 const columns = [
   { id: "FullName", label: "", minWidth: 220 },
@@ -39,14 +43,14 @@ function createData(FullName, DateOfBirth, isTeacher, UserInfo) {
 
 
 const ClassList = () => {
-  const isTeacher = true; //tam thoi
   let classId = localStorage.getItem("classID");
   const [refreshPage, setRefreshPage] = useState(false);
   const [userInfoDelete, setUserInfoDelete] = useState();
   const [userInfoReport, setUserInfoReport] = useState();
   const [rows, setRows] = useState([]);
-  // const [teacherList, setTeacherList] = useState([]);
-  // const [studentList, setStudentList] = useState([]);
+  const [userID, setUserID] = useState()
+  const [teacherID, setTeacherId] = useState()
+  const navigate = useNavigate();
 
   const [addMemberClass, setAddMemberClass] = useState(false);
   const handleCloseAddMemberClass = () => setAddMemberClass(false);
@@ -86,12 +90,17 @@ const ClassList = () => {
   };
 
   useEffect(() => {
+    AuthService.isUser(navigate);
     const fetchData = async () => {
+      UserService.getUserInfo().then((info) => {
+        setUserID(info.ID)
+      });
       await ClassService.memberClass(classId).then((info) => {
         const students = info.data.message.Students;
         const teachers = info.data.message.Teachers;
         setRows([]);
         console.log(teachers[0]);
+        setTeacherId(teachers[0].ID)
 
         for (let i = 0; i < teachers.length; i++) {
           setRows((rows) => [
@@ -121,8 +130,10 @@ const ClassList = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refreshPage]);
 
-  //hardcode for class id
-  // let classID = localStorage.getItem("classID");
+  let isTeacher = true;
+  if (userID !== teacherID) {
+    isTeacher = false
+  }
 
   const handleAddPeople = () => {
     // setRefreshPage((prev) => !prev);
@@ -132,6 +143,26 @@ const ClassList = () => {
   return (
     <DashbroadLayout>
       <ClassHeader>
+        {/*<Button*/}
+        {/*    variant="contained"*/}
+        {/*    sx={{*/}
+        {/*      backgroundColor: "#0A5379",*/}
+        {/*      marginLeft: 1.4,*/}
+        {/*      height: 50,*/}
+        {/*      width: 160,*/}
+        {/*      marginTop: 2,*/}
+        {/*    }}*/}
+        {/*>*/}
+        {/*  <AddIcon style={{ color: "white" }} />*/}
+        {/*  <Typography*/}
+        {/*      paddingLeft={1}*/}
+        {/*      className={"sign-in"}*/}
+        {/*      fontSize={20}*/}
+        {/*      fontWeight={500}*/}
+        {/*  >*/}
+        {/*    Tạo mới*/}
+        {/*  </Typography>*/}
+        {/*</Button>*/}
         <div className="dataTable">
           <Container
             maxWidth={false}
@@ -273,7 +304,7 @@ const ClassList = () => {
                             <TableCell>
                               <Button sx={{ width: 3 }}>
                                 <ReportProblemIcon
-                                  style={{ color: "#cccc00" }}
+                                  style={{ color: "#ffff00" }}
                                   onClick={() => {
                                     handleReportMember(row.UserInfo);
                                   }}
