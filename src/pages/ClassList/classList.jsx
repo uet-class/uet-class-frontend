@@ -1,4 +1,4 @@
-import "./other.css";
+import "./classList.css";
 import DashbroadLayout from "../../layouts/DashbroadLayout/dashbroadLayout";
 import ClassHeader from "../../components/ClassHeader/classHeader";
 import {
@@ -38,7 +38,7 @@ function createData(FullName, DateOfBirth, isTeacher, UserInfo) {
 }
 
 
-const Other = () => {
+const ClassList = () => {
   const isTeacher = true; //tam thoi
   let classId = localStorage.getItem("classID");
   const [refreshPage, setRefreshPage] = useState(false);
@@ -347,4 +347,4 @@ const Other = () => {
   );
 };
 
-export default Other;
+export default ClassList;

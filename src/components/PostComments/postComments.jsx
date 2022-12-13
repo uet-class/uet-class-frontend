@@ -24,6 +24,7 @@ const PostComments = (props) => {
     const [title, setTitle] = useState();
     const [content, setContent] = useState();
     const [creatorID, setCreatorID] = useState()
+    const [updatedAt, setUpdatedAt] = useState()
     const [refreshComment, setRefreshComment] = useState(false);
     const handleRefresh = () => {
         setRefreshComment((current) => !current);
@@ -41,6 +42,7 @@ const PostComments = (props) => {
             setCreatorName(post.CreatorName);
             setTitle(post.Title);
             setContent(post.Content);
+            setUpdatedAt(post.UpdatedAt)
             setComment(commentArr);
         })
     }
@@ -76,15 +78,29 @@ const PostComments = (props) => {
     return (
         <Box sx={style}>
             <Grid container>
-                <Grid item xs={1}>
+                <Grid item xs={1}
+                    sx={{
+                        paddingTop: 1,
+                    }}
+                >
                     <Avatar alt="Remy Sharp"
                             src={"https://i.insider.com/61135525ad63f30019501966?width=700"}/>
                 </Grid>
                 <Grid item xs={11}>
                     <Grid container>
                         <Grid item xs={12}>
-                            <Typography variant={"h5"}>
+                            <Typography
+                                sx={{
+                                    fontWeight: 600,
+                                    fontSize: 25,
+                                }}
+                            >
                                 {creatorName}
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Typography>
+                                {moment(updatedAt).format("DD/MM/YYYY, h:mm:ss a")}
                             </Typography>
                         </Grid>
                     </Grid>
@@ -95,30 +111,46 @@ const PostComments = (props) => {
                     borderBottom: 1
                 }}
             >
-                <Grid
-                    item
+                <Grid container
                     sx={{
-                        paddingLeft: 10,
+                        paddingBottom: 2,
                         paddingTop: 2,
+                        paddingLeft: 2,
                     }}
                 >
-                    <Typography
-                        variant={"h4"}
-                        sx={{
-                            paddingBottom: 2,
-                        }}
+                    <Grid item xs={12}>
+                        <Box
+                            sx={{
+                                borderBottom: 1,
+                                maxWidth: 500,
+                            }}
+                        >
+                            <Typography
+                                sx={{
+                                    fontWeight: 600,
+                                    fontSize: 25,
+                                }}
+                            >
+                                {title}
+                            </Typography>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12}
+                          sx={{
+                              paddingTop: 2,
+                          }}
                     >
-                        {title}
-                    </Typography>
-                    <Typography
-                        sx={{
-                            paddingBottom: 2,
-                            maxHeight: '20vh',
-                            overflow: 'auto'
-                        }}
-                    >
-                        {content}
-                    </Typography>
+                        <Typography
+                            sx={{
+                                fontWeight: 300,
+                                fontSize: 18,
+                                maxHeight: "25vh",
+                                overflow: "auto",
+                            }}
+                        >
+                            {content}
+                        </Typography>
+                    </Grid>
                 </Grid>
             </Box>
             <Grid
@@ -134,7 +166,6 @@ const PostComments = (props) => {
                             name={comment.CreatorID}
                             avatar={"https://i.insider.com/61135525ad63f30019501966?width=700"}
                             content={comment.Content}
-                            time={moment(comment.UpdatedAt).format("DD/MM/YYYY, h:mm:ss a")}
                             creatorID={creatorID}
                             commentID={comment.ID}
                         />
