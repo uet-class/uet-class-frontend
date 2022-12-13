@@ -2,7 +2,7 @@ import DashbroadLayout from "../../layouts/DashbroadLayout/dashbroadLayout";
 import "./assignments.css";
 import ClassHeader from "../../components/ClassHeader/classHeader";
 import ArticleIcon from "@mui/icons-material/Article";
-import DeleteIcon from "@mui/icons-material/Delete";
+// import DeleteIcon from "@mui/icons-material/Delete";
 import { useState, useEffect } from "react";
 import * as React from "react";
 import Paper from "@mui/material/Paper";
@@ -99,9 +99,9 @@ const Assignments = () => {
     );
   };
 
-  const handleDelete = (a) => {
-    console.log(a);
-  };
+  // const handleDelete = (a) => {
+  //   console.log(a);
+  // };
 
   return (
     <DashbroadLayout>
@@ -155,9 +155,9 @@ const Assignments = () => {
                         }
                         return <></>;
                       })}
-                      {isTeacher && (
+                      {/* {isTeacher && (
                         <TableCell style={{ width: 3 }}></TableCell>
-                      )}
+                      )} */}
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -209,7 +209,7 @@ const Assignments = () => {
                             }
                             return <></>;
                           })}
-                          {isTeacher && (
+                          {/* {isTeacher && (
                             <TableCell>
                               <Button
                                 sx={{ width: 3 }}
@@ -220,7 +220,7 @@ const Assignments = () => {
                                 <DeleteIcon style={{ color: "red" }} />
                               </Button>
                             </TableCell>
-                          )}
+                          )} */}
                         </TableRow>
                       );
                     })}
