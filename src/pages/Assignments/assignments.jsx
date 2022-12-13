@@ -19,6 +19,7 @@ import CreateAssignmentForm from "../../components/createAssignmentForm/createAs
 import { useNavigate } from "react-router-dom";
 import AuthService from "../../services/auth.service";
 import AssignmentService from "../../services/assignment.service";
+import UploadAttachmentAssignment from "../../components/UploadAttachmentAssignment/uploadAttachmentAssignment";
 import UserService from "../../services/user.service";
 import ClassService from "../../services/class.service";
 
@@ -40,6 +41,11 @@ const Assignments = () => {
   const [openCreateAssignment, setCreateAssignment] = useState(false);
   const handleCloseCreateAssignment = () => setCreateAssignment(false);
   const handleOpenCreateAssignment = () => setCreateAssignment(true);
+
+  const [openUploadAttachment, setUploadAttachment] = useState(false);
+  const handleCloseUploadAttachment = () => setUploadAttachment(false);
+  const handleOpenUploadAttachment = () => setUploadAttachment(true);
+
   const [refreshPage, setRefreshPage] = useState(false);
   const handleRefresh = () => {
     setRefreshPage((current) => !current);
@@ -190,13 +196,15 @@ const Assignments = () => {
                           tabIndex={-1}
                           key={row.code}
                           onClick={() => {
+                            setAssignmentInfo(row.info);
                             if (!isTeacher) {
-                              setAssignmentInfo(row.info);
                               handleOpenSubmitAssignment();
+                            } else {
+                              handleOpenUploadAttachment();
                             }
                           }}
                           sx={{
-                            ...(!isTeacher && { cursor: "pointer" }),
+                            cursor: "pointer",
                           }}
                         >
                           {columns.map((column) => {
@@ -270,6 +278,21 @@ const Assignments = () => {
               <CreateAssignmentForm
                 handleCloseCreateAssignment={handleCloseCreateAssignment}
                 handleRefresh={handleRefresh}
+              />
+            </Box>
+          </Modal>
+
+          <Modal
+            open={openUploadAttachment}
+            onClose={handleCloseUploadAttachment}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box>
+              <UploadAttachmentAssignment
+                handleCloseUploadAttachment={handleCloseUploadAttachment}
+                handleRefresh={handleRefresh}
+                info={assigmentInfo}
               />
             </Box>
           </Modal>

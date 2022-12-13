@@ -46,10 +46,43 @@ class ClassService {
             });
     }
 
+    reviewClassMaterials(classId, filePath) {
+        return axios.get(`/class/${classId}/download-material`, {
+            params: {
+                objectName: filePath
+            }
+        })
+            .then(function (response) {
+                return response;
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    }
+
     uploadClassMaterial(classId, data) {
         return axios.post(`/class/${classId}/upload-material`, data, {
             headers: {
                 'Content-Type': 'multipart/form-data'
+            }
+        })
+            .then(function (response) {
+                // console.log(response)
+                return response;
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    }
+
+    uploadAssignmentAttachment(ID, classId, creatorId, data) {
+        return axios.post(`/assignments/${ID}/upload-attachment`, data, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+            params: {
+                classId: classId,
+                creatorId: creatorId
             }
         })
             .then(function (response) {

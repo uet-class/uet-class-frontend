@@ -4,7 +4,7 @@ import DashbroadLayout from "../../layouts/DashbroadLayout/dashbroadLayout";
 import AddIcon from "@mui/icons-material/Add";
 import ClassHeader from "../../components/ClassHeader/classHeader";
 import DeleteIcon from "@mui/icons-material/Delete";
-import DownloadIcon from "@mui/icons-material/Download";
+// import DownloadIcon from "@mui/icons-material/Download";
 import ArticleIcon from "@mui/icons-material/Article";
 import { useState, useEffect } from "react";
 import * as React from "react";
@@ -20,6 +20,7 @@ import AuthService from "../../services/auth.service";
 import { useNavigate } from "react-router-dom";
 import ClassService from "../../services/class.service";
 import moment from "moment";
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import UserService from "../../services/user.service";
 
 
@@ -93,8 +94,12 @@ const Documents = () => {
     });
   };
 
-  const handleDownload = (fileName) => {
-    console.log(fileName);
+  const handleReview = (fileName) => {
+    // console.log(fileName, classID);
+    ClassService.reviewClassMaterials(classID, fileName).then((res) => {
+      // console.log(res.data.message)
+      window.open(res.data.message)
+    })
     // storage.bucket('uc-class-27').file("text.txt").download();
   };
 
@@ -189,10 +194,10 @@ const Documents = () => {
                             <Button
                               sx={{ width: 3 }}
                               onClick={() => {
-                                handleDownload(row.name);
+                                handleReview(row.name);
                               }}
                             >
-                              <DownloadIcon style={{ color: "blue" }} />
+                              <RemoveRedEyeIcon style={{ color: "blue" }} />
                             </Button>
                           </TableCell>
                           {isTeacher && (
