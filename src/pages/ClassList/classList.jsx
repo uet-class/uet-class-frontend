@@ -27,6 +27,7 @@ import AddMemberClassForm from "../../components/AddMemberClassForm/addMemberCla
 import ClassService from "../../services/class.service";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 import CreateReportUserForm from "../../components/CreateReportUserForm/createReportUserForm";
+import UserService from "../../services/user.service";
 
 const columns = [
   { id: "FullName", label: "", minWidth: 220 },
@@ -39,14 +40,13 @@ function createData(FullName, DateOfBirth, isTeacher, UserInfo) {
 
 
 const ClassList = () => {
-  const isTeacher = true; //tam thoi
   let classId = localStorage.getItem("classID");
   const [refreshPage, setRefreshPage] = useState(false);
   const [userInfoDelete, setUserInfoDelete] = useState();
   const [userInfoReport, setUserInfoReport] = useState();
   const [rows, setRows] = useState([]);
-  // const [teacherList, setTeacherList] = useState([]);
-  // const [studentList, setStudentList] = useState([]);
+  const [userID, setUserID] = useState()
+  const [teacherID, setTeacherID] = useState()
 
   const [addMemberClass, setAddMemberClass] = useState(false);
   const handleCloseAddMemberClass = () => setAddMemberClass(false);
@@ -86,12 +86,16 @@ const ClassList = () => {
   };
 
   useEffect(() => {
+    UserService.getUserInfo().then((info) => {
+      setUserID(info.ID)
+    });
     const fetchData = async () => {
       await ClassService.memberClass(classId).then((info) => {
         const students = info.data.message.Students;
         const teachers = info.data.message.Teachers;
         setRows([]);
         console.log(teachers[0]);
+        setTeacherID(teachers[0].ID)
 
         for (let i = 0; i < teachers.length; i++) {
           setRows((rows) => [
@@ -128,6 +132,11 @@ const ClassList = () => {
     // setRefreshPage((prev) => !prev);
     handleOpenAddMemeberClass();
   };
+
+  let isTeacher = true;
+  if (userID !== teacherID) {
+    isTeacher = false
+  }
 
   return (
     <DashbroadLayout>

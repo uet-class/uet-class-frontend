@@ -19,6 +19,8 @@ import CreateAssignmentForm from "../../components/createAssignmentForm/createAs
 import { useNavigate } from "react-router-dom";
 import AuthService from "../../services/auth.service";
 import AssignmentService from "../../services/assignment.service";
+import UserService from "../../services/user.service";
+import ClassService from "../../services/class.service";
 
 const columns = [
   { id: "name", label: "Bài tập", minWidth: 300 },
@@ -44,7 +46,8 @@ const Assignments = () => {
   };
   const [rows, setRows] = useState([]);
   const [assigmentInfo, setAssignmentInfo] = useState();
-  const isTeacher = true; //tam thoi
+  const [userID, setUserID] = useState()
+  const [teacherID, setTeacherID] = useState()
 
   const navigate = useNavigate();
 
@@ -69,8 +72,26 @@ const Assignments = () => {
       }
     });
 
+    const fetchData = async () => {
+      UserService.getUserInfo().then((info) => {
+        setUserID(info.ID)
+      });
+      await ClassService.memberClass(classID).then((info) => {
+        const teachers = info.data.message.Teachers;
+        console.log(teachers[0]);
+        setTeacherID(teachers[0].ID)
+      });
+    }
+
+    fetchData();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refreshPage]);
+
+  let isTeacher = true;
+  if (userID !== teacherID) {
+    isTeacher = false
+  }
 
   const assignmentStatus = (done) => {
     if (done) {
