@@ -2,7 +2,7 @@ import DashbroadLayout from "../../layouts/DashbroadLayout/dashbroadLayout";
 import "./assignments.css";
 import ClassHeader from "../../components/ClassHeader/classHeader";
 import ArticleIcon from "@mui/icons-material/Article";
-import DeleteIcon from "@mui/icons-material/Delete";
+// import DeleteIcon from "@mui/icons-material/Delete";
 import { useState, useEffect } from "react";
 import * as React from "react";
 import Paper from "@mui/material/Paper";
@@ -18,6 +18,7 @@ import AddIcon from "@mui/icons-material/Add";
 import CreateAssignmentForm from "../../components/createAssignmentForm/createAssignmentForm";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../../services/auth.service";
+import AssignmentService from "../../services/assignment.service";
 import UserService from "../../services/user.service";
 import ClassService from "../../services/class.service";
 
@@ -28,27 +29,9 @@ const columns = [
   { id: "status", label: "Trạng thái", minWidth: 100 },
 ];
 
-function createData(name, updateDate, deadlineDate, id) {
-  return { name, updateDate, deadlineDate, id };
+function createData(name, updateDate, deadlineDate, id, info) {
+  return { name, updateDate, deadlineDate, id, info };
 }
-
-const rows = [
-  createData("bai1 Gioi thieu", "20/11/2022", "25/11/2022", 1),
-  createData("bai1 Gioi thieu", "20/11/2022", "25/11/2022", 1),
-  createData("bai1 Gioi thieu", "20/11/2022", "25/11/2022", 1),
-  createData("bai1 Gioi thieu", "20/11/2022", "25/11/2022", 1),
-  createData("bai1 Gioi thieu", "20/11/2022", "25/11/2022", 1),
-  createData("bai1 Gioi thieu", "20/11/2022", "25/11/2022", 1),
-  createData("bai1 Gioi thieu", "20/11/2022", "25/11/2022", 1),
-  createData("bai1 Gioi thieu", "20/11/2022", "25/11/2022", 1),
-  createData("bai1 Gioi thieu", "20/11/2022", "25/11/2022", 1),
-  createData("bai1 Gioi thieu", "20/11/2022", "25/11/2022", 1),
-  createData("bai1 Gioi thieu", "20/11/2022", "25/11/2022", 1),
-  createData("bai1 Gioi thieu", "20/11/2022", "25/11/2022", 1),
-  createData("bai1 Gioi thieu", "20/11/2022", "25/11/2022", 1),
-  createData("bai1 Gioi thieu", "20/11/2022", "25/11/2022", 1),
-  createData("bai1 Gioi thieu", "20/11/2022", "25/11/2022", 1),
-];
 
 const Assignments = () => {
   const [openSubmitAssignment, setSubmitAssignment] = useState(false);
@@ -57,17 +40,37 @@ const Assignments = () => {
   const [openCreateAssignment, setCreateAssignment] = useState(false);
   const handleCloseCreateAssignment = () => setCreateAssignment(false);
   const handleOpenCreateAssignment = () => setCreateAssignment(true);
+  const [refreshPage, setRefreshPage] = useState(false);
+  const handleRefresh = () => {
+    setRefreshPage((current) => !current);
+  };
+  const [rows, setRows] = useState([]);
+  const [assigmentInfo, setAssignmentInfo] = useState();
   const [userID, setUserID] = useState()
   const [teacherID, setTeacherID] = useState()
-  let classID = localStorage.getItem("classID");
 
   const navigate = useNavigate();
 
   //hardcode for classID
-  //   let classID = localStorage.getItem("classID");
+  let classID = localStorage.getItem("classID");
 
   useEffect(() => {
     AuthService.isUser(navigate);
+    AssignmentService.listAssignment(classID).then((res) => {
+      setRows([]);
+      for (let i = 0; i < res.data.message.length; i++) {
+        setRows((rows) => [
+          ...rows,
+          createData(
+            res.data.message[i].Title,
+            res.data.message[i].CreatedAt,
+            res.data.message[i].Duedate,
+            res.data.message[i].ID,
+            res.data.message[i]
+          ),
+        ]);
+      }
+    });
 
     const fetchData = async () => {
       UserService.getUserInfo().then((info) => {
@@ -83,7 +86,7 @@ const Assignments = () => {
     fetchData();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [refreshPage]);
 
   let isTeacher = true;
   if (userID !== teacherID) {
@@ -117,9 +120,9 @@ const Assignments = () => {
     );
   };
 
-  const handleDelete = (a) => {
-    console.log(a);
-  };
+  // const handleDelete = (a) => {
+  //   console.log(a);
+  // };
 
   return (
     <DashbroadLayout>
@@ -173,9 +176,9 @@ const Assignments = () => {
                         }
                         return <></>;
                       })}
-                      {isTeacher && (
+                      {/* {isTeacher && (
                         <TableCell style={{ width: 3 }}></TableCell>
-                      )}
+                      )} */}
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -188,6 +191,7 @@ const Assignments = () => {
                           key={row.code}
                           onClick={() => {
                             if (!isTeacher) {
+                              setAssignmentInfo(row.info);
                               handleOpenSubmitAssignment();
                             }
                           }}
@@ -226,7 +230,7 @@ const Assignments = () => {
                             }
                             return <></>;
                           })}
-                          {isTeacher && (
+                          {/* {isTeacher && (
                             <TableCell>
                               <Button
                                 sx={{ width: 3 }}
@@ -237,7 +241,7 @@ const Assignments = () => {
                                 <DeleteIcon style={{ color: "red" }} />
                               </Button>
                             </TableCell>
-                          )}
+                          )} */}
                         </TableRow>
                       );
                     })}
@@ -253,7 +257,7 @@ const Assignments = () => {
             aria-describedby="modal-modal-description"
           >
             <Box>
-              <SubmitAssignmentForm />
+              <SubmitAssignmentForm info={assigmentInfo} />
             </Box>
           </Modal>
           <Modal
@@ -263,7 +267,10 @@ const Assignments = () => {
             aria-describedby="modal-modal-description"
           >
             <Box>
-              <CreateAssignmentForm />
+              <CreateAssignmentForm
+                handleCloseCreateAssignment={handleCloseCreateAssignment}
+                handleRefresh={handleRefresh}
+              />
             </Box>
           </Modal>
         </div>

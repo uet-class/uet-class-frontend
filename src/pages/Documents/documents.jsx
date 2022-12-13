@@ -56,10 +56,13 @@ const Documents = () => {
       // console.log(res.data.message);
       setRows([]);
       for (let i = 0; i < res.data.message.length; i++) {
-        setRows((rows) => [
-          ...rows,
-          createData(res.data.message[i].fileName, res.data.message[i].createdAt),
-        ]);
+        const file_path = res.data.message[i].fileName.split('/')
+        if (file_path.length === 1) {
+          setRows((rows) => [
+            ...rows,
+            createData(res.data.message[i].fileName, res.data.message[i].createdAt),
+          ]);
+        }
       }
     });
 

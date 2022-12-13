@@ -24,11 +24,11 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: 1200,
   bgcolor: "background.paper",
-  border: "2px solid #000",
+  border: "2px solid #dddddd",
   boxShadow: 24,
   justifyContent: "center",
   p: 4,
-  borderRadius: "25px",
+  borderRadius: "10px",
   padding: "30px",
   paddingTop: "40px",
   paddingBottom: "40px",
@@ -112,16 +112,17 @@ const ProfileForm = (props) => {
           <Container
             maxWidth={false}
             disableGutters
-            sx={
-              {
-                //   backgroundColor: "gray",
-              }
-            }
+            sx={{
+              //   backgroundColor: "gray",
+              paddingRight: "10px",
+            }}
           >
             <Box
               sx={{
                 display: "flex",
                 justifyContent: "center",
+                paddingTop: "100px",
+                // height: "100%",
               }}
             >
               <Avatar
@@ -137,10 +138,10 @@ const ProfileForm = (props) => {
               sx={{
                 display: "flex",
                 justifyContent: "center",
-                paddingTop: "40px",
+                paddingTop: "30px",
               }}
             >
-              <Typography fontSize={32} fontWeight={600} color="black">
+              <Typography fontSize={32} fontWeight={600} color="#003049">
                 {props.userInfo.FullName}
               </Typography>
             </Box>
@@ -171,23 +172,12 @@ const ProfileForm = (props) => {
               <Typography
                 fontSize={32}
                 fontWeight={600}
-                color="black"
+                color="#003049"
                 marginBottom={3}
               >
                 Hồ sơ cá nhân
               </Typography>
               <Box component={"form"} onSubmit={handleSubmit}>
-                <TextField
-                  name="fullname"
-                  label="Họ và tên"
-                  defaultValue={props.userInfo.FullName}
-                  variant="standard"
-                  fullWidth
-                  sx={{ marginBottom: "30px" }}
-                  InputLabelProps={{
-                    style: { color: "black", fontSize: 20, fontWeight: "bold" },
-                  }}
-                />
                 <TextField
                   name="email"
                   disabled
@@ -197,9 +187,29 @@ const ProfileForm = (props) => {
                   fullWidth
                   sx={{ marginBottom: "30px" }}
                   InputLabelProps={{
-                    style: { color: "black", fontSize: 20, fontWeight: "bold" },
+                    style: {
+                      color: "#003049",
+                      fontSize: 20,
+                      fontWeight: "bold",
+                    },
                   }}
                 />
+                <TextField
+                  name="fullname"
+                  label="Họ và tên"
+                  defaultValue={props.userInfo.FullName}
+                  variant="standard"
+                  fullWidth
+                  sx={{ marginBottom: "30px" }}
+                  InputLabelProps={{
+                    style: {
+                      color: "#003049",
+                      fontSize: 20,
+                      fontWeight: "bold",
+                    },
+                  }}
+                />
+
                 <TextField
                   id="phoneNumber"
                   name="phoneNumber"
@@ -209,7 +219,11 @@ const ProfileForm = (props) => {
                   fullWidth
                   sx={{ marginBottom: "30px" }}
                   InputLabelProps={{
-                    style: { color: "black", fontSize: 20, fontWeight: "bold" },
+                    style: {
+                      color: "#003049",
+                      fontSize: 20,
+                      fontWeight: "bold",
+                    },
                   }}
                 />
                 {/* <TextField
@@ -222,7 +236,7 @@ const ProfileForm = (props) => {
                   fullWidth
                   sx={{ marginBottom: "30px" }}
                   InputLabelProps={{
-                    style: { color: "black", fontSize: 20, fontWeight: "bold" },
+                    style: { color: "#003049", fontSize: 20, fontWeight: "bold" },
                   }}
                 /> */}
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -236,7 +250,7 @@ const ProfileForm = (props) => {
                         name="dateOfBirth"
                         InputLabelProps={{
                           style: {
-                            color: "black",
+                            color: "#003049",
                             fontSize: 20,
                             fontWeight: "bold",
                           },
@@ -251,22 +265,24 @@ const ProfileForm = (props) => {
                   fontSize={16}
                   fontWeight={"bold"}
                   marginTop={2}
-                  color="black"
+                  color="#003049"
+                  paddingTop={1}
                 >
-                  Thay avatar
+                  Thay ảnh đại diện
                 </Typography>
                 <input type="file" name="file" onChange={handleFileInput} />
                 <Button
                   type="submit"
                   variant="contained"
                   sx={{
-                    backgroundColor: "#1967D2",
-                    borderRadius: 4,
-                    width: "40%",
-                    marginLeft: "90px",
+                    backgroundColor: "#0A5379",
+                    borderRadius: 1,
+                    width: "30%",
+                    marginLeft: "205px",
+                    textTransform: "none",
                   }}
                 >
-                  <Typography paddingLeft={1} fontSize={20} fontWeight={500}>
+                  <Typography fontSize={20} fontWeight={500}>
                     Cập nhật
                   </Typography>
                 </Button>

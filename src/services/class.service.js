@@ -109,7 +109,6 @@ class ClassService {
                 console.log(error);
             });
     }
-
 }
 
 export default new ClassService();

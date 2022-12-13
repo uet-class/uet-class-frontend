@@ -28,9 +28,6 @@ import ClassService from "../../services/class.service";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 import CreateReportUserForm from "../../components/CreateReportUserForm/createReportUserForm";
 import UserService from "../../services/user.service";
-import {useNavigate} from "react-router-dom";
-import AuthService from "../../services/auth.service";
-import * as React from "react";
 
 const columns = [
   { id: "FullName", label: "", minWidth: 220 },
@@ -49,8 +46,7 @@ const ClassList = () => {
   const [userInfoReport, setUserInfoReport] = useState();
   const [rows, setRows] = useState([]);
   const [userID, setUserID] = useState()
-  const [teacherID, setTeacherId] = useState()
-  const navigate = useNavigate();
+  const [teacherID, setTeacherID] = useState()
 
   const [addMemberClass, setAddMemberClass] = useState(false);
   const handleCloseAddMemberClass = () => setAddMemberClass(false);
@@ -90,17 +86,16 @@ const ClassList = () => {
   };
 
   useEffect(() => {
-    AuthService.isUser(navigate);
+    UserService.getUserInfo().then((info) => {
+      setUserID(info.ID)
+    });
     const fetchData = async () => {
-      UserService.getUserInfo().then((info) => {
-        setUserID(info.ID)
-      });
       await ClassService.memberClass(classId).then((info) => {
         const students = info.data.message.Students;
         const teachers = info.data.message.Teachers;
         setRows([]);
         console.log(teachers[0]);
-        setTeacherId(teachers[0].ID)
+        setTeacherID(teachers[0].ID)
 
         for (let i = 0; i < teachers.length; i++) {
           setRows((rows) => [
@@ -130,39 +125,22 @@ const ClassList = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refreshPage]);
 
-  let isTeacher = true;
-  if (userID !== teacherID) {
-    isTeacher = false
-  }
+  //hardcode for class id
+  // let classID = localStorage.getItem("classID");
 
   const handleAddPeople = () => {
     // setRefreshPage((prev) => !prev);
     handleOpenAddMemeberClass();
   };
 
+  let isTeacher = true;
+  if (userID !== teacherID) {
+    isTeacher = false
+  }
+
   return (
     <DashbroadLayout>
       <ClassHeader>
-        {/*<Button*/}
-        {/*    variant="contained"*/}
-        {/*    sx={{*/}
-        {/*      backgroundColor: "#0A5379",*/}
-        {/*      marginLeft: 1.4,*/}
-        {/*      height: 50,*/}
-        {/*      width: 160,*/}
-        {/*      marginTop: 2,*/}
-        {/*    }}*/}
-        {/*>*/}
-        {/*  <AddIcon style={{ color: "white" }} />*/}
-        {/*  <Typography*/}
-        {/*      paddingLeft={1}*/}
-        {/*      className={"sign-in"}*/}
-        {/*      fontSize={20}*/}
-        {/*      fontWeight={500}*/}
-        {/*  >*/}
-        {/*    Tạo mới*/}
-        {/*  </Typography>*/}
-        {/*</Button>*/}
         <div className="dataTable">
           <Container
             maxWidth={false}
@@ -183,13 +161,13 @@ const ClassList = () => {
                 justifyContent: "space-between",
               }}
             >
-              <Typography fontSize={28} fontWeight={600} color="#1967D2">
+              <Typography fontSize={28} fontWeight={600} color="#0A5379">
                 Thành viên
               </Typography>
               {isTeacher && (
                 <PersonAddAlt1Icon
                   sx={{
-                    color: "blue",
+                    color: "#0A5379",
                     height: "35px",
                     width: "35px",
                     cursor: "pointer",
@@ -273,7 +251,7 @@ const ClassList = () => {
                                   className={"sign-in"}
                                   fontSize={17}
                                   fontWeight={600}
-                                  color={"#E5810B"}
+                                  color={"#47A59F"}
                                 >
                                   Giảng viên
                                 </Typography>
@@ -283,11 +261,21 @@ const ClassList = () => {
                                   className={"sign-in"}
                                   fontSize={17}
                                   fontWeight={600}
-                                  color={"#47A59F"}
+                                  color={"#0A5379"}
                                 >
                                   Học viên
                                 </Typography>
                               )}
+                            </TableCell>
+                            <TableCell>
+                              <Button sx={{ width: 3 }}>
+                                <ReportProblemIcon
+                                  style={{ color: "#0A5379" }}
+                                  onClick={() => {
+                                    handleReportMember(row.UserInfo);
+                                  }}
+                                />
+                              </Button>
                             </TableCell>
                             <TableCell>
                               {isTeacher && (
@@ -301,16 +289,7 @@ const ClassList = () => {
                                 </Button>
                               )}{" "}
                             </TableCell>
-                            <TableCell>
-                              <Button sx={{ width: 3 }}>
-                                <ReportProblemIcon
-                                  style={{ color: "#ffff00" }}
-                                  onClick={() => {
-                                    handleReportMember(row.UserInfo);
-                                  }}
-                                />
-                              </Button>
-                            </TableCell>
+                           
                           </TableRow>
                         );
                       })}

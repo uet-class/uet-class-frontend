@@ -23,7 +23,7 @@ class AuthService {
         try {
             await UserService.getUserInfo()
                 .then((res) => {
-                    console.log(res)
+                    // console.log(res)
                     // if (res === false || res.IsAdmin) {
                     if (res === false) {
                         navigate("/signin");
