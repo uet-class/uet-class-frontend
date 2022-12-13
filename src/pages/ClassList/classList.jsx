@@ -114,24 +114,6 @@ const ClassList = () => {
               students[i]
             ),
           ]);
-          setRows((rows) => [
-            ...rows,
-            createData(
-              students[i].FullName,
-              students[i].DateOfBirth,
-              false,
-              students[i]
-            ),
-          ]);
-          setRows((rows) => [
-            ...rows,
-            createData(
-              students[i].FullName,
-              students[i].DateOfBirth,
-              false,
-              students[i]
-            ),
-          ]);
         }
       });
     };
