@@ -19,7 +19,7 @@ const Sidebar = (props) => {
     `/class/${classID}/posts`,
     `/class/${classID}/documents`,
     `/class/${classID}/assignments`,
-    `/class/${classID}/other`,
+    `/class/${classID}/classList`,
   ];
   sideBar.basicLinkName = [
     "Trang chủ",
