@@ -6,7 +6,7 @@ import AuthService from "../../services/auth.service";
 import {
     Avatar,
     Box,
-    Button,
+    Button, Container,
     Grid,
     Modal,
     Typography,
@@ -24,7 +24,6 @@ import EditIcon from "@mui/icons-material/Edit";
 import moment from "moment";
 
 const Posts = () => {
-    //hardcode for class id
     let classID = localStorage.getItem("classID");
 
     const [openCreatePost, setOpenCreatePost] = useState(false);
@@ -40,21 +39,14 @@ const Posts = () => {
     const getAllPosts = () => {
         postService.getAllPosts(classID).then((listPosts) => {
             const postArr = [];
-            const creatorArr = [];
             if (listPosts.data.message != null) {
                 for (let i = 0; i < listPosts.data.message.length; i++) {
                     if (listPosts.data.message[i].DeletedAt == null) {
                         postArr.push(listPosts.data.message[i]);
                     }
-                    UserService.getCreatorName(listPosts.data.message[i].CreatorID).then(
-                        (creatorName) => {
-                            creatorArr.push(creatorName);
-                        }
-                    );
                 }
             }
             postArr.reverse();
-            creatorArr.reverse();
             setPost(postArr);
         });
     };
@@ -116,145 +108,169 @@ const Posts = () => {
                         Tạo mới
                     </Typography>
                 </Button>
-
-                <Box
+                <Container
+                    maxWidth={false}
+                    disableGutters
                     sx={{
-                        paddingTop: 3,
-                        marginLeft: 1,
                         paddingLeft: 1,
-                        paddingRight: 2,
+                        paddingRight: 3,
+                        maxHeight: "65vh",
+                        overflow: "auto",
+                        paddingBottom: 2,
+                        paddingTop: 2,
                     }}
                 >
-                    <Grid
-                        container
-                        sx={{
-                            maxHeight: "70vh",
-                            overflow: "auto",
-                        }}
-                    >
-                        {post?.map((post) => (
-                            <Grid item xs={12} paddingBottom={3}>
-                                <Box
+                    {post?.map((post) => (
+                        <Box
+                            boxShadow={3}
+                            bgcolor={"#FCF9F9"}
+                            sx={{
+                                border: 1,
+                                marginBottom: 3,
+                                paddingTop: 1,
+                                borderRadius: 5,
+                            }}
+                        >
+                            <Grid
+                                container
+                                className={"post-header"}
+                                sx={{
+                                    paddingBottom: 2,
+                                }}
+                            >
+                                <Grid
+                                    item
+                                    xs={0.5}
                                     sx={{
-                                        borderRadius: 8,
-                                        bgcolor: "white",
+                                        paddingBottom: 2,
+                                        paddingLeft: 1.5,
+                                        paddingTop: 1,
                                     }}
                                 >
-                                    <Grid
-                                        container
-                                        sx={{
-                                            paddingLeft: 2,
-                                            paddingTop: 2,
-                                        }}
-                                    >
-                                        <Grid item xs={0.5}>
-                                            <Avatar
-                                                alt="Remy Sharp"
-                                                src={
-                                                    "https://i.insider.com/61135525ad63f30019501966?width=700"
-                                                }
-                                            />
+                                    <Avatar
+                                        alt="Remy Sharp"
+                                        src={
+                                            "https://i.insider.com/61135525ad63f30019501966?width=700"
+                                        }
+                                    />
+                                </Grid>
+                                <Grid
+                                    item
+                                    xs={10.5}
+                                >
+                                    <Grid container>
+                                        <Grid item xs={12}>
+                                            <Typography
+                                                sx={{
+                                                    fontWeight: 600,
+                                                    fontSize: 25,
+                                                }}
+                                            >
+                                                {post.CreatorName}
+                                            </Typography>
                                         </Grid>
-                                        <Grid item xs={11.5}>
-                                            <Grid container>
-                                                <Grid item xs={1}>
-                                                    <Typography
-                                                        sx={{
-                                                            fontWeight: 600,
-                                                            fontSize: 25,
-                                                        }}
-
-                                                    >
-                                                        {post.CreatorName}
-                                                    </Typography>
-                                                </Grid>
-                                                <Grid item xs={10}>
-                                                    <Typography
-                                                        sx={{
-                                                            fontWeight: 100,
-                                                            fontSize: 16,
-                                                        }}
-
-                                                    >
-                                                        {moment(post.UpdatedAt).format("DD/MM/YYYY, h:mm:ss a")}
-                                                    </Typography>
-                                                </Grid>
-                                                {post.CreatorID === userInfo ? (
-                                                        <Grid item xs={1}>
-                                                            <Grid container>
-                                                                <Grid item xs={6}>
-                                                                    <Button
-                                                                        sx={{ width: 3 }}
-                                                                        onClick={() => {
-                                                                            handleOpenDeletePost();
-                                                                            setPostID(post.ID);
-                                                                        }}
-                                                                    >
-                                                                        <DeleteIcon style={{ color: "red" }}/>
-                                                                    </Button>
-                                                                </Grid>
-                                                                <Grid item xs={6}>
-                                                                    <Button
-                                                                        sx={{ width: 3 }}
-                                                                        onClick={() => {
-                                                                            handleOpenUpdatePost();
-                                                                            setPostID(post.ID);
-                                                                        }}
-                                                                    >
-                                                                        <EditIcon/>
-                                                                    </Button>
-                                                                </Grid>
-                                                            </Grid>
-                                                        </Grid>
-                                                ) : null}
+                                        <Grid item xs={12}>
+                                            <Typography>
+                                                {moment(post.UpdatedAt).format("DD/MM/YYYY, h:mm:ss a")}
+                                            </Typography>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                {post.CreatorID === userInfo ? (
+                                    <Grid item xs={1}>
+                                        <Grid container>
+                                            <Grid item xs={6}>
+                                                <Button
+                                                    sx={{width: 3}}
+                                                    onClick={() => {
+                                                        handleOpenDeletePost();
+                                                        setPostID(post.ID);
+                                                    }}
+                                                >
+                                                    <DeleteIcon style={{color: "red"}}/>
+                                                </Button>
+                                            </Grid>
+                                            <Grid item xs={6}>
+                                                <Button
+                                                    sx={{width: 3}}
+                                                    onClick={() => {
+                                                        handleOpenUpdatePost();
+                                                        setPostID(post.ID);
+                                                    }}
+                                                >
+                                                    <EditIcon/>
+                                                </Button>
                                             </Grid>
                                         </Grid>
                                     </Grid>
-                                    <Grid
-                                        item
+                                ) : null}
+                            </Grid>
+                            <Grid
+                                container
+                                className={"post-content"}
+                                sx={{
+                                    paddingBottom: 2,
+                                    paddingLeft: 5,
+                                }}
+                            >
+                                <Grid item xs={12}>
+                                    <Box
                                         sx={{
-                                            paddingLeft: 10,
-                                            paddingTop: 2,
+                                            borderBottom: 1,
+                                            maxWidth: 1000,
                                         }}
                                     >
                                         <Typography
                                             sx={{
                                                 fontWeight: 600,
                                                 fontSize: 25,
-                                                paddingBottom: 2,
                                             }}
                                         >
                                             {post.Title}
                                         </Typography>
-                                        <Typography
-                                            variant={"h5"}
-                                            sx={{
-                                                paddingBottom: 2,
-                                            }}
-                                        >
-                                            {post.Content}
-                                        </Typography>
-                                    </Grid>
-                                    <Grid
-                                        item
+                                    </Box>
+                                </Grid>
+                                <Grid
+                                    item
+                                    xs={12}
+                                    sx={{
+                                        paddingTop: 2,
+                                    }}
+                                >
+                                    <Typography
                                         sx={{
-                                            paddingLeft: 10,
+                                            fontWeight: 300,
+                                            fontSize: 18,
+                                            maxHeight: "25vh",
+                                            overflow: "auto",
                                         }}
                                     >
-                                        <Button
-                                            onClick={() => {
-                                                handleOpenPostComment();
-                                                setPostID(post.ID);
-                                            }}
-                                        >
-                                            Hiển thị bình luận
-                                        </Button>
-                                    </Grid>
-                                </Box>
+                                        {post.Content}
+                                    </Typography>
+                                </Grid>
                             </Grid>
-                        ))}
-                    </Grid>
-                </Box>
+                            <Grid
+                                containter
+                                className={"comment"}
+                                sx={{
+                                    paddingBottom: 1,
+                                    paddingLeft: 4,
+                                }}
+                            >
+                                <Button
+                                    onClick={() => {
+                                        handleOpenPostComment();
+                                        setPostID(post.ID);
+                                    }}
+                                >
+                                    <Typography>
+                                        Hiển thị bình luận
+                                    </Typography>
+                                </Button>
+                            </Grid>
+                        </Box>
+                    ))}
+                </Container>
             </ClassHeader>
 
             <Modal
