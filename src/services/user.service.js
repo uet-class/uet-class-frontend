@@ -7,7 +7,7 @@ class UserService {
             FullName: data.fullname.value,
             DateOfBirth: data.dateOfBirth.value,
             // Password: "1",
-            // PhoneNumber: data.phoneNumber.value
+            PhoneNumber: data.phoneNumber.value
         })
             .then(function (response) {
 

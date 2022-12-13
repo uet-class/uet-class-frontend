@@ -114,6 +114,24 @@ const ClassList = () => {
               students[i]
             ),
           ]);
+          setRows((rows) => [
+            ...rows,
+            createData(
+              students[i].FullName,
+              students[i].DateOfBirth,
+              false,
+              students[i]
+            ),
+          ]);
+          setRows((rows) => [
+            ...rows,
+            createData(
+              students[i].FullName,
+              students[i].DateOfBirth,
+              false,
+              students[i]
+            ),
+          ]);
         }
       });
     };
@@ -152,13 +170,13 @@ const ClassList = () => {
                 justifyContent: "space-between",
               }}
             >
-              <Typography fontSize={28} fontWeight={600} color="#1967D2">
+              <Typography fontSize={28} fontWeight={600} color="#0A5379">
                 Thành viên
               </Typography>
               {isTeacher && (
                 <PersonAddAlt1Icon
                   sx={{
-                    color: "blue",
+                    color: "#0A5379",
                     height: "35px",
                     width: "35px",
                     cursor: "pointer",
@@ -242,7 +260,7 @@ const ClassList = () => {
                                   className={"sign-in"}
                                   fontSize={17}
                                   fontWeight={600}
-                                  color={"#E5810B"}
+                                  color={"#47A59F"}
                                 >
                                   Giảng viên
                                 </Typography>
@@ -252,11 +270,21 @@ const ClassList = () => {
                                   className={"sign-in"}
                                   fontSize={17}
                                   fontWeight={600}
-                                  color={"#47A59F"}
+                                  color={"#0A5379"}
                                 >
                                   Học viên
                                 </Typography>
                               )}
+                            </TableCell>
+                            <TableCell>
+                              <Button sx={{ width: 3 }}>
+                                <ReportProblemIcon
+                                  style={{ color: "#0A5379" }}
+                                  onClick={() => {
+                                    handleReportMember(row.UserInfo);
+                                  }}
+                                />
+                              </Button>
                             </TableCell>
                             <TableCell>
                               {isTeacher && (
@@ -270,16 +298,7 @@ const ClassList = () => {
                                 </Button>
                               )}{" "}
                             </TableCell>
-                            <TableCell>
-                              <Button sx={{ width: 3 }}>
-                                <ReportProblemIcon
-                                  style={{ color: "#cccc00" }}
-                                  onClick={() => {
-                                    handleReportMember(row.UserInfo);
-                                  }}
-                                />
-                              </Button>
-                            </TableCell>
+                           
                           </TableRow>
                         );
                       })}
