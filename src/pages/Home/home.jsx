@@ -20,6 +20,8 @@ import AuthService from "../../services/auth.service";
 import { useNavigate } from "react-router-dom";
 import ClassService from "../../services/class.service";
 import TeacherDeleteClass from "../../components/TeacherDeleteClass/teacherDeleteClass";
+import UserService from "../../services/user.service";
+import StudentLeaveClass from "../../components/StudentLeaveClass/studentLeaveClass";
 
 const Home = () => {
   const [openCreateClass, setOpenCreateClass] = useState(false);
@@ -39,7 +41,14 @@ const Home = () => {
 
   const [isShow, setIsShow] = useState(false);
 
-  const [classes, setClasses] = useState();
+  const [classTeacher, setClassTeacher] = useState();
+  const [classStudent, setClassStudent] = useState();
+
+  const [openStudentLeaveClass, setOpenStudentLeaveClass] = useState(false);
+  const handleOpenStudentLeaveClass = () => setOpenStudentLeaveClass(true);
+  const handleCloseStudentLeaveClass = () => setOpenStudentLeaveClass(false);
+  const [leaveClassID, setLeaveClassID] = useState()
+  const [userEmail, setUserEmail] = useState()
 
   const navigate = useNavigate();
 
@@ -53,6 +62,13 @@ const Home = () => {
           }
         }
       }
+      setClassTeacher(classArr);
+    });
+  };
+
+  const getClassStudent = () => {
+    ClassService.listClass().then((listClass) => {
+      const classArr = [];
       if (listClass.data.message.studentClasses != null) {
         for (let i = 0; i < listClass.data.message.studentClasses.length; i++) {
           if (listClass.data.message.studentClasses[i].DeletedAt == null) {
@@ -60,9 +76,9 @@ const Home = () => {
           }
         }
       }
-      setClasses(classArr);
+      setClassStudent(classArr);
     });
-  };
+  }
 
   const handleJoinClass = (id) => {
     localStorage.setItem("classID", id);
@@ -71,9 +87,13 @@ const Home = () => {
 
   useEffect(() => {
     AuthService.isUser(navigate)
+    UserService.getUserInfo().then((info) => {
+      setUserEmail(info.Email)
+    });
     const fetchData = async () => {
       setIsShow(true);
       await getClassTeacher();
+      await getClassStudent();
     };
     fetchData()
 
@@ -153,7 +173,7 @@ const Home = () => {
                   overflow: "auto",
                 }}
               >
-                {classes?.map((userClass) => (
+                {classTeacher?.map((userClass) => (
                   <Grid item>
                     <Card
                       sx={{
@@ -204,6 +224,57 @@ const Home = () => {
                     </Card>
                   </Grid>
                 ))}
+                {classStudent?.map((userClass) => (
+                    <Grid item>
+                      <Card
+                          sx={{
+                            height: "100%",
+                            display: "flex",
+                            flexDirection: "column",
+                            minWidth: 310,
+                            maxWidth: 310,
+                          }}
+                      >
+                        <Box
+                            sx={{
+                              paddingTop: "56.25%",
+                              backgroundColor: "#90EE90",
+                            }}
+                        ></Box>
+                        <CardContent
+                            sx={{
+                              flexGrow: 1,
+                            }}
+                        >
+                          <Typography variant={"h5"}>
+                            {userClass.ClassName}
+                          </Typography>
+                          <Typography>{userClass.Description}</Typography>
+                        </CardContent>
+                        <CardActions>
+                          <Button
+                              size={"small"}
+                              color={"primary"}
+                              onClick={() => {
+                                handleJoinClass(userClass.ID);
+                              }}
+                          >
+                            Vào lớp
+                          </Button>
+                          <Button
+                              size={"small"}
+                              color={"primary"}
+                              onClick={() => {
+                                handleOpenStudentLeaveClass();
+                                setLeaveClassID(userClass.ID);
+                              }}
+                          >
+                            Rời khỏi lớp
+                          </Button>
+                        </CardActions>
+                      </Card>
+                    </Grid>
+                ))}
               </Grid>
             </Box>
 
@@ -247,6 +318,22 @@ const Home = () => {
                     handleRefresh={handleRefresh}
                     handleCloseTeacherDeleteClass={handleCloseTeacherDeleteClass}
                     deleteClassID={deleteClassID}
+                />
+              </Box>
+            </Modal>
+
+            <Modal
+                open={openStudentLeaveClass}
+                onClose={handleCloseStudentLeaveClass}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+              <Box>
+                <StudentLeaveClass
+                    handleRefresh={handleRefresh}
+                    handleCloseStudentLeaveClass={handleCloseStudentLeaveClass}
+                    leaveClassID={leaveClassID}
+                    userEmail={userEmail}
                 />
               </Box>
             </Modal>

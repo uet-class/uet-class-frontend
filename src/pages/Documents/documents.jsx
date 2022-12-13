@@ -21,6 +21,7 @@ import { useNavigate } from "react-router-dom";
 import ClassService from "../../services/class.service";
 import moment from "moment";
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import UserService from "../../services/user.service";
 
 
 const columns = [
@@ -40,7 +41,8 @@ const Documents = () => {
   const [openCreateDocument, setOpenCreateDocument] = useState(false);
   const handleOpenCreateDocument = () => setOpenCreateDocument(true);
   const handleCloseCreateDocument = () => setOpenCreateDocument(false);
-  const isTeacher = true; //tam thoi
+  const [userID, setUserID] = useState()
+  const [teacherID, setTeacherID] = useState()
   const [refreshPage, setRefreshPage] = useState(false);
   const handleRefresh = () => {
     setRefreshPage((current) => !current);
@@ -65,8 +67,25 @@ const Documents = () => {
       }
     });
 
+    const fetchData = async () => {
+      UserService.getUserInfo().then((info) => {
+        setUserID(info.ID)
+      });
+      await ClassService.memberClass(classID).then((info) => {
+        const teachers = info.data.message.Teachers;
+        console.log(teachers[0]);
+        setTeacherID(teachers[0].ID)
+      });
+    }
+
+    fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refreshPage]);
+
+  let isTeacher = true;
+  if (userID !== teacherID) {
+    isTeacher = false
+  }
 
   const handleDelete = (fileName) => {
     console.log(fileName);
