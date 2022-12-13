@@ -46,6 +46,20 @@ class ClassService {
             });
     }
 
+    reviewClassMaterials(classId, filePath) {
+        return axios.get(`/class/${classId}/download-material`, {
+            params: {
+                objectName: filePath
+            }
+        })
+            .then(function (response) {
+                return response;
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    }
+
     uploadClassMaterial(classId, data) {
         return axios.post(`/class/${classId}/upload-material`, data, {
             headers: {

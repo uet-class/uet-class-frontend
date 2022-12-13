@@ -44,7 +44,7 @@ const Assignments = () => {
   };
   const [rows, setRows] = useState([]);
   const [assigmentInfo, setAssignmentInfo] = useState();
-  const isTeacher = true; //tam thoi
+  const isTeacher = false; //tam thoi
 
   const navigate = useNavigate();
 
