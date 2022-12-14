@@ -69,7 +69,6 @@ const AdminDeleteClass = () => {
                         variant="contained"
                         sx={{
                             color: "#015198",
-                            borderRadius: 4,
                         }}
                     >
                         <DeleteIcon style={{color: 'white'}}/>
