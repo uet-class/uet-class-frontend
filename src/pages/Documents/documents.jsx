@@ -20,20 +20,14 @@ import AuthService from "../../services/auth.service";
 import { useNavigate } from "react-router-dom";
 import ClassService from "../../services/class.service";
 import moment from "moment";
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import UserService from "../../services/user.service";
-
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 
 const columns = [
   { id: "name", label: "Tên tài liệu", minWidth: 220 },
   { id: "updateDate", label: "Thời gian đăng tải", minWidth: 100 },
 ];
-
-// const {Storage} = require('@google-cloud/storage');
-// const storage = new Storage();
-
 function createData(name, updateDate) {
-  updateDate = moment(updateDate).format("DD/MM/YYYY h:mm:ss a")
+  updateDate = moment(updateDate).format("DD/MM/YYYY h:mm:ss a");
   return { name, updateDate };
 }
 
@@ -41,51 +35,51 @@ const Documents = () => {
   const [openCreateDocument, setOpenCreateDocument] = useState(false);
   const handleOpenCreateDocument = () => setOpenCreateDocument(true);
   const handleCloseCreateDocument = () => setOpenCreateDocument(false);
-  const [userID, setUserID] = useState()
-  const [teacherID, setTeacherID] = useState()
   const [refreshPage, setRefreshPage] = useState(false);
+  const [isTeacher, setIsTeacher] = useState(false);
   const handleRefresh = () => {
     setRefreshPage((current) => !current);
   };
   const [rows, setRows] = useState([]);
   const navigate = useNavigate();
   let classID = localStorage.getItem("classID");
+  let userID = localStorage.getItem("userId");
 
   useEffect(() => {
     AuthService.isUser(navigate);
-    ClassService.listClassMaterials(classID).then((res) => {
-      // console.log(res.data.message);
-      setRows([]);
-      for (let i = 0; i < res.data.message.length; i++) {
-        const file_path = res.data.message[i].fileName.split('/')
-        if (file_path.length === 1) {
-          setRows((rows) => [
-            ...rows,
-            createData(res.data.message[i].fileName, res.data.message[i].createdAt),
-          ]);
-        }
-      }
-    });
 
     const fetchData = async () => {
-      UserService.getUserInfo().then((info) => {
-        setUserID(info.ID)
-      });
       await ClassService.memberClass(classID).then((info) => {
         const teachers = info.data.message.Teachers;
-        console.log(teachers[0]);
-        setTeacherID(teachers[0].ID)
+        if (
+          userID.toString() === teachers[0].ID.toString() &&
+          isTeacher !== true
+        ) {
+          setIsTeacher(true);
+        } else {
+          ClassService.listClassMaterials(classID).then((res) => {
+            // console.log(res.data.message);
+            setRows([]);
+            for (let i = 0; i < res.data.message.length; i++) {
+              const file_path = res.data.message[i].fileName.split("/");
+              if (file_path.length === 1) {
+                setRows((rows) => [
+                  ...rows,
+                  createData(
+                    res.data.message[i].fileName,
+                    res.data.message[i].createdAt
+                  ),
+                ]);
+              }
+            }
+          });
+        }
       });
-    }
+    };
 
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refreshPage]);
-
-  let isTeacher = true;
-  if (userID !== teacherID) {
-    isTeacher = false
-  }
+  }, [refreshPage, isTeacher]);
 
   const handleDelete = (fileName) => {
     console.log(fileName);
@@ -95,12 +89,9 @@ const Documents = () => {
   };
 
   const handleReview = (fileName) => {
-    // console.log(fileName, classID);
     ClassService.reviewClassMaterials(classID, fileName).then((res) => {
-      // console.log(res.data.message)
-      window.open(res.data.message)
-    })
-    // storage.bucket('uc-class-27').file("text.txt").download();
+      window.open(res.data.message);
+    });
   };
 
   return (
