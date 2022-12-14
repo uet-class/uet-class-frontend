@@ -84,7 +84,9 @@ const Sidebar = (props) => {
               return (
                 <Link
                   className="nav-link"
-                  onClick={() => changeClass(classInfo.ID)}
+                  onClick={() => {
+                    changeClass(classInfo.ID);
+                  }}
                   to={`/class/${classInfo.ID}/posts`}
                 >
                   <ClassIcon /> {classInfo.ClassName}

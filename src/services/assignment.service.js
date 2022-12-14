@@ -103,6 +103,20 @@ class AssignmentService {
             });
     }
 
+    getAssignment(classId, assignmentID) {
+        return axios.get(`/assignments/${assignmentID}`, {
+            params: {
+                classId: classId
+            }
+        })
+            .then(function (response) {
+                return response;
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    }
+
 }
 
 export default new AssignmentService();

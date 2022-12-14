@@ -82,7 +82,7 @@ const Comment = (props) => {
                                     setCommentID(props.commentID)
                                 }}
                             >
-                                <EditIcon/>
+                                <EditIcon style={{ color: "#0A5379" }}/>
                             </Button>
                         </Grid>
                     </Grid>

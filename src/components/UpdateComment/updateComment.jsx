@@ -50,6 +50,9 @@ const UpdateComment = (props) => {
                     className={"login-info"}
                     fontSize={20}
                     fontWeight={500}
+                    sx={{
+                        color: "#0A5379"
+                    }}
                 >
                     Nội dung
                 </Typography>
@@ -73,8 +76,8 @@ const UpdateComment = (props) => {
                         type="submit"
                         variant="contained"
                         sx={{
-                            color: "#015198",
-                            borderRadius: 4,
+                            backgroundColor: "#0A5379",
+                            textTransform: "none",
                         }}
                     >
                         <AddIcon style={{color: 'white'}}/>
