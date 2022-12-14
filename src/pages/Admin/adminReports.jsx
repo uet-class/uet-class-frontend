@@ -60,7 +60,6 @@ const AdminReports = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [refreshState]);
 
-
     return (
         <Header>
             <Container
@@ -88,11 +87,12 @@ const AdminReports = () => {
                             <Grid item>
                                 <Card
                                     sx={{
-                                        height: "100%",
+                                        height: "98%",
                                         display: "flex",
                                         flexDirection: "column",
                                         minWidth: 310,
                                         maxWidth: 310,
+                                        backgroundColor: "#FEFEFE"
                                     }}
                                 >
                                     <Box
@@ -106,35 +106,55 @@ const AdminReports = () => {
                                             flexGrow: 1,
                                         }}
                                     >
-                                        <Typography variant={"h5"}>
-                                            Báo cáo số {report.ID}
+                                        <Typography
+                                            sx={{
+                                                fontSize: 25,
+                                                fontWeight: 550,
+                                            }}
+                                        >
+                                            Báo cáo
                                         </Typography>
-                                        <Typography>
-                                            Báo cáo của người dùng {report.ReporterEmail}
+                                        <Typography
+                                            sx={{
+                                                fontSize: 18,
+                                                fontWeight: 550,
+                                                paddingTop: 1,
+                                            }}
+                                        >
+                                            Người tạo: {report.ReporterName}
                                         </Typography>
                                     </CardContent>
                                     <CardActions>
-                                        <Button
-                                            size={"small"}
-                                            color={"primary"}
-                                            onClick={() => {
-                                                handleOpenReportContent();
-                                                setReporterID(report.ReporterID);
-                                                setReportMessage(report.Message);
-                                                setReporterEmail(report.ReporterEmail);
-                                                setReportObjectContact(report.ReportObjectContact);
-                                            }}
-                                        >Xem nội dung</Button>
-                                        <Button
-                                            size={"small"}
-                                            color={"primary"}
-                                            onClick={() => {
-                                                handleOpenDeleteReport();
-                                                setReportID(report.ID);
+                                        <Box
+                                            sx={{
+                                                paddingBottom: 1,
                                             }}
                                         >
-                                            Xóa báo cáo
-                                        </Button>
+                                            <Button
+                                                size={"small"}
+                                                color={"primary"}
+                                                onClick={() => {
+                                                    handleOpenReportContent();
+                                                    setReporterID(report.ReporterID);
+                                                    setReportMessage(report.Message);
+                                                    setReporterEmail(report.ReporterEmail);
+                                                    setReportObjectContact(report.ReportObjectContact);
+                                                }}
+                                            >
+                                                Xem nội dung
+                                            </Button>
+                                            <Button
+                                                size={"small"}
+                                                color={"primary"}
+                                                onClick={() => {
+                                                    handleOpenDeleteReport();
+                                                    setReportID(report.ID);
+                                                }}
+                                            >
+                                                Xóa báo cáo
+                                            </Button>
+                                        </Box>
+
                                     </CardActions>
                                 </Card>
                             </Grid>

@@ -6,9 +6,7 @@ import {
     Card, CardActions,
     CardContent,
     Container,
-    createTheme,
     Grid, Modal,
-    ThemeProvider,
     Typography
 } from "@mui/material";
 import Header from "../../components/Header/header";
@@ -52,64 +50,76 @@ const AdminClasses = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [refreshState]);
 
-    const theme = createTheme({
-        typography: {
-            fontFamily: ["Inter", "sans-serif"].join(","),
-        },
-    });
-
     return (
-        <ThemeProvider theme={theme}>
-            <Header>
-                <Container
-                    maxWidth={false}
-                    disableGutters
+        <Header>
+            <Container
+                maxWidth={false}
+                disableGutters
+                sx={{
+                    paddingLeft: 8,
+                    paddingRight: 15,
+                }}
+            >
+                <AdminNavBar handleRefresh={handleRefresh}/>
+                <Box
                     sx={{
-                        paddingLeft: 8,
-                        paddingRight: 15,
+                        paddingTop: 5,
                     }}
                 >
-                    <AdminNavBar handleRefresh={handleRefresh}/>
-                    <Box
+                    <Grid
+                        container spacing={4}
                         sx={{
-                            paddingTop: 5,
+                            maxHeight: '78vh',
+                            overflow: 'auto'
                         }}
                     >
-                        <Grid
-                            container spacing={4}
-                            sx={{
-                                maxHeight: '78vh',
-                                overflow: 'auto'
-                            }}
-                        >
-                            {classes?.map((classes) => (
-                                <Grid item>
-                                    <Card
+                        {classes?.map((classes) => (
+                            <Grid item>
+                                <Card
+                                    sx={{
+                                        height: "98%",
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        minWidth: 310,
+                                        maxWidth: 310,
+                                        backgroundColor: "#FEFEFE"
+                                    }}
+                                >
+                                    <Box
                                         sx={{
-                                            height: "100%",
-                                            display: "flex",
-                                            flexDirection: "column",
-                                            minWidth: 310,
-                                            maxWidth: 310,
+                                            paddingTop: "56.25%",
+                                            backgroundColor: "#90EE90",
+                                        }}
+                                    ></Box>
+                                    <CardContent
+                                        sx={{
+                                            flexGrow: 1,
                                         }}
                                     >
-                                        <Box
+                                        <Typography
                                             sx={{
-                                                paddingTop: "56.25%",
-                                                backgroundColor: "#90EE90",
-                                            }}
-                                        ></Box>
-                                        <CardContent
-                                            sx={{
-                                                flexGrow: 1,
+                                                fontSize: 25,
+                                                fontWeight: 550,
                                             }}
                                         >
-                                            <Typography variant={"h5"}>
-                                                {classes.ClassName}
-                                            </Typography>
-                                            <Typography>{classes.Description}</Typography>
-                                        </CardContent>
-                                        <CardActions>
+                                            {classes.ClassName}
+                                        </Typography>
+                                        <Typography
+                                            sx={{
+                                                fontSize: 18,
+                                                fontWeight: 550,
+                                                paddingTop: 1,
+                                            }}
+                                        >
+                                            {classes.Description}
+                                        </Typography>
+                                    </CardContent>
+                                    <CardActions>
+                                        <Box
+                                            sx={{
+                                                paddingBottom: 1,
+                                            }}
+                                        >
                                             <Button
                                                 size={"small"}
                                                 color={"primary"}
@@ -120,28 +130,28 @@ const AdminClasses = () => {
                                             >
                                                 Xóa lớp
                                             </Button>
-                                        </CardActions>
-                                    </Card>
-                                </Grid>
-                            ))}
-                        </Grid>
-                    </Box>
+                                        </Box>
+                                    </CardActions>
+                                </Card>
+                            </Grid>
+                        ))}
+                    </Grid>
+                </Box>
 
-                    <Modal
-                        open={openAdminDeleteClass}
-                        onClose={handleCloseAdminDeleteClass}
-                        aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description"
-                    >
-                        <TeacherDeleteClass
-                            handleRefresh={handleRefresh}
-                            handleCloseTeacherDeleteClass={handleCloseAdminDeleteClass}
-                            deleteClassID={deleteClassID}
-                        />
-                    </Modal>
-                </Container>
-            </Header>
-        </ThemeProvider>
+                <Modal
+                    open={openAdminDeleteClass}
+                    onClose={handleCloseAdminDeleteClass}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <TeacherDeleteClass
+                        handleRefresh={handleRefresh}
+                        handleCloseTeacherDeleteClass={handleCloseAdminDeleteClass}
+                        deleteClassID={deleteClassID}
+                    />
+                </Modal>
+            </Container>
+        </Header>
     )
 }
 
