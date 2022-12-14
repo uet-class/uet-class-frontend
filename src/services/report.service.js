@@ -24,6 +24,18 @@ class ReportService {
                 console.error(error);
             });
     }
+
+    deleteReport(reportID) {
+        let url = `/report/${reportID}`
+        return axios.delete(url)
+            .then(function (response) {
+                // console.log(response);
+                return response;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
 }
 
 export default new ReportService();
