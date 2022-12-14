@@ -51,6 +51,9 @@ const AdminDeleteUser = (props) => {
                     className={"login-info"}
                     fontSize={20}
                     fontWeight={500}
+                    sx={{
+                        color: "#305264"
+                    }}
                 >
                     Email
                 </Typography>
@@ -72,8 +75,8 @@ const AdminDeleteUser = (props) => {
                         type="submit"
                         variant="contained"
                         sx={{
-                            color: "#015198",
-                            borderRadius: 4,
+                            backgroundColor: "#305264",
+                            textTransform: "none",
                         }}
                     >
                         <DeleteIcon style={{color: 'white'}}/>

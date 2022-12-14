@@ -59,6 +59,7 @@ const CreateClass = (props) => {
                     name="className"
                     className={"input-rounded"}
                     autoComplete='off'
+                    required
                     sx={{
                         width: "100%",
                         paddingBottom: 3,
@@ -75,6 +76,7 @@ const CreateClass = (props) => {
                     name="description"
                     className={"input-rounded"}
                     autoComplete='off'
+                    required
                     sx={{
                         width: "100%",
                         paddingBottom: 3,

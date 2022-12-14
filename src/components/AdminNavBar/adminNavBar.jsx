@@ -27,10 +27,13 @@ const AdminNavBar = (props) => {
             }}
         >
             <Grid container>
-                <Grid item xs={4}>
+                <Grid item xs={2.285}>
                     <Button
                         onClick={() => {
                             navigate("/admin/reports");
+                        }}
+                        sx={{
+                            textTransform: "none",
                         }}
                     >
                         <Typography
@@ -42,10 +45,13 @@ const AdminNavBar = (props) => {
                         </Typography>
                     </Button>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={5.715}>
                     <Button
                         onClick={() => {
                             navigate("/admin/class");
+                        }}
+                        sx={{
+                            textTransform: "none",
                         }}
                     >
                         <Typography
@@ -58,7 +64,7 @@ const AdminNavBar = (props) => {
                     </Button>
                 </Grid>
                 <Grid
-                    item xs={2}
+                    item xs={2.35}
                     display="flex"
                     justifyContent="flex-end"
                 >
@@ -67,7 +73,7 @@ const AdminNavBar = (props) => {
                         variant="contained"
                         sx={{
                             backgroundColor: "#305264",
-                            borderRadius: 4,
+                            textTransform: "none",
                         }}
                     >
                         <AddIcon style={{color: 'white'}}/>
@@ -82,7 +88,7 @@ const AdminNavBar = (props) => {
                     </Button>
                 </Grid>
                 <Grid
-                    item xs={2}
+                    item xs={1.65}
                     display="flex"
                     justifyContent="flex-end"
                 >
@@ -91,7 +97,7 @@ const AdminNavBar = (props) => {
                         variant="contained"
                         sx={{
                             backgroundColor: "#305264",
-                            borderRadius: 4,
+                            textTransform: "none",
                         }}
                     >
                         <DeleteIcon style={{color: 'white'}}/>
