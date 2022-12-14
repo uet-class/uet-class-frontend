@@ -97,7 +97,7 @@ const Comment = (props) => {
             >
                 <DeleteComment
                     handleCloseDeleteComment={handleCloseDeleteComment}
-                    handleRefresh={handleRefresh}
+                    handleRefresh={props.handleRefresh}
                     commentID={commentID}
                 />
             </Modal>
@@ -110,7 +110,7 @@ const Comment = (props) => {
             >
                 <UpdateComment
                     handleCloseUpdateComment={handleCloseUpdateComment}
-                    handleRefresh={handleRefresh}
+                    handleRefresh={props.handleRefresh}
                     commentID={commentID}
                 />
             </Modal>
