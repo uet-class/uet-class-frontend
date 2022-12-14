@@ -3,6 +3,7 @@ import { Box, Button, Grid, Typography, Container, Paper } from "@mui/material";
 import { React, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import ArticleIcon from "@mui/icons-material/Article";
+import AssignmentService from "../../services/assignment.service";
 
 const style = {
   position: "absolute",
@@ -19,13 +20,23 @@ const style = {
 };
 
 const SubmitAssignmentForm = (props) => {
+  let classID = localStorage.getItem("classID");
+  let userID = localStorage.getItem("userId");
   const [selectedFile, setSelectedFile] = useState(null);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     // const data = event.target;
     console.log(selectedFile);
-    console.log(props.info.ID)
+    console.log(props.info.ID);
+    AssignmentService.getUserSubmission(classID, props.info.ID, userID).then((res) => {
+      if (res.data.message !== null) {
+        console.log('not null')
+      } else {
+        console.log('null')
+      }
+      console.log(res.data.message)
+    })
   };
 
   const handleFileInput = (e) => {
