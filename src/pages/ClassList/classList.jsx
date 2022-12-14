@@ -27,7 +27,10 @@ import AddMemberClassForm from "../../components/AddMemberClassForm/addMemberCla
 import ClassService from "../../services/class.service";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 import CreateReportUserForm from "../../components/CreateReportUserForm/createReportUserForm";
-import UserService from "../../services/user.service";
+import AuthService from "../../services/auth.service";
+import { useNavigate } from "react-router-dom";
+
+
 
 const columns = [
   { id: "FullName", label: "", minWidth: 220 },
@@ -38,25 +41,23 @@ function createData(FullName, DateOfBirth, isTeacher, UserInfo) {
   return { FullName, DateOfBirth, isTeacher, UserInfo };
 }
 
-
 const ClassList = () => {
-  let classId = localStorage.getItem("classID");
+  const navigate = useNavigate();
   const [refreshPage, setRefreshPage] = useState(false);
   const [userInfoDelete, setUserInfoDelete] = useState();
   const [userInfoReport, setUserInfoReport] = useState();
   const [rows, setRows] = useState([]);
-  const [userID, setUserID] = useState()
-  const [teacherID, setTeacherID] = useState()
-
   const [addMemberClass, setAddMemberClass] = useState(false);
   const handleCloseAddMemberClass = () => setAddMemberClass(false);
   const handleOpenAddMemeberClass = () => setAddMemberClass(true);
-
   const [reportMemberClass, setReportMemberClass] = useState(false);
   const handleCloseReportMemberClass = () => setReportMemberClass(false);
   const handleOpenReportMemeberClass = () => setReportMemberClass(true);
-
+  const [isTeacher, setIsTeacher] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
+  
+  let classId = localStorage.getItem("classID");
+  let userID = localStorage.getItem("userId");
 
   const handleRefreshPage = () => {
     setRefreshPage((prev) => !prev);
@@ -86,57 +87,54 @@ const ClassList = () => {
   };
 
   useEffect(() => {
-    UserService.getUserInfo().then((info) => {
-      setUserID(info.ID)
-    });
+    AuthService.isUser(navigate);
     const fetchData = async () => {
       await ClassService.memberClass(classId).then((info) => {
         const students = info.data.message.Students;
         const teachers = info.data.message.Teachers;
-        setRows([]);
-        console.log(teachers[0]);
-        setTeacherID(teachers[0].ID)
+        if (
+          userID.toString() === teachers[0].ID.toString() &&
+          isTeacher !== true
+        ) {
+          setIsTeacher(true);
+        } else {
+          setRows([]);
+          console.log(teachers[0]);
 
-        for (let i = 0; i < teachers.length; i++) {
-          setRows((rows) => [
-            ...rows,
-            createData(
-              teachers[i].FullName,
-              teachers[i].DateOfBirth,
-              true,
-              teachers[i]
-            ),
-          ]);
-        }
-        for (let i = 0; i < students.length; i++) {
-          setRows((rows) => [
-            ...rows,
-            createData(
-              students[i].FullName,
-              students[i].DateOfBirth,
-              false,
-              students[i]
-            ),
-          ]);
+          for (let i = 0; i < teachers.length; i++) {
+            setRows((rows) => [
+              ...rows,
+              createData(
+                teachers[i].FullName,
+                teachers[i].DateOfBirth,
+                true,
+                teachers[i]
+              ),
+            ]);
+          }
+          for (let i = 0; i < students.length; i++) {
+            setRows((rows) => [
+              ...rows,
+              createData(
+                students[i].FullName,
+                students[i].DateOfBirth,
+                false,
+                students[i]
+              ),
+            ]);
+          }
         }
       });
     };
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refreshPage]);
+  }, [refreshPage, isTeacher]);
 
-  //hardcode for class id
-  // let classID = localStorage.getItem("classID");
 
   const handleAddPeople = () => {
-    // setRefreshPage((prev) => !prev);
     handleOpenAddMemeberClass();
   };
 
-  let isTeacher = true;
-  if (userID !== teacherID) {
-    isTeacher = false
-  }
 
   return (
     <DashbroadLayout>
@@ -148,7 +146,6 @@ const ClassList = () => {
             sx={{
               paddingLeft: 1,
               paddingRight: 3,
-              // backgroundColor: 'yellow'
             }}
           >
             <Box
@@ -289,7 +286,6 @@ const ClassList = () => {
                                 </Button>
                               )}{" "}
                             </TableCell>
-                           
                           </TableRow>
                         );
                       })}

@@ -52,18 +52,12 @@ const Assignments = () => {
   };
   const [rows, setRows] = useState([]);
   const [assigmentInfo, setAssignmentInfo] = useState();
-  // const [userID, setUserID] = useState()
-  // const [teacherID, setTeacherID] = useState();
 
   const navigate = useNavigate();
 
   //hardcode for classID
   let classID = localStorage.getItem("classID");
   let userID = localStorage.getItem("userId");
-  // let isTeacher = false;
-  // if (userID.toString() !== teacherID.toString()) {
-  //   isTeacher = false
-  // }
 
   useEffect(() => {
     AuthService.isUser(navigate);
