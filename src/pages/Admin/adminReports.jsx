@@ -16,6 +16,7 @@ import {useNavigate} from "react-router-dom";
 import ReportContent from "../../components/ReportContent/reportContent";
 import ReportService from "../../services/report.service";
 import AdminNavBar from "../../components/AdminNavBar/adminNavBar";
+import AdminDeleteReport from "../../components/AdminDeleteReport/adminDeleteReport";
 
 const AdminReports = () => {
     const navigate = useNavigate();
@@ -23,6 +24,11 @@ const AdminReports = () => {
     const [openReportContent, setOpenReportContent] = useState(false)
     const handleOpenReportContent = () => setOpenReportContent(true);
     const handleCloseReportContent = () => setOpenReportContent(false);
+
+    const [openDeleteReport, setOpenDeleteReport] = useState(false);
+    const handleOpenDeleteReport = () => setOpenDeleteReport(true);
+    const handleCloseDeleteReport = () => setOpenDeleteReport(false);
+    const [reportID, setReportID] = useState()
 
     const [reporterID, setReporterID] = useState()
     const [reportMessage, setReportMessage] = useState()
@@ -123,7 +129,16 @@ const AdminReports = () => {
                                                     setReportMessage(report.Message);
                                                 }}
                                             >Xem nội dung</Button>
-                                            <Button size={"small"} color={"primary"}>Xóa báo cáo</Button>
+                                            <Button
+                                                size={"small"}
+                                                color={"primary"}
+                                                onClick={() => {
+                                                    handleOpenDeleteReport();
+                                                    setReportID(report.ID);
+                                                }}
+                                            >
+                                                Xóa báo cáo
+                                            </Button>
                                         </CardActions>
                                     </Card>
                                 </Grid>
@@ -139,6 +154,19 @@ const AdminReports = () => {
                     >
                         <ReportContent reporterID={reporterID}
                                        reportMessage={reportMessage}
+                        />
+                    </Modal>
+
+                    <Modal
+                        open={openDeleteReport}
+                        onClose={handleCloseDeleteReport}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                    >
+                        <AdminDeleteReport
+                            handleRefresh={handleRefresh}
+                            handleCloseDeleteReport={handleCloseDeleteReport}
+                            reportID={reportID}
                         />
                     </Modal>
                 </Container>
