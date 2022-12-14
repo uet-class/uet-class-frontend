@@ -272,7 +272,7 @@ const Assignments = () => {
             aria-describedby="modal-modal-description"
           >
             <Box>
-              <SubmitAssignmentForm info={assigmentInfo} />
+              <SubmitAssignmentForm info={assigmentInfo} handleCloseSubmitAssignment={handleCloseSubmitAssignment} handleRefresh={handleRefresh} />
             </Box>
           </Modal>
           <Modal
