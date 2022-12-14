@@ -154,11 +154,11 @@ const Assignments = () => {
               variant="contained"
               sx={{
                 backgroundColor: "#0A5379",
-                borderRadius: 5,
                 marginLeft: 1.4,
                 height: 50,
                 width: 160,
                 marginTop: 2,
+                textTransform: "none",
               }}
               onClick={handleOpenCreateAssignment}
             >
@@ -175,7 +175,7 @@ const Assignments = () => {
           )}
           <div className="dataTable">
             <Paper sx={{ width: "100%", overflow: "hidden" }}>
-              <TableContainer sx={{ height: 550 }}>
+              <TableContainer sx={{ height: 610 }}>
                 <Table stickyHeader aria-label="sticky table">
                   <TableHead>
                     <TableRow>

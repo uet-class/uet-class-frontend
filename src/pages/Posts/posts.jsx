@@ -90,11 +90,11 @@ const Posts = () => {
                     variant="contained"
                     sx={{
                         backgroundColor: "#0A5379",
-                        borderRadius: 5,
                         marginLeft: 1.4,
                         height: 50,
                         width: 160,
                         marginTop: 2,
+                        textTransform: "none",
                     }}
                     onClick={handleOpenCreatePost}
                 >
@@ -128,7 +128,6 @@ const Posts = () => {
                                 border: 1,
                                 marginBottom: 3,
                                 paddingTop: 1,
-                                borderRadius: 5,
                             }}
                         >
                             <Grid
