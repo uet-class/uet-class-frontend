@@ -50,6 +50,9 @@ const UpdatePost = (props) => {
                     className={"login-info"}
                     fontSize={20}
                     fontWeight={500}
+                    sx={{
+                        color: "#0A5379"
+                    }}
                 >
                     Tiêu đề
                 </Typography>
@@ -66,6 +69,9 @@ const UpdatePost = (props) => {
                     className={"login-info"}
                     fontSize={20}
                     fontWeight={500}
+                    sx={{
+                        color: "#0A5379"
+                    }}
                 >
                     Nội dung
                 </Typography>
@@ -74,7 +80,8 @@ const UpdatePost = (props) => {
                     className={"input-rounded"}
                     autoComplete='off'
                     multiline
-                    maxRows={10}
+                    maxRows={9}
+                    minRows={9}
                     sx={{
                         width: "100%",
                         paddingBottom: 3,
@@ -89,8 +96,8 @@ const UpdatePost = (props) => {
                         type="submit"
                         variant="contained"
                         sx={{
-                            color: "#015198",
-                            borderRadius: 4,
+                            backgroundColor: "#0A5379",
+                            textTransform: "none",
                         }}
                     >
                         <AddIcon style={{color: 'white'}}/>

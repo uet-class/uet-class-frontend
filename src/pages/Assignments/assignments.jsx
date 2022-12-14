@@ -66,7 +66,7 @@ const Assignments = () => {
       await ClassService.memberClass(classID).then((info) => {
         const teachers = info.data.message.Teachers;
         if (
-          userID.toString() !== teachers[0].ID.toString() &&
+          userID.toString() === teachers[0].ID.toString() &&
           isTeacher !== true
         ) {
           setIsTeacher(true);
@@ -106,7 +106,7 @@ const Assignments = () => {
     fetchData();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refreshPage, isTeacher]);
+  }, [refreshPage, isTeacher, navigate]);
 
   const assignmentStatus = (done) => {
     if (done === true) {
@@ -148,11 +148,11 @@ const Assignments = () => {
               variant="contained"
               sx={{
                 backgroundColor: "#0A5379",
-                borderRadius: 5,
                 marginLeft: 1.4,
                 height: 50,
                 width: 160,
                 marginTop: 2,
+                textTransform: "none",
               }}
               onClick={handleOpenCreateAssignment}
             >
@@ -169,7 +169,17 @@ const Assignments = () => {
           )}
           <div className="dataTable">
             <Paper sx={{ width: "100%", overflow: "hidden" }}>
-              <TableContainer sx={{ height: 550 }}>
+              <TableContainer
+                  // sx={{ height: 610 }}
+                  sx={{
+                    ...(isTeacher && {
+                      height: 610
+                    }),
+                    ...(!isTeacher && {
+                      height: 670
+                    })
+                  }}
+              >
                 <Table stickyHeader aria-label="sticky table">
                   <TableHead>
                     <TableRow>

@@ -101,6 +101,7 @@ const AdminClasses = () => {
                                                 fontSize: 25,
                                                 fontWeight: 550,
                                             }}
+                                            noWrap
                                         >
                                             {classes.ClassName}
                                         </Typography>
@@ -110,6 +111,7 @@ const AdminClasses = () => {
                                                 fontWeight: 550,
                                                 paddingTop: 1,
                                             }}
+                                            noWrap
                                         >
                                             {classes.Description}
                                         </Typography>

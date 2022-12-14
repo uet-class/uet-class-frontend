@@ -87,6 +87,7 @@ const TeacherDeleteClass = (props) => {
                             variant="contained"
                             sx={{
                                 backgroundColor: "#305264",
+                                textTransform: "none",
                             }}
                         >
                             <Typography
@@ -112,6 +113,7 @@ const TeacherDeleteClass = (props) => {
                             variant="contained"
                             sx={{
                                 backgroundColor: "#305264",
+                                textTransform: "none",
                             }}
                         >
                             <Typography

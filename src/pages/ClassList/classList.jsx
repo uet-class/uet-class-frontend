@@ -128,7 +128,7 @@ const ClassList = () => {
     };
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refreshPage, isTeacher]);
+  }, [refreshPage, isTeacher, navigate]);
 
 
   const handleAddPeople = () => {
@@ -175,7 +175,7 @@ const ClassList = () => {
             </Box>
             <Box>
               <Paper sx={{ width: "100%", overflow: "hidden" }}>
-                <TableContainer sx={{ height: 590 }}>
+                <TableContainer sx={{ height: 610 }}>
                   <Table stickyHeader aria-label="sticky table">
                     <TableHead>
                       <TableRow>

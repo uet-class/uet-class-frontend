@@ -79,7 +79,7 @@ const Documents = () => {
 
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refreshPage, isTeacher]);
+  }, [refreshPage, isTeacher, navigate]);
 
   const handleDelete = (fileName) => {
     console.log(fileName);
@@ -89,6 +89,7 @@ const Documents = () => {
   };
 
   const handleReview = (fileName) => {
+    console.log(fileName)
     ClassService.reviewClassMaterials(classID, fileName).then((res) => {
       window.open(res.data.message);
     });
@@ -103,11 +104,11 @@ const Documents = () => {
               variant="contained"
               sx={{
                 backgroundColor: "#0A5379",
-                borderRadius: 5,
                 marginLeft: 1.4,
                 height: 50,
                 width: 160,
                 marginTop: 2,
+                textTransform: "none",
               }}
               onClick={handleOpenCreateDocument}
             >
@@ -125,7 +126,7 @@ const Documents = () => {
 
           <div className="dataTable">
             <Paper sx={{ width: "100%", overflow: "hidden" }}>
-              <TableContainer sx={{ height: 590 }}>
+              <TableContainer sx={{ height: 610 }}>
                 <Table stickyHeader aria-label="sticky table">
                   <TableHead>
                     <TableRow>

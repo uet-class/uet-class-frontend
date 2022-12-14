@@ -7,13 +7,10 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 500,
+    width: 400,
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
-    p: 5,
-    minHeight: 100,
-    maxHeight: 200,
 };
 
 const DeletePost = (props) => {
@@ -55,71 +52,79 @@ const DeletePost = (props) => {
                     Xóa bài viết thất bại
                 </Alert>
             ) : null}
-            <Box component={"form"} onSubmit={handleSubmit}>
-                <Grid container>
-                    <Grid item xs={12}>
-                        <Typography
-                            display={"flex"}
-                            justifyContent={"center"}
+            <Box
+                component={"form"}
+                onSubmit={handleSubmit}
+                sx={{
+                    padding: 2,
+                }}
+            >
+                <Typography
+                    sx={{
+                        fontSize: 25,
+                        fontWeight: 500,
+                        paddingLeft: 1,
+                    }}
+                >
+                    Xóa bài viết này?
+                </Typography>
+                <Grid container
+                      sx={{
+                          paddingTop: 3
+                      }}
+                >
+                    <Grid
+                        item xs={9}
+                        display={"flex"}
+                        justifyContent={"flex-end"}
+                        paddingLeft={5}
+                    >
+                        <Button
+                            onClick={() => (state.button = 1)}
+                            name={"yesBtn"}
+                            value={"yesBtn"}
+                            type="submit"
+                            variant="contained"
                             sx={{
-                                fontSize: 30,
-                                fontWeight: 600,
+                                backgroundColor: "#305264",
+                                textTransform: "none",
                             }}
                         >
-                            Xóa bài viết này?
-                        </Typography>
+                            <Typography
+                                paddingLeft={1}
+                                className={"sign-in"}
+                                fontSize={20}
+                                fontWeight={500}
+                            >
+                                Xác nhận
+                            </Typography>
+                        </Button>
                     </Grid>
-                    <Grid item xs={12}>
-                        <Grid container
-                              sx={{
-                                  paddingRight: 2,
-                                  paddingTop: 3,
-                              }}
+                    <Grid
+                        item xs={3}
+                        display={"flex"}
+                        justifyContent={"flex-end"}
+                    >
+                        <Button
+                            onClick={() => (state.button = 0)}
+                            name={"noBtn"}
+                            value={"noBtn"}
+                            type="submit"
+                            variant="contained"
+                            sx={{
+                                backgroundColor: "#305264",
+                                textTransform: "none",
+                            }}
                         >
-                            <Grid
-                                item
-                                xs={6}
-                                display={"flex"}
-                                justifyContent={"center"}
+                            <Typography
+                                paddingLeft={1}
+                                className={"sign-in"}
+                                fontSize={20}
+                                fontWeight={500}
                             >
-                                <Button
-                                    onClick={() => (state.button = 0)}
-                                    name={"noBtn"}
-                                    value={"noBtn"}
-                                    type="submit"
-                                    variant="contained"
-                                    sx={{
-                                        backgroundColor: "#FF0000" ,
-                                    }}
-                                >
-                                    <Typography
-                                        paddingLeft={1}
-                                        className={"sign-in"}
-                                    >
-                                        Không
-                                    </Typography>
-                                </Button>
-                            </Grid>
-                            <Grid item xs={6}
-                                  display={"flex"}
-                                  justifyContent={"center"}
-                            >
-                                <Button
-                                    onClick={() => (state.button = 1)}
-                                    name={"yesBtn"}
-                                    value={"yesBtn"}
-                                    type="submit"
-                                    variant="contained"
-                                >
-                                    <Typography
-                                        paddingLeft={1}
-                                        className={"sign-in"}
-                                    >
-                                        Xóa
-                                    </Typography>
-                                </Button>
-                            </Grid>
-                        </Grid>
+                                Hủy
+                            </Typography>
+                        </Button>
                     </Grid>
                 </Grid>
             </Box>

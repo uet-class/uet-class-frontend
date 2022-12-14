@@ -52,6 +52,9 @@ const CreateClass = (props) => {
                     className={"login-info"}
                     fontSize={20}
                     fontWeight={500}
+                    sx={{
+                        color: "#305264"
+                    }}
                 >
                     Tên lớp
                 </Typography>
@@ -69,6 +72,9 @@ const CreateClass = (props) => {
                     className={"login-info"}
                     fontSize={20}
                     fontWeight={500}
+                    sx={{
+                        color: "#305264"
+                    }}
                 >
                     Mô tả
                 </Typography>
@@ -90,8 +96,8 @@ const CreateClass = (props) => {
                         type="submit"
                         variant="contained"
                         sx={{
-                            color: "#015198",
-                            borderRadius: 4,
+                            backgroundColor: "#305264",
+                            textTransform: "none",
                         }}
                     >
                         <AddIcon style={{color: 'white'}}/>

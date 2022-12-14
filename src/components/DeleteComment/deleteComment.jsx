@@ -7,11 +7,10 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 800,
+    width: 400,
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
-    p: 4,
 };
 
 const DeleteComment = (props) => {
@@ -53,13 +52,18 @@ const DeleteComment = (props) => {
                     Xóa bình luận thất bại
                 </Alert>
             ) : null}
-            <Box component={"form"} onSubmit={handleSubmit}>
+            <Box
+                component={"form"}
+                onSubmit={handleSubmit}
+                sx={{
+                    padding: 2,
+                }}
+            >
                 <Typography
-                    display={"flex"}
-                    justifyContent={"center"}
                     sx={{
-                        fontSize: 30,
-                        fontWeight: 600,
+                        fontSize: 25,
+                        fontWeight: 500,
+                        paddingLeft: 1,
                     }}
                 >
                     Xóa bình luận?
@@ -70,35 +74,10 @@ const DeleteComment = (props) => {
                       }}
                 >
                     <Grid
-                        item xs={6}
+                        item xs={9}
                         display={"flex"}
-                        justifyContent={"center"}
-                    >
-                        <Button
-                            onClick={() => (state.button = 0)}
-                            name={"noBtn"}
-                            value={"noBtn"}
-                            type="submit"
-                            variant="contained"
-                            sx={{
-                                backgroundColor: "#FF0000",
-                                borderRadius: 4,
-                            }}
-                        >
-                            <Typography
-                                paddingLeft={1}
-                                className={"sign-in"}
-                                fontSize={20}
-                                fontWeight={500}
-                            >
-                                Không
-                            </Typography>
-                        </Button>
-                    </Grid>
-                    <Grid
-                        item xs={6}
-                        display={"flex"}
-                        justifyContent={"center"}
+                        justifyContent={"flex-end"}
+                        paddingLeft={5}
                     >
                         <Button
                             onClick={() => (state.button = 1)}
@@ -107,8 +86,8 @@ const DeleteComment = (props) => {
                             type="submit"
                             variant="contained"
                             sx={{
-                                backgroundColor: "#00FF00",
-                                borderRadius: 4,
+                                backgroundColor: "#305264",
+                                textTransform: "none",
                             }}
                         >
                             <Typography
@@ -117,7 +96,33 @@ const DeleteComment = (props) => {
                                 fontSize={20}
                                 fontWeight={500}
                             >
-                                Có
+                                Xác nhận
+                            </Typography>
+                        </Button>
+                    </Grid>
+                    <Grid
+                        item xs={3}
+                        display={"flex"}
+                        justifyContent={"flex-end"}
+                    >
+                        <Button
+                            onClick={() => (state.button = 0)}
+                            name={"noBtn"}
+                            value={"noBtn"}
+                            type="submit"
+                            variant="contained"
+                            sx={{
+                                backgroundColor: "#305264",
+                                textTransform: "none",
+                            }}
+                        >
+                            <Typography
+                                paddingLeft={1}
+                                className={"sign-in"}
+                                fontSize={20}
+                                fontWeight={500}
+                            >
+                                Hủy
                             </Typography>
                         </Button>
                     </Grid>

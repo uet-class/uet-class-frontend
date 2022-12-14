@@ -64,7 +64,7 @@ const Posts = () => {
         fetchData();
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [refreshPost]);
+    }, [refreshPost, navigate]);
 
     const handleOpenCreatePost = () => setOpenCreatePost(true);
     const handleCloseCreatePost = () => setOpenCreatePost(false);
@@ -86,38 +86,41 @@ const Posts = () => {
     return (
         <DashbroadLayout>
             <ClassHeader>
-                <Button
-                    variant="contained"
-                    sx={{
-                        backgroundColor: "#0A5379",
-                        borderRadius: 5,
-                        marginLeft: 1.4,
-                        height: 50,
-                        width: 160,
-                        marginTop: 2,
-                    }}
-                    onClick={handleOpenCreatePost}
+                <Box
+                    paddingBottom={2}
                 >
-                    <AddIcon style={{color: "white"}}/>
-                    <Typography
-                        paddingLeft={1}
-                        className={"sign-in"}
-                        fontSize={20}
-                        fontWeight={500}
+                    <Button
+                        variant="contained"
+                        sx={{
+                            backgroundColor: "#0A5379",
+                            marginLeft: 1.4,
+                            height: 50,
+                            width: 160,
+                            marginTop: 1,
+                            textTransform: "none",
+                        }}
+                        onClick={handleOpenCreatePost}
                     >
-                        Tạo mới
-                    </Typography>
-                </Button>
+                        <AddIcon style={{color: "white"}}/>
+                        <Typography
+                            paddingLeft={1}
+                            className={"sign-in"}
+                            fontSize={20}
+                            fontWeight={500}
+                        >
+                            Tạo mới
+                        </Typography>
+                    </Button>
+                </Box>
                 <Container
                     maxWidth={false}
                     disableGutters
                     sx={{
                         paddingLeft: 1,
                         paddingRight: 3,
-                        maxHeight: "65vh",
+                        maxHeight: "70vh",
                         overflow: "auto",
                         paddingBottom: 2,
-                        paddingTop: 2,
                     }}
                 >
                     {post?.map((post) => (
@@ -125,10 +128,8 @@ const Posts = () => {
                             boxShadow={3}
                             bgcolor={"#FCF9F9"}
                             sx={{
-                                border: 1,
                                 marginBottom: 3,
                                 paddingTop: 1,
-                                borderRadius: 5,
                             }}
                         >
                             <Grid
@@ -198,7 +199,7 @@ const Posts = () => {
                                                         setPostID(post.ID);
                                                     }}
                                                 >
-                                                    <EditIcon/>
+                                                    <EditIcon style={{ color: "#0A5379" }} />
                                                 </Button>
                                             </Grid>
                                         </Grid>
@@ -241,8 +242,6 @@ const Posts = () => {
                                         sx={{
                                             fontWeight: 300,
                                             fontSize: 18,
-                                            maxHeight: "25vh",
-                                            overflow: "auto",
                                         }}
                                     >
                                         {post.Content}

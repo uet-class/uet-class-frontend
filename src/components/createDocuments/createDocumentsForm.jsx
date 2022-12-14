@@ -11,11 +11,9 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: 300,
   bgcolor: "background.paper",
-  border: "2px solid #000",
   boxShadow: 24,
   justifyContent: "center",
   p: 4,
-  borderRadius: "25px",
 };
 
 const CreateDocuments = (props) => {
@@ -78,6 +76,7 @@ const CreateDocuments = (props) => {
               backgroundColor: "#1967D2",
               //   borderRadius: 4,
               width: "100%",
+              textTransform: "none",
             }}
           >
             <AddIcon style={{ color: "white" }} />
