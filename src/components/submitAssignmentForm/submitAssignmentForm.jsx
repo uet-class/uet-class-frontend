@@ -13,6 +13,7 @@ import AddIcon from "@mui/icons-material/Add";
 import ArticleIcon from "@mui/icons-material/Article";
 import AssignmentService from "../../services/assignment.service";
 import Submission from "../Submission/submission";
+import Attachment from "../Attachment/attachment";
 
 const style = {
   position: "absolute",
@@ -34,6 +35,7 @@ const SubmitAssignmentForm = (props) => {
   let userID = localStorage.getItem("userId");
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadSubmissionFail, setUploadSubmissionFail] = useState(false);
+  const [assignmentFiles, setAssignmentFiles] = useState();
   const [submissionFiles, setSubmissionFiles] = useState();
   var formData = new FormData();
 
@@ -44,6 +46,17 @@ const SubmitAssignmentForm = (props) => {
         setSubmissionFiles(res.data.message);
       }
     );
+    AssignmentService.getAssignment(classID, props.info.ID).then((res) => {
+      setAssignmentFiles([]);
+      for (let i = 0; i < res.data.message.UploadFile.length; i++) {
+        if (res.data.message.UploadFile[i].fileName.split("/").length === 2) {
+          setAssignmentFiles((files) => [
+            ...files,
+            res.data.message.UploadFile[i],
+          ]);
+        }
+      }
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -158,6 +171,20 @@ const SubmitAssignmentForm = (props) => {
                   <Typography fontSize={20} fontWeight={100} color="black">
                     {props.info?.Content}
                   </Typography>
+                  <Grid container maxWidth={"100%"} spacing={2}>
+                    {assignmentFiles?.map((file) => (
+                      <Grid
+                        item
+                        xs={6}
+                        sx={{
+                          height: 70,
+                          marginTop: 2,
+                        }}
+                      >
+                        <Attachment info={file} />
+                      </Grid>
+                    ))}
+                  </Grid>
                 </Paper>
               </Box>
               <Box

@@ -66,7 +66,7 @@ const Assignments = () => {
       await ClassService.memberClass(classID).then((info) => {
         const teachers = info.data.message.Teachers;
         if (
-          userID.toString() === teachers[0].ID.toString() &&
+          userID.toString() !== teachers[0].ID.toString() &&
           isTeacher !== true
         ) {
           setIsTeacher(true);
