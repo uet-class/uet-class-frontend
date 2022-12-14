@@ -11,9 +11,9 @@ class ReportService {
             });
     }
 
-    createUserReports(reporterID, userId, content) {
+    createUserReports(userId, content) {
         return axios.post('/reports', {
-            ReporterId: reporterID,
+            ReporterId: parseInt(localStorage.getItem("userId")),
             ReportObjectID: userId,
             ReportType: "user",
             Message: content
