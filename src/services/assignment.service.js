@@ -19,6 +19,62 @@ class AssignmentService {
             });
     }
 
+    uploadSubmission(classId, assignmentId, creatorId, data) {
+        return axios.post(`/submissions`, data, {
+            params: {
+                classId: classId,
+                assignmentId: assignmentId,
+                creatorId: creatorId
+            }
+        })
+            .then(function (response) {
+                // console.log(response)
+                return response;
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    }
+
+    getUserSubmission(classId, assignmentId, creatorId) {
+        return axios.get(`/submissions`, {
+            params: {
+                classId: classId,
+                assignmentId: assignmentId,
+                userId: creatorId
+            }
+        })
+            .then(function (response) {
+                // console.log(response)
+                return response;
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    }
+
+    checkUserSubmission(classId, assignmentId, creatorId) {
+        return axios.get(`/submissions`, {
+            params: {
+                classId: classId,
+                assignmentId: assignmentId,
+                userId: creatorId
+            }
+        })
+            .then(function (response) {
+                console.log(assignmentId, response.data.message)
+                if (response.data.message !== null) {
+                    return true;
+                  } else {
+                    return false;
+                  }
+            })
+            .catch(function (error) {
+                console.error(error);
+                return false;
+            });
+    }
+
     listAssignment(classId) {
         return axios.get('/assignments', {
             params: {
