@@ -45,6 +45,21 @@ class AssignmentService {
             }
         })
             .then(function (response) {
+                return response;
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    }
+
+    getClassSubmission(classId, assignmentId) {
+        return axios.get(`/submissions/all`, {
+            params: {
+                classId: classId,
+                assignmentId: assignmentId
+            }
+        })
+            .then(function (response) {
                 // console.log(response)
                 return response;
             })
@@ -62,7 +77,6 @@ class AssignmentService {
             }
         })
             .then(function (response) {
-                // console.log(assignmentId, response.data.message)
                 if (response.data.message !== null) {
                     return true;
                   } else {
