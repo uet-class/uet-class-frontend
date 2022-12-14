@@ -20,7 +20,7 @@ class AssignmentService {
     }
 
     uploadSubmission(classId, assignmentId, creatorId, data) {
-        return axios.post(`/submissions`, data, {
+        return axios.post(`/submissions/upload`, data, {
             params: {
                 classId: classId,
                 assignmentId: assignmentId,
@@ -62,7 +62,7 @@ class AssignmentService {
             }
         })
             .then(function (response) {
-                console.log(assignmentId, response.data.message)
+                // console.log(assignmentId, response.data.message)
                 if (response.data.message !== null) {
                     return true;
                   } else {

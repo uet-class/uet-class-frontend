@@ -45,7 +45,7 @@ const Assignments = () => {
   const [openUploadAttachment, setUploadAttachment] = useState(false);
   const handleCloseUploadAttachment = () => setUploadAttachment(false);
   const handleOpenUploadAttachment = () => setUploadAttachment(true);
-
+  const [isTeacher, setIsTeacher] = useState(false);
   const [refreshPage, setRefreshPage] = useState(false);
   const handleRefresh = () => {
     setRefreshPage((current) => !current);
@@ -53,39 +53,20 @@ const Assignments = () => {
   const [rows, setRows] = useState([]);
   const [assigmentInfo, setAssignmentInfo] = useState();
   // const [userID, setUserID] = useState()
-  const [teacherID, setTeacherID] = useState();
+  // const [teacherID, setTeacherID] = useState();
 
   const navigate = useNavigate();
 
   //hardcode for classID
   let classID = localStorage.getItem("classID");
   let userID = localStorage.getItem("userId");
+  // let isTeacher = false;
+  // if (userID.toString() !== teacherID.toString()) {
+  //   isTeacher = false
+  // }
 
   useEffect(() => {
     AuthService.isUser(navigate);
-    AssignmentService.listAssignment(classID).then((res) => {
-      setRows([]);
-      for (let i = 0; i < res.data.message.length; i++) {
-        AssignmentService.checkUserSubmission(
-          classID,
-          res.data.message[i].ID,
-          userID
-        ).then((response) => {
-          setRows((rows) => [
-            ...rows,
-            createData(
-              res.data.message[i].Title,
-              res.data.message[i].CreatedAt,
-              res.data.message[i].Duedate,
-              res.data.message[i].ID,
-              response,
-              res.data.message[i]
-            ),
-          ]);
-          setRows((rows) => (rows.sort((a,b) => Date.parse(a.updateDate) - Date.parse(b.updateDate))));
-        });
-      }
-    });
 
     const fetchData = async () => {
       // UserService.getUserInfo().then((info) => {
@@ -93,20 +74,49 @@ const Assignments = () => {
       // });
       await ClassService.memberClass(classID).then((info) => {
         const teachers = info.data.message.Teachers;
-        // console.log(teachers[0]);
-        setTeacherID(teachers[0].ID);
+        // setTeacherID(teachers[0].ID);
+        if (
+          userID.toString() === teachers[0].ID.toString() &&
+          isTeacher !== true
+        ) {
+          setIsTeacher(true);
+        } else {
+          AssignmentService.listAssignment(classID).then((res) => {
+            setRows([]);
+            for (let i = 0; i < res.data.message.length; i++) {
+              AssignmentService.checkUserSubmission(
+                classID,
+                res.data.message[i].ID,
+                userID
+              ).then((response) => {
+                setRows((rows) => [
+                  ...rows,
+                  createData(
+                    res.data.message[i].Title,
+                    res.data.message[i].CreatedAt,
+                    res.data.message[i].Duedate,
+                    res.data.message[i].ID,
+                    response,
+                    res.data.message[i]
+                  ),
+                ]);
+                setRows((rows) =>
+                  rows.sort(
+                    (a, b) =>
+                      Date.parse(a.updateDate) - Date.parse(b.updateDate)
+                  )
+                );
+              });
+            }
+          });
+        }
       });
     };
 
     fetchData();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refreshPage]);
-
-  let isTeacher = false;
-  if (userID !== teacherID) {
-    isTeacher = false
-  }
+  }, [refreshPage, isTeacher]);
 
   const assignmentStatus = (done) => {
     if (done === true) {
@@ -272,7 +282,11 @@ const Assignments = () => {
             aria-describedby="modal-modal-description"
           >
             <Box>
-              <SubmitAssignmentForm info={assigmentInfo} />
+              <SubmitAssignmentForm
+                info={assigmentInfo}
+                handleCloseSubmitAssignment={handleCloseSubmitAssignment}
+                handleRefresh={handleRefresh}
+              />
             </Box>
           </Modal>
           <Modal

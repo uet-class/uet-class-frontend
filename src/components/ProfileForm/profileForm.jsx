@@ -38,7 +38,7 @@ const ProfileForm = (props) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [updateProfileFail, setUpdateProfileFail] = useState(false);
   const [timeBirthDate, setTimeBirthDate] = useState(
-    dayjs("01-02-2003", "DD-MM-YYYY")
+    dayjs(props.userInfo.DateOfBirth, "DD-MM-YYYY")
   );
 
   useEffect(() => {
@@ -114,14 +114,14 @@ const ProfileForm = (props) => {
             disableGutters
             sx={{
               //   backgroundColor: "gray",
-              paddingRight: "10px",
+              paddingRight: "20px",
             }}
           >
             <Box
               sx={{
                 display: "flex",
                 justifyContent: "center",
-                paddingTop: "100px",
+                paddingTop: "80px",
                 // height: "100%",
               }}
             >
@@ -129,8 +129,8 @@ const ProfileForm = (props) => {
                 alt="Remy Sharp"
                 src={props.userInfo.AvatarUrl}
                 sx={{
-                  height: "180px",
-                  width: "180px",
+                  height: "220px",
+                  width: "220px",
                 }}
               />
             </Box>
@@ -217,6 +217,7 @@ const ProfileForm = (props) => {
                   defaultValue={props.userInfo.PhoneNumber}
                   variant="standard"
                   fullWidth
+                  type="number"
                   sx={{ marginBottom: "30px" }}
                   InputLabelProps={{
                     style: {

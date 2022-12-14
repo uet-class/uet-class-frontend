@@ -1,5 +1,13 @@
 import "./submitAssignmentForm.css";
-import { Box, Button, Grid, Typography, Container, Paper } from "@mui/material";
+import {
+  Box,
+  Button,
+  Grid,
+  Typography,
+  Container,
+  Paper,
+  Alert,
+} from "@mui/material";
 import { React, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import ArticleIcon from "@mui/icons-material/Article";
@@ -23,20 +31,28 @@ const SubmitAssignmentForm = (props) => {
   let classID = localStorage.getItem("classID");
   let userID = localStorage.getItem("userId");
   const [selectedFile, setSelectedFile] = useState(null);
+  const [uploadSubmissionFail, setUploadSubmissionFail] = useState(false);
+  var formData = new FormData();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     // const data = event.target;
     console.log(selectedFile);
     console.log(props.info.ID);
-    AssignmentService.getUserSubmission(classID, props.info.ID, userID).then((res) => {
-      if (res.data.message !== null) {
-        console.log('not null')
-      } else {
-        console.log('null')
-      }
-      console.log(res.data.message)
-    })
+    formData.append("submission", selectedFile);
+    AssignmentService.uploadSubmission(classID, props.info.ID, userID, formData)
+      .then((res) => {
+        if (res.status === 200) {
+          props.handleCloseSubmitAssignment();
+          props.handleRefresh();
+        } else {
+          const error = new Error(res.error);
+          throw error;
+        }
+      })
+      .catch((err) => {
+        setUploadSubmissionFail(true);
+      });
   };
 
   const handleFileInput = (e) => {
@@ -56,6 +72,9 @@ const SubmitAssignmentForm = (props) => {
           }
         }
       >
+        {uploadSubmissionFail ? (
+          <Alert severity="error">Cập nhật thông tin thất bại</Alert>
+        ) : null}
         <Box
           sx={{
             borderBottom: 1,
