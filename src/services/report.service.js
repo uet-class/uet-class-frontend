@@ -2,7 +2,7 @@ import axios from "axios";
 
 class ReportService {
     getReports() {
-        return axios.get('/report')
+        return axios.get('/reports')
             .then(function (response) {
                 return response;
             })
@@ -11,8 +11,9 @@ class ReportService {
             });
     }
 
-    createUserReports(userId, content) {
-        return axios.post('/report', {
+    createUserReports(reporterID, userId, content) {
+        return axios.post('/reports', {
+            ReporterId: reporterID,
             ReportObjectID: userId,
             ReportType: "user",
             Message: content
@@ -26,7 +27,7 @@ class ReportService {
     }
 
     deleteReport(reportID) {
-        let url = `/report/${reportID}`
+        let url = `/reports/${reportID}`
         return axios.delete(url)
             .then(function (response) {
                 // console.log(response);

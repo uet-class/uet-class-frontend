@@ -1,11 +1,12 @@
 import {Box, Grid, Typography} from "@mui/material";
+import Divider from '@mui/material/Divider';
 
 const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 600,
+    width: 550,
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
@@ -16,26 +17,74 @@ const style = {
 const ReportContent = (props) => {
     return (
         <Box sx={style}>
-            <Grid container>
-                <Grid item xs={12}>
-                    <Typography variant={"h5"}>
-                        Báo cáo của người dùng số {props.reporterID}
-                    </Typography>
-                </Grid>
-                <Grid
-                    item xs={12}
-                    sx={{
-                        paddingTop: 3
-                    }}
-                >
-                    <Typography
-                        variant={"normal-text"}
+            <Grid container
+                  display={"flex"}
+                  justifyContent={"flex-end"}
+                  paddingBottom={2}
+            >
+                <Grid item xs={4}>
+                    <Grid container
+                          paddingBottom={2}
                     >
-                        {props.reportMessage}
-                    </Typography>
+                        <Typography
+                            sx={{
+                                fontSize: 20,
+                                fontWeight: 600,
+                            }}
+                        >
+                            Người báo cáo:
+                        </Typography>
+                    </Grid>
+                    <Grid container>
+                        <Typography
+                            sx={{
+                                fontSize: 20,
+                                fontWeight: 600,
+                            }}
+                        >
+                            Đối tượng:
+                        </Typography>
+                    </Grid>
+                </Grid>
+                <Grid item xs={8}>
+                    <Grid container
+                          paddingBottom={2}
+                    >
+                        <Typography
+                            sx={{
+                                fontSize: 20,
+                                fontWeight: 400,
+                            }}
+                        >
+                            {props.reporterEmail}
+                        </Typography>
+                    </Grid>
+                    <Grid container>
+                        <Typography
+                            sx={{
+                                fontSize: 20,
+                                fontWeight: 400,
+                            }}
+                        >
+                            {props.reportObjectContact}
+                        </Typography>
+                    </Grid>
                 </Grid>
             </Grid>
-
+            <Divider
+                variant="middle"
+            />
+            <Grid container
+                  sx={{
+                      maxHeight: '60vh',
+                      overflow: 'auto',
+                      paddingTop: 2,
+                  }}
+            >
+                    <Typography>
+                        {props.reportMessage}
+                    </Typography>
+            </Grid>
         </Box>
     )
 }

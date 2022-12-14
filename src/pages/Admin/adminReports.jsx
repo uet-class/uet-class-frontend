@@ -3,10 +3,8 @@ import {
     Button,
     Card, CardActions, CardContent,
     Container,
-    createTheme,
     Grid,
     Modal,
-    ThemeProvider,
     Typography
 } from "@mui/material";
 import React, {useEffect, useState} from "react";
@@ -37,6 +35,8 @@ const AdminReports = () => {
     const handleRefresh = () => setRefreshState(current => !current)
 
     const [reports, setReports] = useState()
+    const [reporterEmail, setReporterEmail] = useState()
+    const [reportObjectContact, setReportObjectContact] = useState()
 
     const getReport = () => {
         ReportService.getReports().then((listReports) => {
@@ -60,118 +60,115 @@ const AdminReports = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [refreshState]);
 
-    const theme = createTheme({
-        typography: {
-            fontFamily: ["Inter", "sans-serif"].join(","),
-        },
-    });
 
     return (
-        <ThemeProvider theme={theme}>
-            <Header>
-                <Container
-                    maxWidth={false}
-                    disableGutters
+        <Header>
+            <Container
+                maxWidth={false}
+                disableGutters
+                sx={{
+                    paddingLeft: 8,
+                    paddingRight: 15,
+                }}
+            >
+                <AdminNavBar handleRefresh={handleRefresh}/>
+                <Box
                     sx={{
-                        paddingLeft: 8,
-                        paddingRight: 15,
+                        paddingTop: 5,
                     }}
                 >
-                    <AdminNavBar handleRefresh={handleRefresh}/>
-                    <Box
+                    <Grid
+                        container spacing={4}
                         sx={{
-                            paddingTop: 5,
+                            maxHeight: '78vh',
+                            overflow: 'auto'
                         }}
                     >
-                        <Grid
-                            container spacing={4}
-                            sx={{
-                                maxHeight: '78vh',
-                                overflow: 'auto'
-                            }}
-                        >
-                            {reports?.map((report) => (
-                                <Grid item>
-                                    <Card
+                        {reports?.map((report) => (
+                            <Grid item>
+                                <Card
+                                    sx={{
+                                        height: "100%",
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        minWidth: 310,
+                                        maxWidth: 310,
+                                    }}
+                                >
+                                    <Box
                                         sx={{
-                                            height: "100%",
-                                            display: "flex",
-                                            flexDirection: "column",
-                                            minWidth: 310,
-                                            maxWidth: 310,
+                                            paddingTop: "56.25%",
+                                            backgroundColor: "primary.dark",
+                                        }}
+                                    ></Box>
+                                    <CardContent
+                                        sx={{
+                                            flexGrow: 1,
                                         }}
                                     >
-                                        <Box
-                                            sx={{
-                                                paddingTop: "56.25%",
-                                                backgroundColor: "primary.dark",
+                                        <Typography variant={"h5"}>
+                                            Báo cáo số {report.ID}
+                                        </Typography>
+                                        <Typography>
+                                            Báo cáo của người dùng {report.ReporterEmail}
+                                        </Typography>
+                                    </CardContent>
+                                    <CardActions>
+                                        <Button
+                                            size={"small"}
+                                            color={"primary"}
+                                            onClick={() => {
+                                                handleOpenReportContent();
+                                                setReporterID(report.ReporterID);
+                                                setReportMessage(report.Message);
+                                                setReporterEmail(report.ReporterEmail);
+                                                setReportObjectContact(report.ReportObjectContact);
                                             }}
-                                        ></Box>
-                                        <CardContent
-                                            sx={{
-                                                flexGrow: 1,
+                                        >Xem nội dung</Button>
+                                        <Button
+                                            size={"small"}
+                                            color={"primary"}
+                                            onClick={() => {
+                                                handleOpenDeleteReport();
+                                                setReportID(report.ID);
                                             }}
                                         >
-                                            <Typography variant={"h5"}>
-                                                Báo cáo số {report.ID}
-                                            </Typography>
-                                            <Typography>
-                                                Báo cáo của người dùng {report.ReporterID}
-                                            </Typography>
-                                        </CardContent>
-                                        <CardActions>
-                                            <Button
-                                                size={"small"}
-                                                color={"primary"}
-                                                onClick={() => {
-                                                    handleOpenReportContent();
-                                                    setReporterID(report.ReporterID);
-                                                    setReportMessage(report.Message);
-                                                }}
-                                            >Xem nội dung</Button>
-                                            <Button
-                                                size={"small"}
-                                                color={"primary"}
-                                                onClick={() => {
-                                                    handleOpenDeleteReport();
-                                                    setReportID(report.ID);
-                                                }}
-                                            >
-                                                Xóa báo cáo
-                                            </Button>
-                                        </CardActions>
-                                    </Card>
-                                </Grid>
-                            ))}
-                        </Grid>
-                    </Box>
+                                            Xóa báo cáo
+                                        </Button>
+                                    </CardActions>
+                                </Card>
+                            </Grid>
+                        ))}
+                    </Grid>
+                </Box>
 
-                    <Modal
-                        open={openReportContent}
-                        onClose={handleCloseReportContent}
-                        aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description"
-                    >
-                        <ReportContent reporterID={reporterID}
-                                       reportMessage={reportMessage}
-                        />
-                    </Modal>
+                <Modal
+                    open={openReportContent}
+                    onClose={handleCloseReportContent}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <ReportContent reporterID={reporterID}
+                                   reportMessage={reportMessage}
+                                   reportObjectContact={reportObjectContact}
+                                   reporterEmail={reporterEmail}
+                    />
+                </Modal>
 
-                    <Modal
-                        open={openDeleteReport}
-                        onClose={handleCloseDeleteReport}
-                        aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description"
-                    >
-                        <AdminDeleteReport
-                            handleRefresh={handleRefresh}
-                            handleCloseDeleteReport={handleCloseDeleteReport}
-                            reportID={reportID}
-                        />
-                    </Modal>
-                </Container>
-            </Header>
-        </ThemeProvider>
+                <Modal
+                    open={openDeleteReport}
+                    onClose={handleCloseDeleteReport}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <AdminDeleteReport
+                        handleRefresh={handleRefresh}
+                        handleCloseDeleteReport={handleCloseDeleteReport}
+                        reportID={reportID}
+                    />
+                </Modal>
+            </Container>
+        </Header>
     )
 }
 

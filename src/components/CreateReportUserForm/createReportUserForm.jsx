@@ -26,7 +26,7 @@ const CreateReportUserForm = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(event.target.content.value);
-    reportService.createUserReports(props.userInfoReport.ID,event.target.content.value).then(() => {
+    reportService.createUserReports(props.reporterID, props.userInfoReport.ID, event.target.content.value).then(() => {
         props.handleCloseReportMemberClass()
     })
   };
