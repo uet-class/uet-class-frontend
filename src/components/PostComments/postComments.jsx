@@ -168,6 +168,7 @@ const PostComments = (props) => {
                             content={comment.Content}
                             creatorID={creatorID}
                             commentID={comment.ID}
+                            handleRefresh={handleRefresh}
                         />
                     );
                 })}

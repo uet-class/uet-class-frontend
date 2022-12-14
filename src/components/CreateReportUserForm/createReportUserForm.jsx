@@ -19,14 +19,14 @@ const style = {
   boxShadow: 24,
   justifyContent: "center",
   p: 4,
-  borderRadius: "25px",
 };
 
 const CreateReportUserForm = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log(props.userInfoReport.ID);
     console.log(event.target.content.value);
-    reportService.createUserReports(props.reporterID, props.userInfoReport.ID, event.target.content.value).then(() => {
+    reportService.createUserReports(props.userInfoReport.ID, event.target.content.value).then(() => {
         props.handleCloseReportMemberClass()
     })
   };
@@ -62,7 +62,6 @@ const CreateReportUserForm = (props) => {
               variant="contained"
               sx={{
                 backgroundColor: "#1967D2",
-                borderRadius: 4,
                 width: "150px",
                 height: "40px",
               }}
