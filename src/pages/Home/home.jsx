@@ -188,6 +188,7 @@ const Home = () => {
                                                 fontSize: 25,
                                                 fontWeight: 550,
                                             }}
+                                            noWrap
                                         >
                                             {userClass.ClassName}
                                         </Typography>
@@ -197,6 +198,7 @@ const Home = () => {
                                                 fontWeight: 550,
                                                 paddingTop: 1,
                                             }}
+                                            noWrap
                                         >
                                             {userClass.Description}
                                         </Typography>

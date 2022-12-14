@@ -128,7 +128,7 @@ const ClassList = () => {
     };
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refreshPage, isTeacher]);
+  }, [refreshPage, isTeacher, navigate]);
 
 
   const handleAddPeople = () => {

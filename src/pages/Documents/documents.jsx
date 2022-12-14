@@ -79,7 +79,7 @@ const Documents = () => {
 
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refreshPage, isTeacher]);
+  }, [refreshPage, isTeacher, navigate]);
 
   const handleDelete = (fileName) => {
     console.log(fileName);
@@ -89,6 +89,7 @@ const Documents = () => {
   };
 
   const handleReview = (fileName) => {
+    console.log(fileName)
     ClassService.reviewClassMaterials(classID, fileName).then((res) => {
       window.open(res.data.message);
     });

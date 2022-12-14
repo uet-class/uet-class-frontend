@@ -64,7 +64,7 @@ const Posts = () => {
         fetchData();
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [refreshPost]);
+    }, [refreshPost, navigate]);
 
     const handleOpenCreatePost = () => setOpenCreatePost(true);
     const handleCloseCreatePost = () => setOpenCreatePost(false);
