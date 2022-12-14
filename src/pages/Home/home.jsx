@@ -39,8 +39,6 @@ const Home = () => {
     setRefreshClass((current) => !current);
   };
 
-  const [isShow, setIsShow] = useState(false);
-
   const [classTeacher, setClassTeacher] = useState();
   const [classStudent, setClassStudent] = useState();
 
@@ -91,7 +89,6 @@ const Home = () => {
       setUserEmail(info.Email)
     });
     const fetchData = async () => {
-      setIsShow(true);
       await getClassTeacher();
       await getClassStudent();
     };
@@ -109,7 +106,6 @@ const Home = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      {isShow ? (
         <Header>
           <Container
             maxWidth={false}
@@ -339,7 +335,6 @@ const Home = () => {
             </Modal>
           </Container>
         </Header>
-      ) : null}
     </ThemeProvider>
   );
 };

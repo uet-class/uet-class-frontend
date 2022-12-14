@@ -69,12 +69,8 @@ const Assignments = () => {
     AuthService.isUser(navigate);
 
     const fetchData = async () => {
-      // UserService.getUserInfo().then((info) => {
-      //   setUserID(info.ID)
-      // });
       await ClassService.memberClass(classID).then((info) => {
         const teachers = info.data.message.Teachers;
-        // setTeacherID(teachers[0].ID);
         if (
           userID.toString() === teachers[0].ID.toString() &&
           isTeacher !== true

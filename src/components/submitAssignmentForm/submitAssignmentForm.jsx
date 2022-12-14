@@ -8,10 +8,11 @@ import {
   Paper,
   Alert,
 } from "@mui/material";
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import ArticleIcon from "@mui/icons-material/Article";
 import AssignmentService from "../../services/assignment.service";
+import Submission from "../Submission/submission";
 
 const style = {
   position: "absolute",
@@ -24,6 +25,7 @@ const style = {
   boxShadow: 24,
   justifyContent: "center",
   p: 4,
+  paddingBottom: 2,
   borderRadius: "25px",
 };
 
@@ -32,7 +34,18 @@ const SubmitAssignmentForm = (props) => {
   let userID = localStorage.getItem("userId");
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadSubmissionFail, setUploadSubmissionFail] = useState(false);
+  const [submissionFiles, setSubmissionFiles] = useState();
   var formData = new FormData();
+
+  useEffect(() => {
+    AssignmentService.getUserSubmission(classID, props.info.ID, userID).then(
+      (res) => {
+        console.log(res.data.message);
+        setSubmissionFiles(res.data.message);
+      }
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -64,13 +77,6 @@ const SubmitAssignmentForm = (props) => {
       <Container
         maxWidth={false}
         disableGutters
-        sx={
-          {
-            // paddingLeft: 8,
-            // paddingRight: 15,
-            // backgroundColor: 'yellow'
-          }
-        }
       >
         {uploadSubmissionFail ? (
           <Alert severity="error">Cập nhật thông tin thất bại</Alert>
@@ -144,7 +150,7 @@ const SubmitAssignmentForm = (props) => {
                 <Paper
                   style={{
                     padding: "10px 20px",
-                    maxHeight: "300px",
+                    maxHeight: "250px",
                     overflow: "auto",
                     boxShadow: "none",
                   }}
@@ -154,9 +160,10 @@ const SubmitAssignmentForm = (props) => {
                   </Typography>
                 </Paper>
               </Box>
-              {/* <Box
+              <Box
                 sx={{
                   // borderBottom: 1,
+                  borderTop: 1,
                   borderColor: "black",
                   paddingTop: 3,
                   paddingBottom: 5,
@@ -166,37 +173,22 @@ const SubmitAssignmentForm = (props) => {
                 <Paper
                   style={{
                     padding: "40px 20px",
-                    maxHeight: "300px",
+                    maxHeight: "250px",
                     overflow: "auto",
                     boxShadow: "none",
                   }}
                 >
-                  {comment_example.map((comment) => {
-                    // console.log(comment.avatar)
-                    return (
-                      <Comment
-                        name={comment.name}
-                        avatar={comment.avatar}
-                        content={comment.content}
-                        time={comment.time}
-                      />
-                    );
+                  {submissionFiles?.map((submission) => {
+                    return <Submission info={submission} />;
                   })}
                 </Paper>
-              </Box> */}
+              </Box>
             </Grid>
             <Grid
               item
               xs={3.8}
               display="flex"
               justifyContent="flex-end"
-              sx={
-                {
-                  // backgroundColor: "yellow",
-                  // display: "flex",
-                  // alignItems: "end",
-                }
-              }
             >
               <Box
                 boxShadow={3}
