@@ -4,7 +4,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import React, {useState} from "react";
 import AdminAddUser from "../AdminAddUser/adminAddUser";
 import AdminDeleteUser from "../AdminDeleteUser/adminDeleteUser";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 const AdminNavBar = (props) => {
     const [openAddUser, setOpenAddUser] = useState(false);
@@ -15,14 +15,12 @@ const AdminNavBar = (props) => {
     const handleOpenDeleteUser = () => setOpenDeleteUser(true);
     const handleCloseDeleteUser = () => setOpenDeleteUser(false);
 
-    const [boldReport, setBoldReport] = useState(false)
-    const handleChangeToReport = () => {
-        setBoldReport((current) => !current);
-    };
-    const [boldClass, setBoldClass] = useState(false)
-    const handleChangeToClass = () => {
-        setBoldClass((current) => !current);
-    };
+    const location = useLocation();
+
+    let isReport = true
+    if (location.pathname !== "/admin/reports") {
+        isReport = false
+    }
 
     const navigate = useNavigate();
 
@@ -39,12 +37,11 @@ const AdminNavBar = (props) => {
                 <Grid item xs={2.285}>
                     <Box
                         sx={{
-                            backgroundColor: boldReport ? "#D3D3D3" : "white"
+                            backgroundColor: isReport ? "#D3D3D3" : "white"
                         }}
                     >
                         <Button
                             onClick={() => {
-                                handleChangeToReport();
                                 navigate("/admin/reports");
                             }}
                             sx={{
@@ -64,12 +61,11 @@ const AdminNavBar = (props) => {
                 <Grid item xs={2.285}>
                     <Box
                         sx={{
-                            backgroundColor: boldClass ? "#D3D3D3" : "white"
+                            backgroundColor: !isReport ? "#D3D3D3" : "white"
                         }}
                     >
                         <Button
                             onClick={() => {
-                                handleChangeToClass();
                                 navigate("/admin/class");
                             }}
                             sx={{
