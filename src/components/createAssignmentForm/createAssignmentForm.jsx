@@ -28,7 +28,7 @@ const style = {
   boxShadow: 24,
   justifyContent: "center",
   p: 4,
-  borderRadius: "25px",
+  // borderRadius: "25px",
 };
 
 const CreateAssignmentForm = (props) => {
@@ -122,25 +122,37 @@ const CreateAssignmentForm = (props) => {
                     // paddingLeft: 8,
                     padding: 2,
                     paddingTop: 3,
-                    backgroundColor: "#D9D9D9",
+                    // backgroundColor: "#D9D9D9",
                     opacity: "100%",
                     borderRadius: "24px",
                   }}
                 >
+                  <Typography
+                    className={"input-rounded"}
+                    fontSize={20}
+                    fontWeight={500}
+                    sx={{
+                        color: "#0A5379"
+                    }}
+                >
+                    Tiêu đề
+                </Typography>
                   <TextField
                     id="header"
                     name="header"
-                    label="Tiêu đề"
-                    variant="standard"
+                    // label="Tiêu đề"
+                    // variant="standard"
+                    input-rounded
                     fullWidth
+                    className={"input-rounded"}
                     // sx={{ width: "100%" }}
-                    InputLabelProps={{
-                      style: {
-                        color: "black",
-                        fontSize: 20,
-                        fontWeight: "bold",
-                      },
-                    }}
+                    // InputLabelProps={{
+                    //   style: {
+                    //     color: "black",
+                    //     fontSize: 20,
+                    //     fontWeight: "bold",
+                    //   },
+                    // }}
                   />
                 </Container>
               </Grid>
@@ -189,24 +201,36 @@ const CreateAssignmentForm = (props) => {
                 // paddingLeft: 8,
                 padding: 2,
                 paddingTop: 1,
-                backgroundColor: "#D9D9D9",
+                // backgroundColor: "#D9D9D9",
                 opacity: "100%",
                 borderRadius: "24px",
                 marginTop: "20px",
               }}
             >
+              <Typography
+                    className={"input-rounded"}
+                    fontSize={20}
+                    fontWeight={500}
+                    sx={{
+                        color: "#0A5379"
+                    }}
+                >
+                    Nội dung
+                </Typography>
               <TextField
                 id="content"
                 name="content"
-                label="Nội dung"
-                variant="standard"
+                // label="Nội dung"
+                // variant="standard"
+                className={"input-rounded"}
                 fullWidth
                 multiline
                 maxRows={10}
+                minRows={10}
                 // inputProps={{ style: {color: "black", fontSize: 20} }}
-                InputLabelProps={{
-                  style: { color: "black", fontSize: 20, fontWeight: "bold" },
-                }}
+                // InputLabelProps={{
+                //   style: { color: "black", fontSize: 20, fontWeight: "bold" },
+                // }}
               />
             </Container>
           </Box>
@@ -241,7 +265,7 @@ const CreateAssignmentForm = (props) => {
                     // paddingLeft: 8,
                     padding: 2,
                     paddingTop: 3,
-                    backgroundColor: "#D9D9D9",
+                    // backgroundColor: "#D9D9D9",
                     opacity: "100%",
                     borderRadius: "24px",
                   }}
@@ -255,7 +279,7 @@ const CreateAssignmentForm = (props) => {
                         <TextField
                           InputLabelProps={{
                             style: {
-                              color: "black",
+                              color: "#0A5379",
                               fontSize: 20,
                               fontWeight: "bold",
                             },
@@ -273,7 +297,7 @@ const CreateAssignmentForm = (props) => {
                 xs={4.9}
                 display="flex"
                 justifyContent="center"
-                sx={{ height: 110 }}
+                sx={{ height: 110, paddingLeft: "130px" }}
                 margin={0.5}
                 alignItems="center"
                 // backgroundColor="blue"
@@ -282,17 +306,17 @@ const CreateAssignmentForm = (props) => {
                   type="submit"
                   variant="contained"
                   sx={{
-                    backgroundColor: "#1967D2",
-                    borderRadius: 4,
-                    width: "250px",
-                    height: "70px",
+                    backgroundColor: "#0A5379",
+                    // borderRadius: 4,
+                    width: "220px",
+                    height: "55px",
                   }}
                 >
                   <AddIcon style={{ color: "white" }} />
                   <Typography
                     paddingLeft={1}
                     className={"sign-in"}
-                    fontSize={20}
+                    fontSize={18}
                     fontWeight={500}
                   >
                     Tạo bài tập mới
