@@ -110,6 +110,7 @@ const AdminReports = () => {
                                             sx={{
                                                 fontSize: 25,
                                                 fontWeight: 550,
+                                                color: "#374E6C"
                                             }}
                                         >
                                             Báo cáo
@@ -132,7 +133,6 @@ const AdminReports = () => {
                                         >
                                             <Button
                                                 size={"small"}
-                                                color={"primary"}
                                                 onClick={() => {
                                                     handleOpenReportContent();
                                                     setReporterID(report.ReporterID);
@@ -140,15 +140,25 @@ const AdminReports = () => {
                                                     setReporterEmail(report.ReporterEmail);
                                                     setReportObjectContact(report.ReportObjectContact);
                                                 }}
+                                                sx={{
+                                                    fontSize: 16,
+                                                    textTransform: "none",
+                                                    color: "#374E6C",
+                                                    paddingRight: 2,
+                                                }}
                                             >
                                                 Xem nội dung
                                             </Button>
                                             <Button
                                                 size={"small"}
-                                                color={"primary"}
                                                 onClick={() => {
                                                     handleOpenDeleteReport();
                                                     setReportID(report.ID);
+                                                }}
+                                                sx={{
+                                                    fontSize: 16,
+                                                    textTransform: "none",
+                                                    color: "#374E6C"
                                                 }}
                                             >
                                                 Xóa báo cáo

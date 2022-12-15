@@ -187,6 +187,7 @@ const Home = () => {
                                             sx={{
                                                 fontSize: 25,
                                                 fontWeight: 550,
+                                                color: "#374E6C"
                                             }}
                                             noWrap
                                         >
@@ -263,6 +264,7 @@ const Home = () => {
                                             sx={{
                                                 fontSize: 25,
                                                 fontWeight: 550,
+                                                color: "#374E6C"
                                             }}
                                         >
                                             {userClass.ClassName}
