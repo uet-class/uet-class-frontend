@@ -100,6 +100,7 @@ const AdminClasses = () => {
                                             sx={{
                                                 fontSize: 25,
                                                 fontWeight: 550,
+                                                color: "#374E6C"
                                             }}
                                             noWrap
                                         >
@@ -124,10 +125,14 @@ const AdminClasses = () => {
                                         >
                                             <Button
                                                 size={"small"}
-                                                color={"primary"}
                                                 onClick={() => {
                                                     handleOpenAdminDeleteClass();
                                                     setDeleteClassID(classes.ID);
+                                                }}
+                                                sx={{
+                                                    fontSize: 16,
+                                                    textTransform: "none",
+                                                    color: "#374E6C"
                                                 }}
                                             >
                                                 Xóa lớp
