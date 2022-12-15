@@ -9,10 +9,10 @@ import UpdateComment from "../UpdateComment/updateComment";
 
 const Comment = (props) => {
     const [userID, setUserID] = useState()
-    const [refreshComment, setRefreshComment] = useState(false);
-    const handleRefresh = () => {
-        setRefreshComment((current) => !current);
-    };
+    // const [refreshComment, setRefreshComment] = useState(false);
+    // const handleRefresh = () => {
+    //     setRefreshComment((current) => !current);
+    // };
 
     const [commentID, setCommentID] = useState()
 
@@ -33,7 +33,7 @@ const Comment = (props) => {
         fetchData()
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [refreshComment])
+    }, [])
 
     return (
         <Grid container wrap="nowrap" spacing={2}>

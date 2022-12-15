@@ -122,7 +122,7 @@ const CreateAssignmentForm = (props) => {
                     // paddingLeft: 8,
                     padding: 2,
                     paddingTop: 3,
-                    backgroundColor: "#D9D9D9",
+                    // backgroundColor: "#D9D9D9",
                     opacity: "100%",
                     borderRadius: "24px",
                   }}
@@ -189,7 +189,7 @@ const CreateAssignmentForm = (props) => {
                 // paddingLeft: 8,
                 padding: 2,
                 paddingTop: 1,
-                backgroundColor: "#D9D9D9",
+                // backgroundColor: "#D9D9D9",
                 opacity: "100%",
                 borderRadius: "24px",
                 marginTop: "20px",
@@ -241,7 +241,7 @@ const CreateAssignmentForm = (props) => {
                     // paddingLeft: 8,
                     padding: 2,
                     paddingTop: 3,
-                    backgroundColor: "#D9D9D9",
+                    // backgroundColor: "#D9D9D9",
                     opacity: "100%",
                     borderRadius: "24px",
                   }}
