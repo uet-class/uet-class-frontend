@@ -22,6 +22,7 @@ import AssignmentService from "../../services/assignment.service";
 import UploadAttachmentAssignment from "../../components/UploadAttachmentAssignment/uploadAttachmentAssignment";
 // import UserService from "../../services/user.service";
 import ClassService from "../../services/class.service";
+import moment from "moment/moment";
 
 const columns = [
   { id: "name", label: "Bài tập", minWidth: 300 },
@@ -83,7 +84,7 @@ const Assignments = () => {
                   ...rows,
                   createData(
                     res.data.message[i].Title,
-                    res.data.message[i].CreatedAt,
+                    moment(res.data.message[i].CreatedAt).format("DD/MM/YYYY, h:mm:ss a"),
                     res.data.message[i].Duedate,
                     res.data.message[i].ID,
                     response,
