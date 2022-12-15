@@ -4,7 +4,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import React, {useState} from "react";
 import AdminAddUser from "../AdminAddUser/adminAddUser";
 import AdminDeleteUser from "../AdminDeleteUser/adminDeleteUser";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 const AdminNavBar = (props) => {
     const [openAddUser, setOpenAddUser] = useState(false);
@@ -14,6 +14,13 @@ const AdminNavBar = (props) => {
     const [openDeleteUser, setOpenDeleteUser] = useState(false);
     const handleOpenDeleteUser = () => setOpenDeleteUser(true);
     const handleCloseDeleteUser = () => setOpenDeleteUser(false);
+
+    const location = useLocation();
+
+    let isReport = true
+    if (location.pathname !== "/admin/reports") {
+        isReport = false
+    }
 
     const navigate = useNavigate();
 
@@ -28,40 +35,55 @@ const AdminNavBar = (props) => {
         >
             <Grid container>
                 <Grid item xs={2.285}>
-                    <Button
-                        onClick={() => {
-                            navigate("/admin/reports");
-                        }}
+                    <Box
                         sx={{
-                            textTransform: "none",
+                            backgroundColor: isReport ? "#D3D3D3" : "white"
                         }}
                     >
-                        <Typography
-                            className={"your-class"}
-                            fontSize={32}
-                            fontWeight={600}
+                        <Button
+                            onClick={() => {
+                                navigate("/admin/reports");
+                            }}
+                            sx={{
+                                textTransform: "none",
+                            }}
                         >
-                            Danh sách báo cáo
-                        </Typography>
-                    </Button>
+                            <Typography
+                                className={"your-class"}
+                                fontSize={32}
+                                fontWeight={600}
+                            >
+                                Danh sách báo cáo
+                            </Typography>
+                        </Button>
+                    </Box>
                 </Grid>
-                <Grid item xs={5.715}>
-                    <Button
-                        onClick={() => {
-                            navigate("/admin/class");
-                        }}
+                <Grid item xs={2.285}>
+                    <Box
                         sx={{
-                            textTransform: "none",
+                            backgroundColor: !isReport ? "#D3D3D3" : "white"
                         }}
                     >
-                        <Typography
-                            className={"your-class"}
-                            fontSize={32}
-                            fontWeight={600}
+                        <Button
+                            onClick={() => {
+                                navigate("/admin/class");
+                            }}
+                            sx={{
+                                textTransform: "none",
+                            }}
                         >
-                            Danh sách lớp
-                        </Typography>
-                    </Button>
+                            <Typography
+                                className={"your-class"}
+                                fontSize={32}
+                                fontWeight={600}
+                            >
+                                Danh sách lớp
+                            </Typography>
+                        </Button>
+                    </Box>
+                </Grid>
+                <Grid item xs={3.43}>
+
                 </Grid>
                 <Grid
                     item xs={2.35}
