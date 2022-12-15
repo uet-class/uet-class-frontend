@@ -15,6 +15,15 @@ const AdminNavBar = (props) => {
     const handleOpenDeleteUser = () => setOpenDeleteUser(true);
     const handleCloseDeleteUser = () => setOpenDeleteUser(false);
 
+    const [boldReport, setBoldReport] = useState(false)
+    const handleChangeToReport = () => {
+        setBoldReport((current) => !current);
+    };
+    const [boldClass, setBoldClass] = useState(false)
+    const handleChangeToClass = () => {
+        setBoldClass((current) => !current);
+    };
+
     const navigate = useNavigate();
 
     return (
@@ -28,40 +37,57 @@ const AdminNavBar = (props) => {
         >
             <Grid container>
                 <Grid item xs={2.285}>
-                    <Button
-                        onClick={() => {
-                            navigate("/admin/reports");
-                        }}
+                    <Box
                         sx={{
-                            textTransform: "none",
+                            backgroundColor: boldReport ? "#D3D3D3" : "white"
                         }}
                     >
-                        <Typography
-                            className={"your-class"}
-                            fontSize={32}
-                            fontWeight={600}
+                        <Button
+                            onClick={() => {
+                                handleChangeToReport();
+                                navigate("/admin/reports");
+                            }}
+                            sx={{
+                                textTransform: "none",
+                            }}
                         >
-                            Danh sách báo cáo
-                        </Typography>
-                    </Button>
+                            <Typography
+                                className={"your-class"}
+                                fontSize={32}
+                                fontWeight={600}
+                            >
+                                Danh sách báo cáo
+                            </Typography>
+                        </Button>
+                    </Box>
                 </Grid>
-                <Grid item xs={5.715}>
-                    <Button
-                        onClick={() => {
-                            navigate("/admin/class");
-                        }}
+                <Grid item xs={2.285}>
+                    <Box
                         sx={{
-                            textTransform: "none",
+                            backgroundColor: boldClass ? "#D3D3D3" : "white"
                         }}
                     >
-                        <Typography
-                            className={"your-class"}
-                            fontSize={32}
-                            fontWeight={600}
+                        <Button
+                            onClick={() => {
+                                handleChangeToClass();
+                                navigate("/admin/class");
+                            }}
+                            sx={{
+                                textTransform: "none",
+                            }}
                         >
-                            Danh sách lớp
-                        </Typography>
-                    </Button>
+                            <Typography
+                                className={"your-class"}
+                                fontSize={32}
+                                fontWeight={600}
+                            >
+                                Danh sách lớp
+                            </Typography>
+                        </Button>
+                    </Box>
+                </Grid>
+                <Grid item xs={3.43}>
+
                 </Grid>
                 <Grid
                     item xs={2.35}
