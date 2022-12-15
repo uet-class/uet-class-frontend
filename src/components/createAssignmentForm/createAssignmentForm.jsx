@@ -11,9 +11,8 @@ import {
 import { React, useState } from "react";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import AddIcon from "@mui/icons-material/Add";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import dayjs from "dayjs";
 import AssignmentService from "../../services/assignment.service";
 import moment from "moment/moment";
 
@@ -36,7 +35,7 @@ const CreateAssignmentForm = (props) => {
   let userID = localStorage.getItem("userId");
   // const [selectedFile, setSelectedFile] = useState(null);
   const [timeDeadline, setTimeDeadline] = useState(
-    dayjs("2014-08-18T21:11:54")
+    moment()
   );
   const [createAssignmentFail, setCreateAssignmentFail] = useState(false);
 
@@ -44,24 +43,13 @@ const CreateAssignmentForm = (props) => {
     setTimeDeadline(newValue);
   };
 
-  // const handleFileInput = (e) => {
-  //   console.log(e.target.files[0]);
-  //   setSelectedFile(e.target.files[0]);
-  // };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // const data = event.target;
-    // console.log(selectedFile);
-    // console.log(event.target.header.value);
-    // console.log(event.target.content.value);
-    // console.log(timeDeadline);
-    // console.log(moment(timeDeadline).format("DD/MM/YYYY, h:mm:ss a"))
     AssignmentService.createAssignment(
       classID,
       userID,
       event.target,
-      moment(timeDeadline).format("DD/MM/YYYY, h:mm:ss a")
+      moment(timeDeadline).format("DD/MM/YYYY, h:mm:ss")
     )
       .then((res) => {
         if (res.status === 200) {
@@ -270,7 +258,7 @@ const CreateAssignmentForm = (props) => {
                     borderRadius: "24px",
                   }}
                 >
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <LocalizationProvider dateAdapter={AdapterMoment}>
                     <DateTimePicker
                       label="Hạn nộp bài tập"
                       value={timeDeadline}
